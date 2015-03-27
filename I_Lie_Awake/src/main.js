@@ -1,6 +1,5 @@
 var mainloop = require('sald:mainloop.js');
 var movement = require('movement.js');
-var utils = require('utils.js');
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -15,8 +14,6 @@ function drawBackground() {
 
 	ctx.fillRect(20, 20, ctx.width, 
 			ctx.height);
-
-
 	
 	ctx.fillRect(0,0, ctx.width, ctx.height);
 }
