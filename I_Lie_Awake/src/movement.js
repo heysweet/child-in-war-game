@@ -58,12 +58,15 @@ var update = function(elapsed){
 		downness = utils.sign(downness) * transform.yDiag;
 	}
 
-	var newX = rightness * elapsed;
-	var newY = downness * elapsed;
+	var xDelta = rightness * elapsed;
+	var yDelta = downness * elapsed;
 
 	// Collision check
-	transform.x += newX;
-	transform.y += newY;
+	transform.x += xDelta;
+	transform.y += yDelta;
+
+	// Camera updates
+	camera.update(elapsed, transform);
 }
 
 module.exports = {

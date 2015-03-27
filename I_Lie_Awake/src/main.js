@@ -1,7 +1,10 @@
-var mainloop = require('sald:mainloop.js');
-var movement = require('movement.js');
+var mainloop = require("sald:mainloop.js");
+var movement = require("movement.js");
+var camera = require("camera.js");
 
 function drawBackground() {
+	var cameraCorner = camera.topLeftCorner();
+
 	var ctx = sald.ctx;
 
 	ctx.setTransform(1,0, 0,1, 0,0);
@@ -16,6 +19,10 @@ function drawBackground() {
 			ctx.height);
 	
 	ctx.fillRect(0,0, ctx.width, ctx.height);
+
+	ctx.fillStyle = 'rgb(200, 200, 256)';
+
+	ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 400, 400);
 }
 
 sald.size = {x:320, y:240, mode:"ratio"};
@@ -33,6 +40,8 @@ sald.scene = {
 		ctx.setTransform(1,0, 0,1, 0,0);
 		ctx.clearRect( 0, 0, ctx.width, ctx.height );
 
+		var cameraCorner = camera.topLeftCorner();
+
 		// Draw Background
 		drawBackground();
 
@@ -43,8 +52,13 @@ sald.scene = {
 
 		ctx.fillStyle = 'rgb(256, 0, 0)';
 
-		ctx.fillRect((transform.x - transform.halfWidth) * scalar,
-			(transform.y - transform.halfHeight) * scalar,
+		var onScreenPos = {
+			x : movement.transform.x - cameraCorner.x,
+			y : movement.transform.y - cameraCorner.y
+		}
+
+		ctx.fillRect((onScreenPos.x - transform.halfWidth) * scalar,
+			(onScreenPos.y - transform.halfHeight) * scalar,
 			(transform.width * scalar), 
 			(transform.height * scalar));
 

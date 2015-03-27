@@ -1,13 +1,39 @@
+var utils = require("utils.js")
+
 var camera = {
-	x : sald.size.x/2,
-	y : sald.size.y/2
+	x : utils.halfScreenWidth(),
+	y : utils.halfScreenHeight()
 };
 
-camera.setCenter = function(x, y){
-	camera.x = x;
-	camera.y = y;
+var room = {
+	width : 500,
+	height : 400
+}
+
+var update = function(elapsed, movementTransform){
+	var halfScreenWidth = utils.halfScreenWidth()
+	var halfScreenHeight = utils.halfScreenHeight();
+
+	if (movementTransform.x > halfScreenWidth &&
+		movementTransform.x < room.width - halfScreenWidth){
+		camera.x = movementTransform.x;
+	}
+
+	if (movementTransform.y > halfScreenHeight &&
+		movementTransform.y < room.height - halfScreenHeight){
+		camera.y = movementTransform.y;
+	}
+}
+
+var topLeftCorner = function(){
+	return {
+		x : camera.x - utils.halfScreenWidth(),
+		y : camera.y - utils.halfScreenHeight()
+	};
 }
 
 module.exports = {
-	transform:camera
+	transform:camera,
+	update:update,
+	topLeftCorner:topLeftCorner
 };

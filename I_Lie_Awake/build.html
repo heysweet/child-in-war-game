@@ -468,12 +468,15 @@ var update = function(elapsed){
 		downness = utils.sign(downness) * transform.yDiag;
 	}
 
-	var newX = rightness * elapsed;
-	var newY = downness * elapsed;
+	var xDelta = rightness * elapsed;
+	var yDelta = downness * elapsed;
 
 	// Collision check
-	transform.x += newX;
-	transform.y += newY;
+	transform.x += xDelta;
+	transform.y += yDelta;
+
+	// Camera updates
+	camera.update(elapsed, transform);
 }
 
 module.exports = {
@@ -481,31 +484,72 @@ module.exports = {
 	update:update
 };},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js' : function(module) {
+var utils = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/utils.js")
+
 var camera = {
-	x : sald.size.x/2,
-	y : sald.size.y/2
+	x : utils.halfScreenWidth(),
+	y : utils.halfScreenHeight()
 };
 
-camera.setCenter = function(x, y){
-	camera.x = x;
-	camera.y = y;
+var room = {
+	width : 500,
+	height : 400
+}
+
+var update = function(elapsed, movementTransform){
+	var halfScreenWidth = utils.halfScreenWidth()
+	var halfScreenHeight = utils.halfScreenHeight();
+
+	if (movementTransform.x > halfScreenWidth &&
+		movementTransform.x < room.width - halfScreenWidth){
+		camera.x = movementTransform.x;
+	}
+
+	if (movementTransform.y > halfScreenHeight &&
+		movementTransform.y < room.height - halfScreenHeight){
+		camera.y = movementTransform.y;
+	}
+}
+
+var topLeftCorner = function(){
+	return {
+		x : camera.x - utils.halfScreenWidth(),
+		y : camera.y - utils.halfScreenHeight()
+	};
 }
 
 module.exports = {
-	transform:camera
+	transform:camera,
+	update:update,
+	topLeftCorner:topLeftCorner
 };},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/utils.js' : function(module) {
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 
+var HALF_SCREEN_WIDTH = (sald.size.x/2);
+var HALF_SCREEN_HEIGHT = (sald.size.y/2);
+
+var halfScreenWidth = function(){
+	return HALF_SCREEN_WIDTH;
+}
+
+var halfScreenHeight = function(){
+	return HALF_SCREEN_HEIGHT;
+}
+
 module.exports = {
-	sign:sign
+	sign:sign,
+	halfScreenWidth:halfScreenWidth,
+	halfScreenHeight:halfScreenHeight
 };},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/main.js' : function(module) {
-var mainloop = require('sald:mainloop.js');
-var movement = require('/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/movement.js');
-var utils = require('/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/utils.js');
+var mainloop = require("sald:mainloop.js");
+var movement = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/movement.js");
+var camera = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js");
 
 function drawBackground() {
+	var cameraCorner = camera.topLeftCorner();
+
 	var ctx = sald.ctx;
 
 	ctx.setTransform(1,0, 0,1, 0,0);
@@ -518,10 +562,12 @@ function drawBackground() {
 
 	ctx.fillRect(20, 20, ctx.width, 
 			ctx.height);
-
-
 	
 	ctx.fillRect(0,0, ctx.width, ctx.height);
+
+	ctx.fillStyle = 'rgb(200, 200, 256)';
+
+	ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 400, 400);
 }
 
 sald.size = {x:320, y:240, mode:"ratio"};
@@ -534,24 +580,34 @@ sald.scene = {
 		movement.update(elapsed);
 	},
 	draw:function() {
+		// Clear the screen
 		var ctx = sald.ctx;
 		ctx.setTransform(1,0, 0,1, 0,0);
+		ctx.clearRect( 0, 0, ctx.width, ctx.height );
 
-		ctx.clearRect( 0 , 0 , ctx.width, ctx.height );
+		var cameraCorner = camera.topLeftCorner();
 
+		// Draw Background
 		drawBackground();
 
+		// Draw the character
 		var transform = movement.transform;
 
 		var scalar = sald.ctx.factor;
 
 		ctx.fillStyle = 'rgb(256, 0, 0)';
-		// ctx.fillRect(0,0, ctx.width, ctx.height);
 
-		ctx.fillRect((transform.x - transform.halfWidth) * scalar,
-			(transform.y - transform.halfHeight) * scalar,
+		var onScreenPos = {
+			x : movement.transform.x - cameraCorner.x,
+			y : movement.transform.y - cameraCorner.y
+		}
+
+		ctx.fillRect((onScreenPos.x - transform.halfWidth) * scalar,
+			(onScreenPos.y - transform.halfHeight) * scalar,
 			(transform.width * scalar), 
 			(transform.height * scalar));
+
+		// Draw the foreground
 	},
 	key:function(key, down) {
 
