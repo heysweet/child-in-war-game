@@ -553,9 +553,9 @@ function drawBackground() {
 	var ctx = sald.ctx;
 	var scalar = sald.ctx.factor;
 
-	ctx.setTransform(1,0, 0,1, 0,0);
+	// ctx.setTransform(1,0, 0,1, 0,0);
 
-	var scalar = sald.ctx.factor;
+	
 	var d = new Date();
 	var n = d.getMilliseconds();
 
@@ -586,6 +586,9 @@ sald.scene = {
 	draw:function() {
 		// Clear the screen
 		var ctx = sald.ctx;
+
+		var scalar = sald.ctx.factor;
+
 		ctx.setTransform(1,0, 0,1, 0,0);
 		ctx.clearRect( 0, 0, ctx.width, ctx.height );
 
