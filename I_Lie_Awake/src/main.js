@@ -6,6 +6,7 @@ function drawBackground() {
 	var cameraCorner = camera.topLeftCorner();
 
 	var ctx = sald.ctx;
+	var scalar = sald.ctx.factor;
 
 	ctx.setTransform(1,0, 0,1, 0,0);
 
@@ -22,7 +23,10 @@ function drawBackground() {
 
 	ctx.fillStyle = 'rgb(200, 200, 256)';
 
-	ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 400, 400);
+	ctx.fillRect((200 - cameraCorner.x)*scalar, 
+		(200 - cameraCorner.y)*scalar, 
+		400 * scalar,
+		400 * scalar);
 }
 
 sald.size = {x:320, y:240, mode:"ratio"};
