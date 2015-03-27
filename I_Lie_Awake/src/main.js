@@ -1,4 +1,6 @@
 var mainloop = require('sald:mainloop.js');
+var movement = require('movement.js');
+var utils = require('utils.js');
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -21,43 +23,6 @@ function drawBackground() {
 
 sald.size = {x:320, y:240, mode:"ratio"};
 
-var Vector = function(x, y){
-	this.x = x;
-	this.y = y;
-	this.length = Math.sqrt((x*x) + (y*y));
-	this.angle = Math.acos( x / this.length );
-}
-
-var getTheta = function(xDelta, yDelta){
-	var vec = new Vector(xDelta, yDelta);
-
-	return vec.angle;
-}
-
-var square = {
-	halfWidth : 10,
-	halfHeight : 10,
-	x : sald.size.x/2,
-	y : sald.size.y/2,
-};
-
-function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
-
-// xDelta and yDelta pixels per second
-var setupSquare = function(xDelta, yDelta){
-	square.xDelta = xDelta;
-	square.yDelta = yDelta;
-	
-	var theta = getTheta(xDelta, yDelta);
-
-	square.xDiag = Math.cos(theta) * square.xDelta;
-	square.yDiag = Math.sin(theta) * square.yDelta;
-
-	console.log(theta, Math.cos(theta), square.xDelta, square.xDiag, square.yDiag);
-}
-
-setupSquare(68, 50);
-
 sald.scene = {
 	/* Use elapsed to make sure that the framerate doesn't 
 	 * affect the gameplay
@@ -68,24 +33,26 @@ sald.scene = {
 		var rightness = 0;
 		var downness = 0;
 
+		var transform = movement.transform;
+
 		// Measure input
-		if (keys.LEFT  || keys.A){rightness -= square.xDelta;}
-		if (keys.RIGHT || keys.D){rightness += square.xDelta;}
-		if (keys.UP	   || keys.W){downness  -= square.yDelta;}
-		if (keys.DOWN  || keys.S){downness  += square.yDelta;}
+		if (keys.LEFT  || keys.A){rightness -= transform.xDelta;}
+		if (keys.RIGHT || keys.D){rightness += transform.xDelta;}
+		if (keys.UP	   || keys.W){downness  -= transform.yDelta;}
+		if (keys.DOWN  || keys.S){downness  += transform.yDelta;}
 
 		// Unit circle the input, avoiding "fast diagonal movement"
 		if (rightness !== 0 && downness !== 0){
-			rightness = sign(rightness) * square.xDiag;
-			downness = sign(downness) * square.yDiag;
+			rightness = utils.sign(rightness) * transform.xDiag;
+			downness = utils.sign(downness) * transform.yDiag;
 		}
 
 		var newX = rightness * elapsed;
 		var newY = downness * elapsed;
 
 		// Collision check
-		square.x += newX;
-		square.y += newY;
+		transform.x += newX;
+		transform.y += newY;
 	},
 	draw:function() {
 		var ctx = sald.ctx;
@@ -95,15 +62,17 @@ sald.scene = {
 
 		drawBackground();
 
+		var transform = movement.transform;
+
 		var scalar = sald.ctx.factor;
 
 		ctx.fillStyle = 'rgb(256, 0, 0)';
 		// ctx.fillRect(0,0, ctx.width, ctx.height);
 
-		ctx.fillRect((square.x - square.halfWidth) * scalar,
-			(square.y - square.halfHeight) * scalar,
-			(square.halfWidth * 2 * scalar), 
-			(square.halfHeight * 2 * scalar));
+		ctx.fillRect((transform.x - transform.halfWidth) * scalar,
+			(transform.y - transform.halfHeight) * scalar,
+			(transform.halfWidth * 2 * scalar), 
+			(transform.halfHeight * 2 * scalar));
 	},
 	key:function(key, down) {
 
