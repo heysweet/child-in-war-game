@@ -28,51 +28,30 @@ sald.scene = {
 	 * affect the gameplay
 	 */
 	update:function(elapsed) {
-		var keys = sald.keys;
-
-		var rightness = 0;
-		var downness = 0;
-
-		var transform = movement.transform;
-
-		// Measure input
-		if (keys.LEFT  || keys.A){rightness -= transform.xDelta;}
-		if (keys.RIGHT || keys.D){rightness += transform.xDelta;}
-		if (keys.UP	   || keys.W){downness  -= transform.yDelta;}
-		if (keys.DOWN  || keys.S){downness  += transform.yDelta;}
-
-		// Unit circle the input, avoiding "fast diagonal movement"
-		if (rightness !== 0 && downness !== 0){
-			rightness = utils.sign(rightness) * transform.xDiag;
-			downness = utils.sign(downness) * transform.yDiag;
-		}
-
-		var newX = rightness * elapsed;
-		var newY = downness * elapsed;
-
-		// Collision check
-		transform.x += newX;
-		transform.y += newY;
+		movement.update(elapsed);
 	},
 	draw:function() {
+		// Clear the screen
 		var ctx = sald.ctx;
 		ctx.setTransform(1,0, 0,1, 0,0);
+		ctx.clearRect( 0, 0, ctx.width, ctx.height );
 
-		ctx.clearRect( 0 , 0 , ctx.width, ctx.height );
-
+		// Draw Background
 		drawBackground();
 
+		// Draw the character
 		var transform = movement.transform;
 
 		var scalar = sald.ctx.factor;
 
 		ctx.fillStyle = 'rgb(256, 0, 0)';
-		// ctx.fillRect(0,0, ctx.width, ctx.height);
 
 		ctx.fillRect((transform.x - transform.halfWidth) * scalar,
 			(transform.y - transform.halfHeight) * scalar,
-			(transform.halfWidth * 2 * scalar), 
-			(transform.halfHeight * 2 * scalar));
+			(transform.width * scalar), 
+			(transform.height * scalar));
+
+		// Draw the foreground
 	},
 	key:function(key, down) {
 
