@@ -551,10 +551,6 @@ function drawBackground() {
 	var cameraCorner = camera.topLeftCorner();
 
 	var ctx = sald.ctx;
-	var scalar = sald.ctx.factor;
-
-	// ctx.setTransform(1,0, 0,1, 0,0);
-
 	
 	var d = new Date();
 	var n = d.getMilliseconds();
@@ -568,10 +564,8 @@ function drawBackground() {
 
 	ctx.fillStyle = 'rgb(200, 200, 256)';
 
-	ctx.fillRect((200 - cameraCorner.x)*scalar, 
-		(200 - cameraCorner.y)*scalar, 
-		400 * scalar,
-		400 * scalar);
+	ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 
+				400, 400);
 }
 
 sald.size = {x:320, y:240, mode:"ratio"};
@@ -589,7 +583,7 @@ sald.scene = {
 
 		var scalar = sald.ctx.factor;
 
-		ctx.setTransform(1,0, 0,1, 0,0);
+		ctx.setTransform(scalar,0, 0,scalar, 0,0);
 		ctx.clearRect( 0, 0, ctx.width, ctx.height );
 
 		var cameraCorner = camera.topLeftCorner();
@@ -600,8 +594,6 @@ sald.scene = {
 		// Draw the character
 		var transform = movement.transform;
 
-		var scalar = sald.ctx.factor;
-
 		ctx.fillStyle = 'rgb(256, 0, 0)';
 
 		var onScreenPos = {
@@ -609,10 +601,10 @@ sald.scene = {
 			y : movement.transform.y - cameraCorner.y
 		}
 
-		ctx.fillRect((onScreenPos.x - transform.halfWidth) * scalar,
-			(onScreenPos.y - transform.halfHeight) * scalar,
-			(transform.width * scalar), 
-			(transform.height * scalar));
+		ctx.fillRect(onScreenPos.x - transform.halfWidth,
+			onScreenPos.y - transform.halfHeight,
+			transform.width, 
+			transform.height);
 
 		// Draw the foreground
 	},
