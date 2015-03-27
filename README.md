@@ -1,3 +1,5 @@
+Make sure you have node installed.
+
 Fork the SALD repo using the instructions found here:
 https://github.com/ixchow/sald
 
