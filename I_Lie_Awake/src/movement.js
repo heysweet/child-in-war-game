@@ -52,21 +52,24 @@ var update = function(elapsed){
 	if (keys.UP	   || keys.W){downness  -= transform.yDelta;}
 	if (keys.DOWN  || keys.S){downness  += transform.yDelta;}
 
-	// Unit circle the input, avoiding "fast diagonal movement"
-	if (rightness !== 0 && downness !== 0){
-		rightness = utils.sign(rightness) * transform.xDiag;
-		downness = utils.sign(downness) * transform.yDiag;
-	}
+	// Compute movement if there should be some
+	if (rightness !== 0 || downness !== 0) {
+		// Unit circle the input, avoiding "fast diagonal movement"
+		if (rightness !== 0 && downness !== 0){
+			rightness = utils.sign(rightness) * transform.xDiag;
+			downness = utils.sign(downness) * transform.yDiag;
+		}
 
-	var xDelta = rightness * elapsed;
-	var yDelta = downness * elapsed;
+		var xDelta = rightness * elapsed;
+		var yDelta = downness * elapsed;
 
-	// Collision check
-	transform.x += xDelta;
-	transform.y += yDelta;
+		// Collision check
+		transform.x += xDelta;
+		transform.y += yDelta;
 
-	// Camera updates
-	camera.update(elapsed, transform);
+		// Camera updates on movement
+		camera.update(elapsed, transform);
+	};
 }
 
 module.exports = {
