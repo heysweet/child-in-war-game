@@ -1,6 +1,6 @@
 var mainloop = require("sald:mainloop.js");
-var movement = require("movement.js");
 var camera = require("camera.js");
+var MainCharacter = require("MainCharacter.js");
 
 function drawBackground() {
 	var cameraCorner = camera.topLeftCorner();
@@ -23,14 +23,23 @@ function drawBackground() {
 				400, 400);
 }
 
+// Not rescaleable
+// sald.size = {x:320, y:240, mode:"exact"};
+
+// Fully, dynamically rescalable
 sald.size = {x:320, y:240, mode:"ratio"};
+
+var mainCharacter = new MainCharacter();
+
+// Exact aspect ratio, to match pixel art
+// sald.size = {x:320, y:240, mode:"multiple"};
 
 sald.scene = {
 	/* Use elapsed to make sure that the framerate doesn't 
 	 * affect the gameplay
 	 */
 	update:function(elapsed) {
-		movement.update(elapsed);
+		mainCharacter.movement.update(elapsed);
 	},
 	draw:function() {
 		// Clear the screen
@@ -45,6 +54,8 @@ sald.scene = {
 
 		// Draw Background
 		drawBackground();
+
+		var movement = mainCharacter.movement;
 
 		// Draw the character
 		var transform = movement.transform;

@@ -1,5 +1,8 @@
 var camera = require("camera.js");
 var utils = require("utils.js");
+var GameObject = require("GameObject.js");
+
+var character;
 
 var Vector = function(x, y){
 	this.x = x;
@@ -14,15 +17,16 @@ var getTheta = function(xDelta, yDelta){
 	return vec.angle;
 }
 
-var transform = {
-	x : sald.size.x/2,
-	y : sald.size.y/2,
-};
+var initialize = function(gameObj){
+	character = gameObj;
+}
 
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 
 // xDelta and yDelta pixels per second
 var setupTransform = function(xDelta, yDelta, width, height){
+	var transform = character.transform;
+
 	transform.xDelta = xDelta;
 	transform.yDelta = yDelta;
 
@@ -38,7 +42,7 @@ var setupTransform = function(xDelta, yDelta, width, height){
 	transform.yDiag = Math.sin(theta) * transform.yDelta;
 }
 
-setupTransform(68, 50, 30, 40);
+setupTransform(68, 50, width, height);
 
 var update = function(elapsed){
 	var keys = sald.keys;
@@ -49,7 +53,7 @@ var update = function(elapsed){
 	// Measure input
 	if (keys.LEFT  || keys.A){rightness -= transform.xDelta;}
 	if (keys.RIGHT || keys.D){rightness += transform.xDelta;}
-	if (keys.UP	   || keys.W){downness  -= transform.yDelta;}
+	if (keys.UP    || keys.W){downness  -= transform.yDelta;}
 	if (keys.DOWN  || keys.S){downness  += transform.yDelta;}
 
 	// Compute movement if there should be some
@@ -63,6 +67,8 @@ var update = function(elapsed){
 		var xDelta = rightness * elapsed;
 		var yDelta = downness * elapsed;
 
+		var transform = character.transform;
+
 		// Collision check
 		transform.x += xDelta;
 		transform.y += yDelta;
@@ -74,5 +80,6 @@ var update = function(elapsed){
 
 module.exports = {
 	transform:transform,
-	update:update
+	update:update,
+	initialize:initialize
 };

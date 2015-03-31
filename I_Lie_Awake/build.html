@@ -448,7 +448,7 @@ var setupTransform = function(xDelta, yDelta, width, height){
 	transform.yDiag = Math.sin(theta) * transform.yDelta;
 }
 
-setupTransform(68, 50, 30, 40);
+setupTransform(68, 50, 16, 30);
 
 var update = function(elapsed){
 	var keys = sald.keys;
@@ -459,24 +459,27 @@ var update = function(elapsed){
 	// Measure input
 	if (keys.LEFT  || keys.A){rightness -= transform.xDelta;}
 	if (keys.RIGHT || keys.D){rightness += transform.xDelta;}
-	if (keys.UP	   || keys.W){downness  -= transform.yDelta;}
+	if (keys.UP    || keys.W){downness  -= transform.yDelta;}
 	if (keys.DOWN  || keys.S){downness  += transform.yDelta;}
 
-	// Unit circle the input, avoiding "fast diagonal movement"
-	if (rightness !== 0 && downness !== 0){
-		rightness = utils.sign(rightness) * transform.xDiag;
-		downness = utils.sign(downness) * transform.yDiag;
-	}
+	// Compute movement if there should be some
+	if (rightness !== 0 || downness !== 0) {
+		// Unit circle the input, avoiding "fast diagonal movement"
+		if (rightness !== 0 && downness !== 0){
+			rightness = utils.sign(rightness) * transform.xDiag;
+			downness = utils.sign(downness) * transform.yDiag;
+		}
 
-	var xDelta = rightness * elapsed;
-	var yDelta = downness * elapsed;
+		var xDelta = rightness * elapsed;
+		var yDelta = downness * elapsed;
 
-	// Collision check
-	transform.x += xDelta;
-	transform.y += yDelta;
+		// Collision check
+		transform.x += xDelta;
+		transform.y += yDelta;
 
-	// Camera updates
-	camera.update(elapsed, transform);
+		// Camera updates on movement
+		camera.update(elapsed, transform);
+	};
 }
 
 module.exports = {
@@ -568,7 +571,14 @@ function drawBackground() {
 				400, 400);
 }
 
+// Not rescaleable
+// sald.size = {x:320, y:240, mode:"exact"};
+
+// Fully, dynamically rescalable
 sald.size = {x:320, y:240, mode:"ratio"};
+
+// Exact aspect ratio, to match pixel art
+// sald.size = {x:320, y:240, mode:"multiple"};
 
 sald.scene = {
 	/* Use elapsed to make sure that the framerate doesn't 
