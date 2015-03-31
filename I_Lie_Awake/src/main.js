@@ -1,6 +1,6 @@
 var mainloop = require("sald:mainloop.js");
 var camera = require("camera.js");
-var MainCharacter = require("MainCharacter.js");
+var MainCharacter = require("MainCharacter.js").MainCharacter;
 
 function drawBackground() {
 	var cameraCorner = camera.topLeftCorner();
@@ -55,22 +55,20 @@ sald.scene = {
 		// Draw Background
 		drawBackground();
 
-		var movement = mainCharacter.movement;
-
 		// Draw the character
-		var transform = movement.transform;
+		var transform = mainCharacter.transform;
 
 		ctx.fillStyle = 'rgb(256, 0, 0)';
 
 		var onScreenPos = {
-			x : movement.transform.x - cameraCorner.x,
-			y : movement.transform.y - cameraCorner.y
+			x : transform.x - cameraCorner.x,
+			y : transform.y - cameraCorner.y
 		}
 
-		ctx.fillRect(onScreenPos.x - transform.halfWidth,
-			onScreenPos.y - transform.halfHeight,
-			transform.width, 
-			transform.height);
+		ctx.fillRect(onScreenPos.x - mainCharacter.halfWidth(),
+			onScreenPos.y - mainCharacter.halfHeight(),
+			mainCharacter.getWidth(), 
+			mainCharacter.getHeight());
 
 		// Draw the foreground
 	},

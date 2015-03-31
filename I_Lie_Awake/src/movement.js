@@ -1,6 +1,6 @@
 var camera = require("camera.js");
 var utils = require("utils.js");
-var GameObject = require("GameObject.js");
+var GameObject = require("GameObject.js").GameObject;
 
 var character;
 
@@ -19,6 +19,11 @@ var getTheta = function(xDelta, yDelta){
 
 var initialize = function(gameObj){
 	character = gameObj;
+
+	var width  = gameObj.getWidth();
+	var height = gameObj.getHeight();
+
+	setupTransform(68, 50, width, height);
 }
 
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
@@ -42,13 +47,13 @@ var setupTransform = function(xDelta, yDelta, width, height){
 	transform.yDiag = Math.sin(theta) * transform.yDelta;
 }
 
-setupTransform(68, 50, width, height);
-
 var update = function(elapsed){
 	var keys = sald.keys;
 
 	var rightness = 0;
 	var downness = 0;
+	
+	var transform = character.transform;
 
 	// Measure input
 	if (keys.LEFT  || keys.A){rightness -= transform.xDelta;}
@@ -67,8 +72,6 @@ var update = function(elapsed){
 		var xDelta = rightness * elapsed;
 		var yDelta = downness * elapsed;
 
-		var transform = character.transform;
-
 		// Collision check
 		transform.x += xDelta;
 		transform.y += yDelta;
@@ -79,7 +82,6 @@ var update = function(elapsed){
 }
 
 module.exports = {
-	transform:transform,
 	update:update,
 	initialize:initialize
 };
