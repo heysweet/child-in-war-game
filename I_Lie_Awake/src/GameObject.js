@@ -5,6 +5,9 @@ var GameObject = function(x_, y_, width_, height_){
 	var width = width_;
 	var height = height_;
 
+	var halfWidth  = width  / 2;
+	var halfHeight = height / 2;
+
 	this.getWidth = function() {
 		return width;
 	}

@@ -587,8 +587,8 @@ var GameObject = function(x_, y_, width_, height_){
 	var width = width_;
 	var height = height_;
 
-	var heightChanged = true;
-	var widthChanged = true;
+	var halfWidth  = width  / 2;
+	var halfHeight = height / 2;
 
 	this.getWidth = function() {
 		return width;
@@ -600,29 +600,19 @@ var GameObject = function(x_, y_, width_, height_){
 
 	this.setWidth = function(num){
 		width = num;
-		widthChanged = true;
+		halfWidth = width / 2;
 	}
 
 	this.setHeight = function(num){
 		height = num;
-		heightChanged = true;
+		halfHeight = height / 2;
 	}
 
 	this.halfWidth = function() {
-		if (widthChanged){
-			halfWidth = width/2;
-			widthChanged = false;
-		}
-
 		return halfWidth;
 	}
 
 	this.halfHeight = function() {
-		if (heightChanged){
-			halfHeight = height/2;
-			heightChanged = false;
-		}
-
 		return halfHeight;
 	}
 
@@ -938,7 +928,6 @@ sald.scene = {
 	 */
 	update:function(elapsed) {
 		mainCharacter.movement.update(elapsed);
-		console.log(elapsed);
 	},
 	draw:function() {
 		// Clear the screen
