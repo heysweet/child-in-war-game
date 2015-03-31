@@ -8,20 +8,36 @@ var GameObject = function(x_, y_, width, height){
 	};
 
 	this.width = width;
-
 	this.height = height;
 
+	// For collisions
+	this.relativeBoundingBox = {
+		min : {
+			x : 0,
+			y : 0
+		},
+		max : {
+			x : width,
+			y : height
+		}
+	}
+
 	this.collisionBox = function() {
+		var bb = this.relativeBoundingBox;
+		var min_ = {x : this.x + bb.min.x,
+					y : this.y + bb.min.y};
+
 		return
 		{
-			min : {	x : this.x,
-					y : this.y },
-			max : {	x : this.x + this.width
-					y : this.y + this.height }
+			min : min_,
+			max : {	x : min_.x + bb.max.x,
+					y : min_.y + bb.max.y }
 		};
 	};
 
-	this.isColliding = function(rect2){
+	this.isColliding = function(obj2){
+		var rect2 = obj2.collisionBox();
+
 		return collision.rectangleRectangle(this.collisionBox(), rect2);
 	};
 }
