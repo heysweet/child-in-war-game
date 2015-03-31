@@ -1,4 +1,4 @@
-var collision = require("sald:collision.js");
+var collision = require("sald:collide.js");
 
 var GameObject = function(x_, y_, width, height){
 	
