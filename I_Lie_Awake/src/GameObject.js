@@ -8,7 +8,7 @@ var GameObject = function(x_, y_, width, height){
 	};
 
 	this.width = width;
-	
+
 	this.height = height;
 
 	this.collisionBox = function() {
@@ -27,5 +27,5 @@ var GameObject = function(x_, y_, width, height){
 }
 
 module.exports = {
-	Room:Room,
+	GameObject:GameObject,
 };
