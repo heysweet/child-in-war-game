@@ -1,7 +1,9 @@
+// Needed to load gamestate
+require("gamestate.js");
+
 var mainloop = require("sald:mainloop.js");
 var camera = require("camera.js");
 var MainCharacter = require("MainCharacter.js").MainCharacter;
-var GAMESTATE = require("gamestate.js");
 
 var Dialogue = require("Dialogue.js");
 var Phrase = require("Phrase.js");
@@ -103,7 +105,6 @@ sald.scene = {
 				if (window.gamestate.currentDialogue === null){
 					testDialogue.start();
 				} else {
-					console.log("GO TO NEXT!");
 					testDialogue.goToNext();
 				}
 			} else if (key === "ONE") {
