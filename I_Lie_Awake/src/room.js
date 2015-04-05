@@ -3,6 +3,4 @@ var Room = function(width, height){
 	this.height = height;
 }
 
-module.exports = {
-	Room:Room,
-};
+module.exports = Room;

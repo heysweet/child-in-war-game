@@ -9,14 +9,6 @@ body {
 <script>
 var modCache = {};
 var mods = {
-'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/gamestate.js' : function(module) {
-var GameState = function(){
-	this.currentDialogue = null;
-}
-
-var gamestate = new GameState();
-
-window.gamestate = gamestate;},
 'sald:mainloop.js' : function(module) {
 if (typeof(window.sald) === "undefined") {
 	window.sald = {};
@@ -423,12 +415,9 @@ var camera = {
 	y : utils.halfScreenHeight()
 };
 
-var room = {
-	width : 500,
-	height : 400
-}
-
 var update = function(elapsed, movementTransform){
+	var room = window.gamestate.currentRoom;
+
 	var halfScreenWidth = utils.halfScreenWidth()
 	var halfScreenHeight = utils.halfScreenHeight();
 
@@ -496,9 +485,7 @@ MainCharacter.prototype.constructor = MainCharacter;
 MainCharacter.prototype.movement = movement;
 
 
-module.exports = {
-	MainCharacter:MainCharacter
-};},
+module.exports = MainCharacter;},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/movement.js' : function(module) {
 var camera = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js");
 var utils = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/utils.js");
@@ -914,6 +901,52 @@ Character.prototype.constructor = Character;
 
 
 module.exports = Character;},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/gamestate.js' : function(module) {
+var GameState = function(){
+	this.currentDialogue = null;
+	this.currentRoom = null;
+}
+
+var gamestate = new GameState();
+
+window.gamestate = gamestate;},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/setup.js' : function(module) {
+var Room = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Room.js");
+
+// Setup Dialogue
+var Dialogue = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Dialogue.js");
+var Phrase = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Phrase.js");
+
+var shouldLoopDialogue = true;
+var testDialogue = new Dialogue(shouldLoopDialogue);
+var lastPhrase1 = new Phrase("Ending 1!");
+var lastPhrase2 = new Phrase("Ending 2!");
+var choicePhrase = new Phrase("Question?");
+
+choicePhrase.addOption("choice 1", lastPhrase1);
+choicePhrase.addOption("choice 2", lastPhrase2);
+
+var firstPhrase = new Phrase("Statement!");
+firstPhrase.setNextPhrase(choicePhrase);
+
+testDialogue.setFirstPhrase(firstPhrase);
+
+// Update the game state
+var gamestate = window.gamestate;
+
+// Set the initial room
+gamestate.currentRoom = new Room(500, 400);
+
+module.exports = {
+	testDialogue:testDialogue
+};},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Room.js' : function(module) {
+var Room = function(width, height){
+	this.width = width;
+	this.height = height;
+}
+
+module.exports = Room;},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Dialogue.js' : function(module) {
 var movement = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/movement.js");
 
@@ -1087,30 +1120,14 @@ Phrase.prototype.draw = function(box){
 
 module.exports = Phrase;},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/main.js' : function(module) {
-// Needed to load gamestate
-require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/gamestate.js");
-
 var mainloop = require("sald:mainloop.js");
 var camera = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js");
-var MainCharacter = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/MainCharacter.js").MainCharacter;
+var MainCharacter = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/MainCharacter.js");
 
-var Dialogue = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Dialogue.js");
-var Phrase = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Phrase.js");
-
-var shouldLoopDialogue = true;
-var testDialogue = new Dialogue(shouldLoopDialogue);
-var lastPhrase1 = new Phrase("Ending 1!");
-var lastPhrase2 = new Phrase("Ending 2!");
-var choicePhrase = new Phrase("Question?");
-
-choicePhrase.addOption("choice 1", lastPhrase1);
-choicePhrase.addOption("choice 2", lastPhrase2);
-
-var firstPhrase = new Phrase("Statement!");
-firstPhrase.setNextPhrase(choicePhrase);
-
-testDialogue.setFirstPhrase(firstPhrase);
-
+// Needed to load gamestate
+require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/gamestate.js");
+var setupVars = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/setup.js");
+var testDialogue = setupVars.testDialogue;
 
 function drawBackground() {
 	var cameraCorner = camera.topLeftCorner();
@@ -1190,17 +1207,23 @@ sald.scene = {
 	key:function(key, down) {
 
 		if (!down){
+			var dialogue = window.gamestate.currentDialogue;
+
+			if (dialogue !== null){
+				if (key === "ONE") {
+					dialogue.goToNext(0);
+				} else if (key === "TWO") {
+					dialogue.goToNext(1);
+				}
+			}
+
 			if (key === "SPACE") {
-				if (window.gamestate.currentDialogue === null){
+				if (dialogue === null){
 					testDialogue.start();
 				} else {
-					testDialogue.goToNext();
+					dialogue.goToNext();
 				}
-			} else if (key === "ONE") {
-				testDialogue.goToNext(0);
-			} else if (key === "TWO") {
-				testDialogue.goToNext(1);
-			}
+			} 
 		}
 	},
 	mouse:function(pos, button, down) {

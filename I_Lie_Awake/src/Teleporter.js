@@ -1,6 +1,8 @@
-var Teleporter = function(room, coords){
-	var room;
-	var coords;
+var camera = require("camera.js");
+
+var Teleporter = function(targetRoom, targetCoords){
+	var room = targetRoom;
+	var coords = targetCoords;
 
 	this.setTargetRoom = function(room_){
 		room = room_;
@@ -19,7 +21,7 @@ var Teleporter = function(room, coords){
 	}
 
 	this.teleport = function(){
-		
+
 	}
 }
 

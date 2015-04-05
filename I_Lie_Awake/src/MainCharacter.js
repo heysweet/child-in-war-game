@@ -19,6 +19,4 @@ MainCharacter.prototype.constructor = MainCharacter;
 MainCharacter.prototype.movement = movement;
 
 
-module.exports = {
-	MainCharacter:MainCharacter
-};
+module.exports = MainCharacter;

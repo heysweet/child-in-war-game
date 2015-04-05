@@ -5,12 +5,9 @@ var camera = {
 	y : utils.halfScreenHeight()
 };
 
-var room = {
-	width : 500,
-	height : 400
-}
-
 var update = function(elapsed, movementTransform){
+	var room = window.gamestate.currentRoom;
+
 	var halfScreenWidth = utils.halfScreenWidth()
 	var halfScreenHeight = utils.halfScreenHeight();
 

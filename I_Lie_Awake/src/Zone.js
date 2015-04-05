@@ -43,27 +43,28 @@ var Zone = function(x, y, width, height){
 	this.isAutoTriggered = function(){
 		return isAutoTriggered;
 	}
+}
 
-	this.trigger = function(){
-		if (this.onTrigger !== undefined){
-			return this.onTrigger();
-		} else {
-			return undefined;
-		}
-	}
-
-	this.checkZone = function(x, y){
-		if (x >= this.x && y >= this.y
-			&& x <= this.x2 && y <= this.y2){
-			if (isAutoTriggered){
-				this.trigger();
-			}
-
-			return true;
-		}
-
-		return false;
+Zone.prototype.trigger = function(){
+	if (this.onTrigger !== undefined){
+		return this.onTrigger();
+	} else {
+		return undefined;
 	}
 }
+
+Zone.prototype.checkZone = function(x, y){
+	if (x >= this.x && y >= this.y
+		&& x <= this.x2 && y <= this.y2){
+		
+		if (this.isAutoTriggered()){
+			this.trigger();
+		}
+
+		return true;
+	}
+
+	return false;
+};
 
 module.exports = Zone;
