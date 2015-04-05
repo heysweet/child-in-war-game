@@ -1,6 +1,25 @@
 var mainloop = require("sald:mainloop.js");
 var camera = require("camera.js");
 var MainCharacter = require("MainCharacter.js").MainCharacter;
+var GAMESTATE = require("gamestate.js");
+
+var Dialogue = require("Dialogue.js");
+var Phrase = require("Phrase.js");
+
+var shouldLoopDialogue = true;
+var testDialogue = new Dialogue(shouldLoopDialogue);
+var lastPhrase1 = new Phrase("Ending 1!");
+var lastPhrase2 = new Phrase("Ending 2!");
+var choicePhrase = new Phrase("Question?");
+
+choicePhrase.addOption("choice 1", lastPhrase1);
+choicePhrase.addOption("choice 2", lastPhrase2);
+
+var firstPhrase = new Phrase("Statement!");
+firstPhrase.setNextPhrase(choicePhrase);
+
+testDialogue.setFirstPhrase(firstPhrase);
+
 
 function drawBackground() {
 	var cameraCorner = camera.topLeftCorner();
@@ -70,13 +89,29 @@ sald.scene = {
 			mainCharacter.getWidth(), 
 			mainCharacter.getHeight());
 
+		var gamestate = window.gamestate;
+
 		// Draw the foreground
+		if (gamestate.currentDialogue !== null){
+			gamestate.currentDialogue.draw();
+		}
 	},
 	key:function(key, down) {
 
-		// if (key === "SPACE" && down) {
-		// 	this.blink = 1.0;
-		// }
+		if (!down){
+			if (key === "SPACE") {
+				if (window.gamestate.currentDialogue === null){
+					testDialogue.start();
+				} else {
+					console.log("GO TO NEXT!");
+					testDialogue.goToNext();
+				}
+			} else if (key === "ONE") {
+				testDialogue.goToNext(0);
+			} else if (key === "TWO") {
+				testDialogue.goToNext(1);
+			}
+		}
 	},
 	mouse:function(pos, button, down) {
 		//Mouse handling.

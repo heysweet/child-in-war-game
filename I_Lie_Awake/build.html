@@ -468,7 +468,7 @@ module.exports = {
 };},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/MainCharacter.js' : function(module) {
 var movement = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/movement.js");
-var GameObject = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/GameObject.js").GameObject;
+var Character = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/character.js").Character;
 
 var startX = sald.size.x/2;
 var startY = sald.size.y/2;
@@ -476,12 +476,12 @@ var width  = 16;
 var height = 30;
 
 function MainCharacter(){
-	GameObject.call(this, startX, startY, width, height);
+	Character.call(this, startX, startY, width, height);
 
 	movement.initialize(this);
 }
 
-MainCharacter.prototype = Object.create(GameObject.prototype);
+MainCharacter.prototype = Object.create(Character.prototype);
 
 MainCharacter.prototype.constructor = MainCharacter;
 
@@ -497,6 +497,11 @@ var utils = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experime
 var GameObject = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/GameObject.js").GameObject;
 
 var character;
+var isPaused = false;
+
+var pause = function(bool){
+	isPaused = bool;
+}
 
 var Vector = function(x, y){
 	this.x = x;
@@ -542,6 +547,10 @@ var setupTransform = function(xDelta, yDelta, width, height){
 }
 
 var update = function(elapsed){
+	if (isPaused){
+		return;
+	}
+
 	var keys = sald.keys;
 
 	var rightness = 0;
@@ -577,7 +586,8 @@ var update = function(elapsed){
 
 module.exports = {
 	update:update,
-	initialize:initialize
+	initialize:initialize,
+	pause:pause
 };},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/GameObject.js' : function(module) {
 var collision = require("sald:collide.js");
@@ -885,10 +895,224 @@ module.exports = {
     rayConvex: rayConvex
 };
 },
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/character.js' : function(module) {
+var GameObject = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/GameObject.js").GameObject;
+
+function Character(startX, startY, width, height){
+	GameObject.call(this, startX, startY, width, height);
+}
+
+Character.prototype = Object.create(GameObject.prototype);
+
+Character.prototype.constructor = Character;
+
+
+module.exports = {
+	Character:Character
+};},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/gamestate.js' : function(module) {
+var GameState = function(){
+	this.currentDialogue = null;
+}
+
+var gamestate = new GameState();
+
+window.gamestate = gamestate;},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Dialogue.js' : function(module) {
+var movement = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/movement.js");
+
+/* Overwrite this.onEnd and this.onStart for 
+	call-back hooks into when the conversation
+	starts and ends */
+
+var Dialogue = function(allowsLoop_){
+	var allowsLoop = allowsLoop_;
+
+	var firstPhrase;
+	var currentPhrase;
+
+	this.shouldStart = function(){
+		return firstPhrase === currentPhrase;
+	}
+
+	this.allowsLoop = function(){ return allowsLoop; };
+	
+	this.getPhrase = function(){
+		return currentPhrase;
+	}
+
+	this.updatePhrase = function(phrase){
+		currentPhrase = phrase;
+	}
+
+	this.setFirstPhrase = function(phrase){
+		firstPhrase = phrase;
+		currentPhrase = firstPhrase;
+	}
+
+	this.reset = function(){
+		currentPhrase = firstPhrase;
+	}
+}
+
+Dialogue.prototype.goToNext = function(choiceNum) {
+	var phrase = this.getPhrase();
+	var next;
+
+	var nextPhrase = phrase.getNext(choiceNum);
+
+	if (nextPhrase === null){
+		this.end();
+	} else if (nextPhrase === undefined){
+		// Do nothing
+	} else {
+		this.updatePhrase(nextPhrase);
+	}
+};
+
+Dialogue.prototype.draw = function(){
+	var ctx = sald.ctx;
+	
+	ctx.fillStyle = 'rgb(248, 248, 248)';
+
+	// Dimensions
+	var box = {};
+
+	var yBottomBorder = 4;
+
+	box.height = sald.size.y / 4;
+	box.x = yBottomBorder;
+	box.y = sald.size.y - yBottomBorder - box.height;
+	box.width = sald.size.x - (box.x * 2);
+
+	// Draw the box
+	ctx.fillRect(box.x, box.y, box.width, box.height);
+
+	// Draw the text
+	var phrase = this.getPhrase();
+
+	phrase.draw(box);
+}
+
+Dialogue.prototype.start = function(){
+	if (this.shouldStart()){
+		movement.pause(true);
+		gamestate.currentDialogue = this;
+
+		// Callback hooks
+		if (this.onStart !== undefined && this.onStart !== null){
+			return this.onStart();
+		} else {
+			return null;
+		}
+	}
+};
+
+Dialogue.prototype.end = function(){
+	if (this.allowsLoop()){
+		this.reset();
+	}
+
+	movement.pause(false);
+	gamestate.currentDialogue = null;
+
+	// Callback hooks
+	if (this.onEnd !== undefined && this.onEnd !== null){
+		return this.onEnd();
+	} else {
+		return null;
+	}
+};
+
+module.exports = Dialogue;},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Phrase.js' : function(module) {
+var Phrase = function(text){
+	this.text = text;
+	this.choices = [];
+	this.next = null;
+}
+
+Phrase.prototype.setNextPhrase = function(phrase){
+	this.next = phrase;
+};
+
+Phrase.prototype.addOption = function(text_, nextPhrase_){
+	var option = {
+		text : text_,
+		next : nextPhrase_
+	};
+
+	this.choices.push(option);
+};
+
+Phrase.prototype.getNext = function(choiceNum){
+	if (choiceNum === undefined){
+		if (this.choices.length == 0){
+			return this.next;
+		} else {
+			return undefined;
+		}
+	} else if (choiceNum < 0 || this.choices.length == 0){
+		return undefined;
+	} else if (choiceNum >= this.choices.length) {
+		return null;
+	}
+	
+	return this.choices[choiceNum].next;
+}
+
+Phrase.prototype.draw = function(box){
+	var ctx = sald.ctx;
+
+	var border = 4;
+	var pxHeight = 12;
+
+	ctx.fillStyle = 'rgb(0, 0, 0)';
+	ctx.font = pxHeight.toString() + "px Georgia";
+	ctx.fillText(this.text, box.x + border, box.y + border + pxHeight, 
+		box.width - (2 * border));
+
+	
+	var yOffsetDelta = pxHeight + 4;
+	var yOffset = yOffsetDelta;
+
+	for (var i = 0; i < this.choices.length; i++){
+		ctx.fillText(this.choices[i].text, box.x + border, box.y + border + pxHeight + yOffset, 
+			box.width - (2 * border));
+		yOffset += yOffsetDelta;
+	}
+}
+
+
+// Phrase.draw = Phrase.prototype.setNextPhrase;
+// Phrase.draw = Phrase.prototype.addOption;
+// Phrase.draw = Phrase.prototype.getNext;
+// Phrase.draw = Phrase.prototype.draw;
+
+module.exports = Phrase;},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/main.js' : function(module) {
 var mainloop = require("sald:mainloop.js");
 var camera = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js");
 var MainCharacter = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/MainCharacter.js").MainCharacter;
+var GAMESTATE = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/gamestate.js");
+
+var Dialogue = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Dialogue.js");
+var Phrase = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Phrase.js");
+
+var shouldLoopDialogue = true;
+var testDialogue = new Dialogue(shouldLoopDialogue);
+var lastPhrase1 = new Phrase("Ending 1!");
+var lastPhrase2 = new Phrase("Ending 2!");
+var choicePhrase = new Phrase("Question?");
+
+choicePhrase.addOption("choice 1", lastPhrase1);
+choicePhrase.addOption("choice 2", lastPhrase2);
+
+var firstPhrase = new Phrase("Statement!");
+firstPhrase.setNextPhrase(choicePhrase);
+
+testDialogue.setFirstPhrase(firstPhrase);
+
 
 function drawBackground() {
 	var cameraCorner = camera.topLeftCorner();
@@ -958,13 +1182,29 @@ sald.scene = {
 			mainCharacter.getWidth(), 
 			mainCharacter.getHeight());
 
+		var gamestate = window.gamestate;
+
 		// Draw the foreground
+		if (gamestate.currentDialogue !== null){
+			gamestate.currentDialogue.draw();
+		}
 	},
 	key:function(key, down) {
 
-		// if (key === "SPACE" && down) {
-		// 	this.blink = 1.0;
-		// }
+		if (!down){
+			if (key === "SPACE") {
+				if (window.gamestate.currentDialogue === null){
+					testDialogue.start();
+				} else {
+					console.log("GO TO NEXT!");
+					testDialogue.goToNext();
+				}
+			} else if (key === "ONE") {
+				testDialogue.goToNext(0);
+			} else if (key === "TWO") {
+				testDialogue.goToNext(1);
+			}
+		}
 	},
 	mouse:function(pos, button, down) {
 		//Mouse handling.

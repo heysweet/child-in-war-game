@@ -3,6 +3,11 @@ var utils = require("utils.js");
 var GameObject = require("GameObject.js").GameObject;
 
 var character;
+var isPaused = false;
+
+var pause = function(bool){
+	isPaused = bool;
+}
 
 var Vector = function(x, y){
 	this.x = x;
@@ -48,6 +53,10 @@ var setupTransform = function(xDelta, yDelta, width, height){
 }
 
 var update = function(elapsed){
+	if (isPaused){
+		return;
+	}
+
 	var keys = sald.keys;
 
 	var rightness = 0;
@@ -83,5 +92,6 @@ var update = function(elapsed){
 
 module.exports = {
 	update:update,
-	initialize:initialize
+	initialize:initialize,
+	pause:pause
 };
