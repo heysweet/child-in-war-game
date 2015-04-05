@@ -72,6 +72,4 @@ GameObject.prototype.isColliding = function(obj2){
 	return collision.rectangleRectangle(this.collisionBox(), rect2);
 };
 
-module.exports = {
-	GameObject:GameObject,
-};
+module.exports = GameObject;

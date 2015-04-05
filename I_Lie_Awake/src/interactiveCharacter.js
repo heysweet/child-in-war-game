@@ -1,4 +1,4 @@
-var Character = require("character.js").Character;
+var Character = require("Character.js");
 
 function InteractiveCharacter(startX, startY, width, height, dialogue){
 	Character.call(this, startX, startY, width, height);

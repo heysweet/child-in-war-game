@@ -1,6 +1,6 @@
 var camera = require("camera.js");
 var utils = require("utils.js");
-var GameObject = require("GameObject.js").GameObject;
+var GameObject = require("GameObject.js");
 
 var character;
 var isPaused = false;

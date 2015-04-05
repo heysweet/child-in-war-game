@@ -1,5 +1,5 @@
 var movement = require("movement.js");
-var Character = require("character.js").Character;
+var Character = require("Character.js");
 
 var startX = sald.size.x/2;
 var startY = sald.size.y/2;
