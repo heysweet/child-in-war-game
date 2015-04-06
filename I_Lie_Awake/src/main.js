@@ -7,27 +7,6 @@ require("gamestate.js");
 var setupVars = require("setup.js");
 var testDialogue = setupVars.testDialogue;
 
-function drawBackground() {
-	var cameraCorner = camera.topLeftCorner();
-
-	var ctx = sald.ctx;
-	
-	var d = new Date();
-	var n = d.getMilliseconds();
-
-	ctx.fillStyle = 'rgb(256, 256, 200)';
-
-	ctx.fillRect(20, 20, ctx.width, 
-			ctx.height);
-	
-	ctx.fillRect(0,0, ctx.width, ctx.height);
-
-	ctx.fillStyle = 'rgb(200, 200, 256)';
-
-	ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 
-				400, 400);
-}
-
 // Not rescaleable
 // sald.size = {x:320, y:240, mode:"exact"};
 
@@ -35,6 +14,20 @@ function drawBackground() {
 sald.size = {x:320, y:240, mode:"ratio"};
 
 var mainCharacter = new MainCharacter();
+
+var gamestate = window.gamestate;
+gamestate.mainCharacter = mainCharacter;
+
+function drawBackground() {
+	var ctx = sald.ctx;
+
+	ctx.fillStyle = 'rgb(0, 0, 0)';
+
+	ctx.fillRect(0, 0, ctx.width, 
+			ctx.height);
+
+	gamestate.currentRoom().draw();
+}
 
 // Exact aspect ratio, to match pixel art
 // sald.size = {x:320, y:240, mode:"multiple"};
@@ -45,6 +38,7 @@ sald.scene = {
 	 */
 	update:function(elapsed) {
 		mainCharacter.movement.update(elapsed);
+		gamestate.currentRoom().update(elapsed);
 	},
 	draw:function() {
 		// Clear the screen
@@ -75,17 +69,17 @@ sald.scene = {
 			mainCharacter.getWidth(), 
 			mainCharacter.getHeight());
 
-		var gamestate = window.gamestate;
+		var dialogue = gamestate.currentDialogue();
 
 		// Draw the foreground
-		if (gamestate.currentDialogue !== null){
-			gamestate.currentDialogue.draw();
+		if (dialogue !== null){
+			dialogue.draw();
 		}
 	},
 	key:function(key, down) {
 
 		if (!down){
-			var dialogue = window.gamestate.currentDialogue;
+			var dialogue = gamestate.currentDialogue();
 
 			if (dialogue !== null){
 				if (key === "ONE") {
@@ -106,6 +100,9 @@ sald.scene = {
 	},
 	mouse:function(pos, button, down) {
 		//Mouse handling.
+		if (down){
+			console.log(camera.getTranslatedPoint(pos));
+		}
 	},
 };
 

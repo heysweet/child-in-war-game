@@ -76,7 +76,7 @@ Dialogue.prototype.draw = function(){
 Dialogue.prototype.start = function(){
 	if (this.shouldStart()){
 		movement.pause(true);
-		gamestate.currentDialogue = this;
+		gamestate.setCurrentDialogue(this);
 
 		// Callback hooks
 		if (this.onStart !== undefined && this.onStart !== null){
@@ -93,7 +93,7 @@ Dialogue.prototype.end = function(){
 	}
 
 	movement.pause(false);
-	gamestate.currentDialogue = null;
+	gamestate.setCurrentDialogue(null);
 
 	// Callback hooks
 	if (this.onEnd !== undefined && this.onEnd !== null){

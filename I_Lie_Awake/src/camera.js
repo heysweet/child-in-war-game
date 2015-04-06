@@ -1,36 +1,73 @@
-var utils = require("utils.js")
+var utils = require("utils.js");
 
-var camera = {
+var transform = {
 	x : utils.halfScreenWidth(),
 	y : utils.halfScreenHeight()
 };
 
 var update = function(elapsed, movementTransform){
-	var room = window.gamestate.currentRoom;
+	var room = window.gamestate.currentRoom();
 
-	var halfScreenWidth = utils.halfScreenWidth()
-	var halfScreenHeight = utils.halfScreenHeight();
+	if (room.staticCamera === undefined){
+		var halfScreenWidth = utils.halfScreenWidth()
+		var halfScreenHeight = utils.halfScreenHeight();
 
-	if (movementTransform.x > halfScreenWidth &&
-		movementTransform.x < room.width - halfScreenWidth){
-		camera.x = movementTransform.x;
-	}
+		if (movementTransform.x > halfScreenWidth &&
+			movementTransform.x < room.width - halfScreenWidth){
+			transform.x = movementTransform.x;
+		}
 
-	if (movementTransform.y > halfScreenHeight &&
-		movementTransform.y < room.height - halfScreenHeight){
-		camera.y = movementTransform.y;
+		if (movementTransform.y > halfScreenHeight &&
+			movementTransform.y < room.height - halfScreenHeight){
+			transform.y = movementTransform.y;
+		}
 	}
 }
 
 var topLeftCorner = function(){
 	return {
-		x : camera.x - utils.halfScreenWidth(),
-		y : camera.y - utils.halfScreenHeight()
+		x : transform.x - utils.halfScreenWidth(),
+		y : transform.y - utils.halfScreenHeight()
 	};
 }
 
+var getTranslatedPoint = function(pt){
+	var cameraCorner = topLeftCorner();
+
+	var scalar = 1 / sald.ctx.factor;
+
+	var x_ = cameraCorner.x + (pt.x * scalar);
+	var y_ = cameraCorner.y + (pt.y * scalar);
+
+	return { x : x_, y : y_ };
+}
+
+var focusCamera = function(coords){
+	var gamestate = window.gamestate;
+
+	var t = gamestate.mainCharacter.transform;
+	var room = gamestate.currentRoom();
+
+	var halfScreenWidth = utils.halfScreenWidth()
+	var halfScreenHeight = utils.halfScreenHeight();
+
+	var x = Math.min(Math.max(halfScreenWidth, t.x), room.width - halfScreenWidth);
+	var y = Math.min(Math.max(halfScreenHeight, t.y), room.height - halfScreenHeight);
+
+	transform.x = x;
+	transform.y = y;
+}
+
+var updateTransform = function(pos){
+	transform.x = pos.x;
+	transform.y = pos.y;
+}
+
 module.exports = {
-	transform:camera,
+	transform:transform,
 	update:update,
-	topLeftCorner:topLeftCorner
+	topLeftCorner:topLeftCorner,
+	getTranslatedPoint:getTranslatedPoint,
+	focusCamera:focusCamera,
+	updateTransform:updateTransform
 };

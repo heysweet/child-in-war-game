@@ -1,8 +1,12 @@
 var camera = require("camera.js");
+var Zone = require("Zone.js");
 
-var Teleporter = function(targetRoom, targetCoords){
+var Teleporter = function(targetRoom, fromBox, targetCoords){
 	var room = targetRoom;
 	var coords = targetCoords;
+	var isEnabled = true;
+
+	var zone = new Zone(fromBox.x, fromBox.y, fromBox.width, fromBox.height);
 
 	this.setTargetRoom = function(room_){
 		room = room_;
@@ -21,7 +25,35 @@ var Teleporter = function(targetRoom, targetCoords){
 	}
 
 	this.teleport = function(){
+		if (isEnabled){
+			window.gamestate.setCurrentRoom(room);
+			var mainCharacter = window.gamestate.mainCharacter;
 
+			if (room.staticCamera !== undefined){
+				camera.updateTransform(room.staticCamera);
+			} else {
+				// Make the camera move to the correct position
+				var position = window.gamestate.mainCharacter.transform;
+
+				camera.focusCamera(position);
+			}
+
+			mainCharacter.updateTransform(coords);
+		}
+	}
+
+	zone.onTrigger = this.teleport;
+
+	this.getZone = function(){
+		return zone;
+	}
+
+	this.isEnabled = function(){
+		return isEnabled;
+	}
+
+	this.setIsEnabled = function(bool){
+		isEnabled = bool;
 	}
 }
 

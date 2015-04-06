@@ -34,6 +34,16 @@ var GameObject = function(x_, y_, width_, height_){
 		return halfHeight;
 	}
 
+	this.getBottomCenter = function(){
+		var x_ = this.transform.x + halfWidth;
+		var y_ = this.transform.y + height;
+
+		return {
+			x : x_,
+			y : y_
+		}
+	}
+
 	this.transform = {
 		x : x_,
 		y : y_
@@ -65,6 +75,11 @@ GameObject.prototype.collisionBox = function() {
 		max : max_
 	};
 };
+
+GameObject.prototype.updateTransform = function(pos){
+	this.transform.x = pos.x;
+	this.transform.y = pos.y;
+}
 
 GameObject.prototype.isColliding = function(obj2){
 	var rect2 = obj2.collisionBox();

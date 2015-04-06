@@ -408,41 +408,78 @@ module.exports = {
 };
 },
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js' : function(module) {
-var utils = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/utils.js")
+var utils = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/utils.js");
 
-var camera = {
+var transform = {
 	x : utils.halfScreenWidth(),
 	y : utils.halfScreenHeight()
 };
 
 var update = function(elapsed, movementTransform){
-	var room = window.gamestate.currentRoom;
+	var room = window.gamestate.currentRoom();
 
-	var halfScreenWidth = utils.halfScreenWidth()
-	var halfScreenHeight = utils.halfScreenHeight();
+	if (room.staticCamera === undefined){
+		var halfScreenWidth = utils.halfScreenWidth()
+		var halfScreenHeight = utils.halfScreenHeight();
 
-	if (movementTransform.x > halfScreenWidth &&
-		movementTransform.x < room.width - halfScreenWidth){
-		camera.x = movementTransform.x;
-	}
+		if (movementTransform.x > halfScreenWidth &&
+			movementTransform.x < room.width - halfScreenWidth){
+			transform.x = movementTransform.x;
+		}
 
-	if (movementTransform.y > halfScreenHeight &&
-		movementTransform.y < room.height - halfScreenHeight){
-		camera.y = movementTransform.y;
+		if (movementTransform.y > halfScreenHeight &&
+			movementTransform.y < room.height - halfScreenHeight){
+			transform.y = movementTransform.y;
+		}
 	}
 }
 
 var topLeftCorner = function(){
 	return {
-		x : camera.x - utils.halfScreenWidth(),
-		y : camera.y - utils.halfScreenHeight()
+		x : transform.x - utils.halfScreenWidth(),
+		y : transform.y - utils.halfScreenHeight()
 	};
 }
 
+var getTranslatedPoint = function(pt){
+	var cameraCorner = topLeftCorner();
+
+	var scalar = 1 / sald.ctx.factor;
+
+	var x_ = cameraCorner.x + (pt.x * scalar);
+	var y_ = cameraCorner.y + (pt.y * scalar);
+
+	return { x : x_, y : y_ };
+}
+
+var focusCamera = function(coords){
+	var gamestate = window.gamestate;
+
+	var t = gamestate.mainCharacter.transform;
+	var room = gamestate.currentRoom();
+
+	var halfScreenWidth = utils.halfScreenWidth()
+	var halfScreenHeight = utils.halfScreenHeight();
+
+	var x = Math.min(Math.max(halfScreenWidth, t.x), room.width - halfScreenWidth);
+	var y = Math.min(Math.max(halfScreenHeight, t.y), room.height - halfScreenHeight);
+
+	transform.x = x;
+	transform.y = y;
+}
+
+var updateTransform = function(pos){
+	transform.x = pos.x;
+	transform.y = pos.y;
+}
+
 module.exports = {
-	transform:camera,
+	transform:transform,
 	update:update,
-	topLeftCorner:topLeftCorner
+	topLeftCorner:topLeftCorner,
+	getTranslatedPoint:getTranslatedPoint,
+	focusCamera:focusCamera,
+	updateTransform:updateTransform
 };},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/utils.js' : function(module) {
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
@@ -621,6 +658,16 @@ var GameObject = function(x_, y_, width_, height_){
 		return halfHeight;
 	}
 
+	this.getBottomCenter = function(){
+		var x_ = this.transform.x + halfWidth;
+		var y_ = this.transform.y + height;
+
+		return {
+			x : x_,
+			y : y_
+		}
+	}
+
 	this.transform = {
 		x : x_,
 		y : y_
@@ -652,6 +699,11 @@ GameObject.prototype.collisionBox = function() {
 		max : max_
 	};
 };
+
+GameObject.prototype.updateTransform = function(pos){
+	this.transform.x = pos.x;
+	this.transform.y = pos.y;
+}
 
 GameObject.prototype.isColliding = function(obj2){
 	var rect2 = obj2.collisionBox();
@@ -903,8 +955,24 @@ Character.prototype.constructor = Character;
 module.exports = Character;},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/gamestate.js' : function(module) {
 var GameState = function(){
-	this.currentDialogue = null;
-	this.currentRoom = null;
+	var currentDialogue = null;
+	var currentRoom = null;
+
+	this.currentDialogue = function(){
+		return currentDialogue;
+	}
+
+	this.setCurrentDialogue = function(dialogue){
+		currentDialogue = dialogue;
+	}
+
+	this.currentRoom = function(){
+		return currentRoom;
+	}
+
+	this.setCurrentRoom = function(room){
+		currentRoom = room;
+	}
 }
 
 var gamestate = new GameState();
@@ -912,6 +980,7 @@ var gamestate = new GameState();
 window.gamestate = gamestate;},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/setup.js' : function(module) {
 var Room = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Room.js");
+var Teleporter = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Teleporter.js");
 
 // Setup Dialogue
 var Dialogue = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Dialogue.js");
@@ -931,22 +1000,261 @@ firstPhrase.setNextPhrase(choicePhrase);
 
 testDialogue.setFirstPhrase(firstPhrase);
 
+
 // Update the game state
 var gamestate = window.gamestate;
 
-// Set the initial room
-gamestate.currentRoom = new Room(500, 400);
+// Set the initial rooms
+var kitchen = new Room(sald.size.x, sald.size.y);
+var bedroom = new Room(sald.size.x/3, sald.size.y/2);
+var parentsBedroom = new Room(sald.size.x/2, sald.size.y/2);
+
+var size = window.sald.size;
+
+bedroom.setStaticCamera(-size.x/3, -size.y/2);
+parentsBedroom.setStaticCamera((size.x/2)-parentsBedroom.width, parentsBedroom.height/2);
+
+var toBedroomTarget		= { x: 0, y: 0};
+var fromBedroomTarget	= { x: 0, y: 0};
+var toParentsTarget		= { x: parentsBedroom.width - 40, 
+							y: parentsBedroom.height/2};
+var fromParentsTarget	= { x: 24, y: 116};
+
+var toBedroomBox = { x : 141, y : 0, width : 48, height : 34 };
+var fromBedroomBox = { x : 0, y : 0, width : 0, height : 0 };
+var toParentsBox = { x : 0, y : 98, width : 18, height : 36 };
+var fromParentsBox = { x : 144, y : 42, width : 20, height : 42 };
+
+var bedroomDoor      = new Teleporter(bedroom, toBedroomBox, toBedroomTarget);
+var leaveBedroomDoor = new Teleporter(kitchen, fromBedroomBox,fromBedroomTarget);
+var parentsDoor      = new Teleporter(parentsBedroom, toParentsBox, toParentsTarget);
+var leaveParentsDoor = new Teleporter(kitchen, fromParentsBox, fromParentsTarget);
+
+kitchen.addTeleporter(bedroomDoor);
+kitchen.addTeleporter(parentsDoor);
+
+bedroom.addTeleporter(leaveBedroomDoor);
+parentsBedroom.addTeleporter(leaveParentsDoor);
+
+gamestate.setCurrentRoom(kitchen);
 
 module.exports = {
 	testDialogue:testDialogue
 };},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Room.js' : function(module) {
+var gamestate = window.gamestate;
+var camera = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js");
+
 var Room = function(width, height){
 	this.width = width;
 	this.height = height;
+
+	var teleporters = [];
+
+	this.addTeleporter = function(teleporter){
+		teleporters.push(teleporter);
+	};
+
+	this.update = function(elapsed){
+		var pos = gamestate.mainCharacter.getBottomCenter();
+
+		for (var i = 0; i < teleporters.length; i++){
+			var tp = teleporters[i];
+			var zone = tp.getZone();
+
+			if (zone.checkZone(pos.x, pos.y)){
+				console.log("BOOM", zone, pos.x, pos.y)
+			}
+		}
+	};
+}
+
+Room.prototype.draw = function(){
+	var ctx = sald.ctx;
+
+	var cameraCorner = camera.topLeftCorner();
+
+	ctx.fillStyle = 'rgb(256, 256, 200)';
+
+	ctx.fillRect(-cameraCorner.x, -cameraCorner.y, this.width, this.height);
+
+	// Used for showing moving environment
+	ctx.fillStyle = 'rgb(200, 200, 256)';
+
+	ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 
+				400, 400);
+}
+
+Room.prototype.setStaticCamera = function(x_, y_) {
+	var camera = {x : x_, y : y_};
+
+	this.staticCamera = camera;
+};
+
+Room.prototype.clearStaticCamera = function(){
+	this.staticCamera = undefined;
 }
 
 module.exports = Room;},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Teleporter.js' : function(module) {
+var camera = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/camera.js");
+var Zone = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Zone.js");
+
+var Teleporter = function(targetRoom, fromBox, targetCoords){
+	var room = targetRoom;
+	var coords = targetCoords;
+	var isEnabled = true;
+
+	var zone = new Zone(fromBox.x, fromBox.y, fromBox.width, fromBox.height);
+
+	this.setTargetRoom = function(room_){
+		room = room_;
+	}
+
+	this.getTargetRoom = function(){
+		return room;
+	}
+
+	this.setTargetCoords = function(coords_){
+		coords = coords_;
+	}
+
+	this.getTargetCoords = function(){
+		return coords;
+	}
+
+	this.teleport = function(){
+		if (isEnabled){
+			window.gamestate.setCurrentRoom(room);
+			var mainCharacter = window.gamestate.mainCharacter;
+
+			if (room.staticCamera !== undefined){
+				camera.updateTransform(room.staticCamera);
+			} else {
+				// Make the camera move to the correct position
+				var position = window.gamestate.mainCharacter.transform;
+
+				camera.focusCamera(position);
+			}
+
+			mainCharacter.updateTransform(coords);
+		}
+	}
+
+	zone.onTrigger = this.teleport;
+
+	this.getZone = function(){
+		return zone;
+	}
+
+	this.isEnabled = function(){
+		return isEnabled;
+	}
+
+	this.setIsEnabled = function(bool){
+		isEnabled = bool;
+	}
+}
+
+module.exports = Teleporter;},
+'/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Zone.js' : function(module) {
+var Zone = function(x_, y_, width_, height_){
+	var isAutoTriggered = true;
+
+	var x = x_;
+	var y = y_;
+	var width = width_;
+	var height = height_;
+	var x2;
+	var y2;
+
+	var isInZone = false;
+
+	var updateX2 = function(){
+		x2 = x + width;
+	}
+
+	var updateY2 = function(){
+		y2 = y + height;
+	}
+
+	updateX2();
+	updateY2();
+
+	var setX = function(x_){
+		x = x_;
+		updateX2();
+	}
+
+	var setY = function(y_){
+		y = y_;
+		updateY2();
+	}
+
+	var setWidth = function(width_){
+		width = width_;
+		updateX2();
+	}
+
+	var setHeight = function(height_){
+		height = height_;
+		updateY2();
+	}
+
+	this.setIsAutoTriggered = function(bool){
+		isAutoTriggered = bool;
+	}
+
+	this.isAutoTriggered = function(){
+		return isAutoTriggered;
+	}
+
+	this.inZone = function(bool){
+		if (isInZone !== bool){
+			if (bool){
+				isInZone = true;
+				this.onEnterZone();
+			} else {
+				isInZone = false;
+				this.onLeaveZone();
+			}
+		}
+	}
+
+	this.onEnterZone = function(){
+		if (this.isAutoTriggered()){
+			this.trigger();
+		}
+	}
+
+	this.onLeaveZone = function(){
+
+	}
+
+	this.checkZone = function(x_, y_){
+		if (x_ > x && y_ > y
+			&& x_ < x2 && y_ < y2){
+
+			this.inZone(true);
+
+			return true;
+		}
+
+		this.inZone(false);
+
+		return false;
+	};
+}
+
+Zone.prototype.trigger = function(){
+	if (this.onTrigger !== undefined){
+		return this.onTrigger();
+	} else {
+		return undefined;
+	}
+}
+
+module.exports = Zone;},
 '/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/Dialogue.js' : function(module) {
 var movement = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/movement.js");
 
@@ -1026,7 +1334,7 @@ Dialogue.prototype.draw = function(){
 Dialogue.prototype.start = function(){
 	if (this.shouldStart()){
 		movement.pause(true);
-		gamestate.currentDialogue = this;
+		gamestate.setCurrentDialogue(this);
 
 		// Callback hooks
 		if (this.onStart !== undefined && this.onStart !== null){
@@ -1043,7 +1351,7 @@ Dialogue.prototype.end = function(){
 	}
 
 	movement.pause(false);
-	gamestate.currentDialogue = null;
+	gamestate.setCurrentDialogue(null);
 
 	// Callback hooks
 	if (this.onEnd !== undefined && this.onEnd !== null){
@@ -1129,27 +1437,6 @@ require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animati
 var setupVars = require("/Users/asweet/Documents/2014-2015 Senior/02 Spring/Experimental Animation/04 Final Project/child-in-war-game/I_Lie_Awake/src/setup.js");
 var testDialogue = setupVars.testDialogue;
 
-function drawBackground() {
-	var cameraCorner = camera.topLeftCorner();
-
-	var ctx = sald.ctx;
-	
-	var d = new Date();
-	var n = d.getMilliseconds();
-
-	ctx.fillStyle = 'rgb(256, 256, 200)';
-
-	ctx.fillRect(20, 20, ctx.width, 
-			ctx.height);
-	
-	ctx.fillRect(0,0, ctx.width, ctx.height);
-
-	ctx.fillStyle = 'rgb(200, 200, 256)';
-
-	ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 
-				400, 400);
-}
-
 // Not rescaleable
 // sald.size = {x:320, y:240, mode:"exact"};
 
@@ -1157,6 +1444,20 @@ function drawBackground() {
 sald.size = {x:320, y:240, mode:"ratio"};
 
 var mainCharacter = new MainCharacter();
+
+var gamestate = window.gamestate;
+gamestate.mainCharacter = mainCharacter;
+
+function drawBackground() {
+	var ctx = sald.ctx;
+
+	ctx.fillStyle = 'rgb(0, 0, 0)';
+
+	ctx.fillRect(0, 0, ctx.width, 
+			ctx.height);
+
+	gamestate.currentRoom().draw();
+}
 
 // Exact aspect ratio, to match pixel art
 // sald.size = {x:320, y:240, mode:"multiple"};
@@ -1167,6 +1468,7 @@ sald.scene = {
 	 */
 	update:function(elapsed) {
 		mainCharacter.movement.update(elapsed);
+		gamestate.currentRoom().update(elapsed);
 	},
 	draw:function() {
 		// Clear the screen
@@ -1197,17 +1499,17 @@ sald.scene = {
 			mainCharacter.getWidth(), 
 			mainCharacter.getHeight());
 
-		var gamestate = window.gamestate;
+		var dialogue = gamestate.currentDialogue();
 
 		// Draw the foreground
-		if (gamestate.currentDialogue !== null){
-			gamestate.currentDialogue.draw();
+		if (dialogue !== null){
+			dialogue.draw();
 		}
 	},
 	key:function(key, down) {
 
 		if (!down){
-			var dialogue = window.gamestate.currentDialogue;
+			var dialogue = gamestate.currentDialogue();
 
 			if (dialogue !== null){
 				if (key === "ONE") {
@@ -1228,6 +1530,9 @@ sald.scene = {
 	},
 	mouse:function(pos, button, down) {
 		//Mouse handling.
+		if (down){
+			console.log(camera.getTranslatedPoint(pos));
+		}
 	},
 };
 

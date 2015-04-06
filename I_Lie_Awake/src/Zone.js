@@ -1,12 +1,14 @@
-var Zone = function(x, y, width, height){
+var Zone = function(x_, y_, width_, height_){
 	var isAutoTriggered = true;
 
-	var x = x;
-	var y = y;
-	var width = width;
-	var height = height;
+	var x = x_;
+	var y = y_;
+	var width = width_;
+	var height = height_;
 	var x2;
 	var y2;
+
+	var isInZone = false;
 
 	var updateX2 = function(){
 		x2 = x + width;
@@ -15,6 +17,9 @@ var Zone = function(x, y, width, height){
 	var updateY2 = function(){
 		y2 = y + height;
 	}
+
+	updateX2();
+	updateY2();
 
 	var setX = function(x_){
 		x = x_;
@@ -43,6 +48,42 @@ var Zone = function(x, y, width, height){
 	this.isAutoTriggered = function(){
 		return isAutoTriggered;
 	}
+
+	this.inZone = function(bool){
+		if (isInZone !== bool){
+			if (bool){
+				isInZone = true;
+				this.onEnterZone();
+			} else {
+				isInZone = false;
+				this.onLeaveZone();
+			}
+		}
+	}
+
+	this.onEnterZone = function(){
+		if (this.isAutoTriggered()){
+			this.trigger();
+		}
+	}
+
+	this.onLeaveZone = function(){
+
+	}
+
+	this.checkZone = function(x_, y_){
+		if (x_ > x && y_ > y
+			&& x_ < x2 && y_ < y2){
+
+			this.inZone(true);
+
+			return true;
+		}
+
+		this.inZone(false);
+
+		return false;
+	};
 }
 
 Zone.prototype.trigger = function(){
@@ -52,19 +93,5 @@ Zone.prototype.trigger = function(){
 		return undefined;
 	}
 }
-
-Zone.prototype.checkZone = function(x, y){
-	if (x >= this.x && y >= this.y
-		&& x <= this.x2 && y <= this.y2){
-		
-		if (this.isAutoTriggered()){
-			this.trigger();
-		}
-
-		return true;
-	}
-
-	return false;
-};
 
 module.exports = Zone;
