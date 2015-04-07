@@ -63,13 +63,19 @@ var GameObject = function(x_, y_, width_, height_){
 }
 
 GameObject.prototype.collisionBox = function() {
+	var x = this.transform.x;
+	var y = this.transform.y;
+
 	var bb = this.relativeBoundingBox;
-	var min_ = {x : this.x + bb.min.x,
-				y : this.y + bb.min.y};
+	var min_ = {x : x + bb.min.x,
+				y : y + bb.min.y};
 	var max_ = {	
 		x : min_.x + bb.max.x,
 		y : min_.y + bb.max.y 
 	}
+
+	console.log("GET BB", this.relativeBoundingBox, x, y, min_, max_);
+
 	return {
 		min : min_,
 		max : max_

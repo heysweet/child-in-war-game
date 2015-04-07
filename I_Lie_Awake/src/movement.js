@@ -2,8 +2,41 @@ var camera = require("camera.js");
 var utils = require("utils.js");
 var GameObject = require("GameObject.js");
 
+var gamestate = window.gamestate;
+
 var character;
 var isPaused = false;
+
+var minX = 0;
+var minY = 0;
+var maxX = 0;
+var maxY = 0;
+
+var updateRoom = function(room){
+	var bb = gamestate.mainCharacter.collisionBox();
+	var transform = gamestate.mainCharacter.transform;
+
+	var smallX = transform.x - bb.min.x;
+	var smallY = transform.y - bb.min.y;
+
+	var bigX = bb.max.x - transform.x;
+	var bigY = bb.max.y - transform.y;
+
+	var midX = (smallX + bigX) / 2;
+	var midY = (smallY + bigY) / 2; 
+
+	minX = midX;
+	minY = midY;
+
+	maxX = room.width  - midX;
+	maxY = room.height - midY;
+
+	console.log(room);
+	console.log(bb);
+	console.log(transform);
+	console.log(smallX, smallY, bigX, bigY);
+	console.log(minX, minY, maxX, maxY);
+}
 
 var pause = function(bool){
 	isPaused = bool;
@@ -82,8 +115,14 @@ var update = function(elapsed){
 		var yDelta = downness * elapsed;
 
 		// Collision check
-		transform.x += xDelta;
-		transform.y += yDelta;
+		var newX = transform.x + xDelta;
+		var newY = transform.y + yDelta;
+
+		newX = Math.max(Math.min(newX, maxX), minX);
+		newY = Math.max(Math.min(newY, maxY), minY);
+
+		transform.x = newX;
+		transform.y = newY;
 
 		// Camera updates on movement
 		camera.update(elapsed, transform);
@@ -93,5 +132,6 @@ var update = function(elapsed){
 module.exports = {
 	update:update,
 	initialize:initialize,
-	pause:pause
+	pause:pause,
+	updateRoom:updateRoom
 };

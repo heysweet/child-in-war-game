@@ -1,5 +1,12 @@
 var Room = require("Room.js");
 var Teleporter = require("Teleporter.js");
+var utils = require("utils.js");
+var MainCharacter = require("MainCharacter.js");
+
+var mainCharacter = new MainCharacter();
+
+var gamestate = window.gamestate;
+gamestate.mainCharacter = mainCharacter;
 
 // Setup Dialogue
 var Dialogue = require("Dialogue.js");
@@ -30,8 +37,9 @@ var parentsBedroom = new Room(sald.size.x/2, sald.size.y/2);
 
 var size = window.sald.size;
 
-bedroom.setStaticCamera(-size.x/3, -size.y/2);
-parentsBedroom.setStaticCamera((size.x/2)-parentsBedroom.width, parentsBedroom.height/2);
+bedroom.setStaticCamera(utils.halfScreenWidth()-(sald.size.x/3), 0);
+parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 
+								parentsBedroom.height/2);
 
 var toBedroomTarget		= { x: 0, y: 0};
 var fromBedroomTarget	= { x: 0, y: 0};

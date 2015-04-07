@@ -1,22 +1,22 @@
 var mainloop = require("sald:mainloop.js");
 var camera = require("camera.js");
-var MainCharacter = require("MainCharacter.js");
+var sound = require("sald:sound.js");
 
 // Needed to load gamestate
 require("gamestate.js");
 var setupVars = require("setup.js");
 var testDialogue = setupVars.testDialogue;
 
+var image = require("./data/image.jpg");
+var dogSound = require("gun.wav");
+
+var mainCharacter = window.gamestate.mainCharacter;
+
 // Not rescaleable
 // sald.size = {x:320, y:240, mode:"exact"};
 
 // Fully, dynamically rescalable
 sald.size = {x:320, y:240, mode:"ratio"};
-
-var mainCharacter = new MainCharacter();
-
-var gamestate = window.gamestate;
-gamestate.mainCharacter = mainCharacter;
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -77,7 +77,6 @@ sald.scene = {
 		}
 	},
 	key:function(key, down) {
-
 		if (!down){
 			var dialogue = gamestate.currentDialogue();
 
@@ -96,6 +95,13 @@ sald.scene = {
 					dialogue.goToNext();
 				}
 			} 
+		} else {
+			if (key === "T"){
+				dogSound.play();
+
+				console.log(image);
+				console.log(dogSound);
+			}
 		}
 	},
 	mouse:function(pos, button, down) {

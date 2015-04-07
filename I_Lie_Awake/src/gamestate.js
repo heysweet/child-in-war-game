@@ -16,6 +16,9 @@ var GameState = function(){
 
 	this.setCurrentRoom = function(room){
 		currentRoom = room;
+		
+		var mainCharacter = window.gamestate.mainCharacter;
+		mainCharacter.movement.updateRoom(room);
 	}
 }
 
