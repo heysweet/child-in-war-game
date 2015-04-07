@@ -34,7 +34,7 @@ var topLeftCorner = function(){
 var getTranslatedPoint = function(pt){
 	var cameraCorner = topLeftCorner();
 
-	var scalar = 1 / sald.ctx.factor;
+	var scalar = utils.imageScalarInverted();
 
 	var x_ = cameraCorner.x + (pt.x * scalar);
 	var y_ = cameraCorner.y + (pt.y * scalar);

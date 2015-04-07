@@ -3,8 +3,8 @@ var Character = require("Character.js");
 
 var startX = sald.size.x/2;
 var startY = sald.size.y/2;
-var width  = 16;
-var height = 30;
+var width  = 62;
+var height = 140;
 
 function MainCharacter(){
 	Character.call(this, startX, startY, width, height);

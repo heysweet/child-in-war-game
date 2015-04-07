@@ -35,6 +35,10 @@ var kitchen = new Room(sald.size.x, sald.size.y);
 var bedroom = new Room(sald.size.x/3, sald.size.y/2);
 var parentsBedroom = new Room(sald.size.x/2, sald.size.y/2);
 
+var kitchenBackground = require("./data/kitchen.png");
+
+kitchen.setBackground(kitchenBackground);
+
 var size = window.sald.size;
 
 bedroom.setStaticCamera(utils.halfScreenWidth()-(sald.size.x/3), 0);
