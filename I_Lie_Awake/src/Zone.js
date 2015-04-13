@@ -71,6 +71,29 @@ var Zone = function(x_, y_, width_, height_){
 
 	}
 
+	this.collideZone = function(box){
+		var x1 = box.min.x;
+		var y1 = box.min.y;
+		var x2 = box.max.x;
+		var y2 = box.max.y;
+
+		var points = [];
+		points.push({ x : x1, y : y1});
+		points.push({ x : x2, y : y1});
+		points.push({ x : x2, y : y2});
+		points.push({ x : x1, y : y2});
+
+		for (var i = 0; i < 4; i++){
+			var pt = points[i];
+
+			if (this.checkZone(pt.x, pt.y)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	this.checkZone = function(x_, y_){
 		if (x_ > x && y_ > y
 			&& x_ < x2 && y_ < y2){

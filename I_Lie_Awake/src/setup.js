@@ -1,3 +1,18 @@
+// Needed to load gamestate
+require("gamestate.js");
+
+var gamestate = window.gamestate;
+
+// Not rescaleable
+// sald.size = {x:320, y:240, mode:"exact"};
+
+// Exact aspect ratio, to match pixel art
+// sald.size = {x:320, y:240, mode:"multiple"};
+
+// Fully, dynamically rescalable
+sald.size = {x:16, y:9, mode:"ratio"};
+window.gamestate.IMAGE_SCALAR = 1/60;
+
 var Room = require("Room.js");
 var Teleporter = require("Teleporter.js");
 var utils = require("utils.js");
@@ -5,7 +20,6 @@ var MainCharacter = require("MainCharacter.js");
 
 var mainCharacter = new MainCharacter();
 
-var gamestate = window.gamestate;
 gamestate.mainCharacter = mainCharacter;
 
 // Setup Dialogue
@@ -31,17 +45,17 @@ testDialogue.setFirstPhrase(firstPhrase);
 var gamestate = window.gamestate;
 
 // Set the initial rooms
-var kitchen = new Room(sald.size.x, sald.size.y);
-var bedroom = new Room(sald.size.x/3, sald.size.y/2);
-var parentsBedroom = new Room(sald.size.x/2, sald.size.y/2);
+var kitchen = new Room(960, 540);
+var bedroom = new Room(430, 430);
+var parentsBedroom = new Room(utils.screenWidth()/2, utils.screenHeight()/2);
 
-var kitchenBackground = require("./data/kitchen.png");
+var kitchenBackground = require("./data/home/mainRoom.png");
+var girlBedroomBackground = require("./data/home/girlBedroom.png");
 
 kitchen.setBackground(kitchenBackground);
+bedroom.setBackground(girlBedroomBackground);
 
-var size = window.sald.size;
-
-bedroom.setStaticCamera(utils.halfScreenWidth()-(sald.size.x/3), 0);
+bedroom.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
 parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 
 								parentsBedroom.height/2);
 
@@ -51,9 +65,9 @@ var toParentsTarget		= { x: parentsBedroom.width - 40,
 							y: parentsBedroom.height/2};
 var fromParentsTarget	= { x: 24, y: 116};
 
-var toBedroomBox = { x : 141, y : 0, width : 48, height : 34 };
-var fromBedroomBox = { x : 0, y : 0, width : 0, height : 0 };
-var toParentsBox = { x : 0, y : 98, width : 18, height : 36 };
+var toBedroomBox = { x : 346, y : 0, width : 117, height : 60 };
+var fromBedroomBox = { x : 154, y : 393, width : 118, height : 42 };
+var toParentsBox = { x : 668, y : 0, width : 117, height : 60 };
 var fromParentsBox = { x : 144, y : 42, width : 20, height : 42 };
 
 var bedroomDoor      = new Teleporter(bedroom, toBedroomBox, toBedroomTarget);

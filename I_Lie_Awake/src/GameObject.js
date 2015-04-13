@@ -34,9 +34,19 @@ var GameObject = function(x_, y_, width_, height_){
 		return halfHeight;
 	}
 
+	this.getTopLeft = function(){
+		var x_ = this.transform.x - halfWidth;
+		var y_ = this.transform.y - halfHeight;
+
+		return {
+			x : x_,
+			y : y_
+		}
+	}
+
 	this.getBottomCenter = function(){
 		var x_ = this.transform.x + halfWidth;
-		var y_ = this.transform.y + height;
+		var y_ = this.transform.y + halfHeight;
 
 		return {
 			x : x_,
@@ -63,18 +73,17 @@ var GameObject = function(x_, y_, width_, height_){
 }
 
 GameObject.prototype.collisionBox = function() {
-	var x = this.transform.x;
-	var y = this.transform.y;
+	var transform = this.getTopLeft();
+	var x = transform.x;
+	var y = transform.y;
 
 	var bb = this.relativeBoundingBox;
 	var min_ = {x : x + bb.min.x,
 				y : y + bb.min.y};
 	var max_ = {	
-		x : min_.x + bb.max.x,
-		y : min_.y + bb.max.y 
+		x : x + bb.max.x,
+		y : y + bb.max.y 
 	}
-
-	console.log("GET BB", this.relativeBoundingBox, x, y, min_, max_);
 
 	return {
 		min : min_,

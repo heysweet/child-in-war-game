@@ -1,7 +1,18 @@
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 
-var HALF_SCREEN_WIDTH = (sald.size.x/2);
-var HALF_SCREEN_HEIGHT = (sald.size.y/2);
+var SCREEN_HEIGHT = sald.size.y / window.gamestate.IMAGE_SCALAR;
+var SCREEN_WIDTH  = sald.size.x / window.gamestate.IMAGE_SCALAR;
+
+var HALF_SCREEN_WIDTH  = (SCREEN_WIDTH /2);
+var HALF_SCREEN_HEIGHT = (SCREEN_HEIGHT/2);
+
+var screenWidth = function(){
+	return SCREEN_WIDTH;
+}
+
+var screenHeight = function(){
+	return SCREEN_HEIGHT;
+}
 
 var halfScreenWidth = function(){
 	return HALF_SCREEN_WIDTH;
@@ -41,6 +52,8 @@ var imageScalarInverted = function(){
 
 module.exports = {
 	sign:sign,
+	screenWidth:screenWidth,
+	screenHeight:screenHeight,
 	halfScreenWidth:halfScreenWidth,
 	halfScreenHeight:halfScreenHeight,
 	imageScalar:imageScalar,

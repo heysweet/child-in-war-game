@@ -13,15 +13,14 @@ var Room = function(width, height){
 	};
 
 	this.update = function(elapsed){
-		var pos = gamestate.mainCharacter.getBottomCenter();
+		var bbox = gamestate.mainCharacter.collisionBox();
+		var pos = gamestate.mainCharacter.transform;
 
 		for (var i = 0; i < teleporters.length; i++){
 			var tp = teleporters[i];
 			var zone = tp.getZone();
 
-			if (zone.checkZone(pos.x, pos.y)){
-				console.log("BOOM", zone, pos.x, pos.y)
-			}
+			zone.collideZone(bbox);
 		}
 	};
 

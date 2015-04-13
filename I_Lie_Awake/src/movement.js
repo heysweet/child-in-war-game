@@ -13,8 +13,13 @@ var maxX = 0;
 var maxY = 0;
 
 var updateRoom = function(room){
-	var bb = gamestate.mainCharacter.collisionBox();
-	var transform = gamestate.mainCharacter.transform;
+	var mainCharacter = gamestate.mainCharacter;
+
+	var bb = mainCharacter.collisionBox();
+	var topLeft = mainCharacter.getTopLeft();
+	var transform = mainCharacter.transform;
+
+	console.log("BB",bb);
 
 	var smallX = transform.x - bb.min.x;
 	var smallY = transform.y - bb.min.y;
@@ -22,20 +27,11 @@ var updateRoom = function(room){
 	var bigX = bb.max.x - transform.x;
 	var bigY = bb.max.y - transform.y;
 
-	var midX = (smallX + bigX) / 2;
-	var midY = (smallY + bigY) / 2; 
+	minX = smallX;
+	minY = smallY;
 
-	minX = midX;
-	minY = midY;
-
-	maxX = room.width  - midX;
-	maxY = room.height - midY;
-
-	console.log(room);
-	console.log(bb);
-	console.log(transform);
-	console.log(smallX, smallY, bigX, bigY);
-	console.log(minX, minY, maxX, maxY);
+	maxX = room.width - bigX;
+	maxY = room.height - bigY;
 }
 
 var pause = function(bool){
@@ -61,7 +57,7 @@ var initialize = function(gameObj){
 	var width  = gameObj.getWidth();
 	var height = gameObj.getHeight();
 
-	setupTransform(68, 50, width, height);
+	setupTransform(136, 100, width, height);
 }
 
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }

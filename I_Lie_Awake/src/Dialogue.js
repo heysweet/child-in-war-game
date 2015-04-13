@@ -1,4 +1,5 @@
 var movement = require("movement.js");
+var utils = require("utils.js");
 
 /* Overwrite this.onEnd and this.onStart for 
 	call-back hooks into when the conversation
@@ -59,10 +60,10 @@ Dialogue.prototype.draw = function(){
 
 	var yBottomBorder = 4;
 
-	box.height = sald.size.y / 4;
+	box.height = utils.screenHeight() / 4;
 	box.x = yBottomBorder;
-	box.y = sald.size.y - yBottomBorder - box.height;
-	box.width = sald.size.x - (box.x * 2);
+	box.y = utils.screenHeight() - yBottomBorder - box.height;
+	box.width = utils.screenWidth() - (box.x * 2);
 
 	// Draw the box
 	ctx.fillRect(box.x, box.y, box.width, box.height);

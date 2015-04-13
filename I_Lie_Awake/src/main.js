@@ -1,21 +1,16 @@
 var mainloop = require("sald:mainloop.js");
-var camera = require("camera.js");
-var sound = require("sald:sound.js");
-var utils = require("utils.js");
 
-// Needed to load gamestate
-require("gamestate.js");
 var setupVars = require("setup.js");
+
+var utils = require("utils.js");
+var camera = require("camera.js");
+var sound = require("sald:soundController.js");
+
+var testSound = require("./data/test.ogg");
+
 var testDialogue = setupVars.testDialogue;
 
 var mainCharacter = window.gamestate.mainCharacter;
-
-// Not rescaleable
-// sald.size = {x:320, y:240, mode:"exact"};
-
-// Fully, dynamically rescalable
-sald.size = {x:16, y:9, mode:"ratio"};
-window.gamestate.IMAGE_SCALAR = 1/60;
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -27,9 +22,6 @@ function drawBackground() {
 
 	gamestate.currentRoom().draw();
 }
-
-// Exact aspect ratio, to match pixel art
-// sald.size = {x:320, y:240, mode:"multiple"};
 
 sald.scene = {
 	/* Use elapsed to make sure that the framerate doesn't 
@@ -93,7 +85,24 @@ sald.scene = {
 				} else {
 					dialogue.goToNext();
 				}
-			} 
+			}
+
+			if (key == "T"){
+				testSound.currentTime = 0;
+				testSound.play();
+			} else if (key == "M"){
+				if (sound.isMuted()){
+					sound.unmute();
+				} else {
+					sound.mute();
+				}
+			} else if (key == "P") {
+				if (sound.isPaused()){
+					sound.resume();
+				} else {
+					sound.pause();
+				}
+			}
 		}
 	},
 	mouse:function(pos, button, down) {
