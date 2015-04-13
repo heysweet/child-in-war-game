@@ -14,11 +14,8 @@ var mainCharacter = window.gamestate.mainCharacter;
 
 function drawBackground() {
 	var ctx = sald.ctx;
-
-	ctx.fillStyle = 'rgb(0, 0, 0)';
-
-	ctx.fillRect(0, 0, ctx.width, 
-			ctx.height);
+	
+	ctx.clearRect(0, 0, utils.screenWidth(), utils.screenHeight());
 
 	gamestate.currentRoom().draw();
 }
@@ -46,19 +43,7 @@ sald.scene = {
 		drawBackground();
 
 		// Draw the character
-		var transform = mainCharacter.transform;
-
-		ctx.fillStyle = 'rgb(256, 0, 0)';
-
-		var onScreenPos = {
-			x : transform.x - cameraCorner.x,
-			y : transform.y - cameraCorner.y
-		}
-
-		ctx.fillRect(onScreenPos.x - mainCharacter.halfWidth(),
-			onScreenPos.y - mainCharacter.halfHeight(),
-			mainCharacter.getWidth(), 
-			mainCharacter.getHeight());
+		mainCharacter.draw(camera);
 
 		var dialogue = gamestate.currentDialogue();
 

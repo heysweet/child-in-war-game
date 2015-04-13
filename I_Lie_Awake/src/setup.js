@@ -59,14 +59,14 @@ bedroom.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight(
 parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 
 								parentsBedroom.height/2);
 
-var toBedroomTarget		= { x: 0, y: 0};
-var fromBedroomTarget	= { x: 0, y: 0};
+var toBedroomTarget		= { x: 214, y: 321};
+var fromBedroomTarget	= { x: 404, y: 84};
 var toParentsTarget		= { x: parentsBedroom.width - 40, 
 							y: parentsBedroom.height/2};
 var fromParentsTarget	= { x: 24, y: 116};
 
 var toBedroomBox = { x : 346, y : 0, width : 117, height : 60 };
-var fromBedroomBox = { x : 154, y : 393, width : 118, height : 42 };
+var fromBedroomBox = { x : 154, y : 403, width : 118, height : 42 };
 var toParentsBox = { x : 668, y : 0, width : 117, height : 60 };
 var fromParentsBox = { x : 144, y : 42, width : 20, height : 42 };
 

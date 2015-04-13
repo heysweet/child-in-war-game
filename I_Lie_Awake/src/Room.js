@@ -41,6 +41,7 @@ Room.prototype.draw = function(){
 	var cameraCorner = camera.topLeftCorner();
 
 	if (background == null){
+
 		ctx.fillStyle = 'rgb(256, 256, 200)';
 
 		ctx.fillRect(-cameraCorner.x, -cameraCorner.y, this.width, this.height);
@@ -51,6 +52,7 @@ Room.prototype.draw = function(){
 		ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 
 					400, 400);
 	} else {
+
 		ctx.drawImage(background, -cameraCorner.x, -cameraCorner.y);
 	}
 }

@@ -19,8 +19,6 @@ var updateRoom = function(room){
 	var topLeft = mainCharacter.getTopLeft();
 	var transform = mainCharacter.transform;
 
-	console.log("BB",bb);
-
 	var smallX = transform.x - bb.min.x;
 	var smallY = transform.y - bb.min.y;
 
@@ -99,6 +97,8 @@ var update = function(elapsed){
 	if (keys.UP    || keys.W){downness  -= transform.yDelta;}
 	if (keys.DOWN  || keys.S){downness  += transform.yDelta;}
 
+	var mainCharacter = gamestate.mainCharacter;
+
 	// Compute movement if there should be some
 	if (rightness !== 0 || downness !== 0) {
 		// Unit circle the input, avoiding "fast diagonal movement"
@@ -117,11 +117,18 @@ var update = function(elapsed){
 		newX = Math.max(Math.min(newX, maxX), minX);
 		newY = Math.max(Math.min(newY, maxY), minY);
 
-		transform.x = newX;
-		transform.y = newY;
+
+		if (transform.x != newX || transform.y != newY){
+			transform.x = newX;
+			transform.y = newY;
+
+			mainCharacter.moveVector = { rightness : rightness, downness : downness };
+		} 
 
 		// Camera updates on movement
 		camera.update(elapsed, transform);
+	} else {
+		mainCharacter.moveVector = null;
 	};
 }
 
