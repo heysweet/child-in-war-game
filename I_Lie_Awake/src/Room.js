@@ -1,6 +1,8 @@
 var gamestate = window.gamestate;
 var camera = require("camera.js");
 
+var collisionBoxes = [];
+
 var Room = function(width, height){
 	this.width = width;
 	this.height = height;
@@ -31,6 +33,36 @@ var Room = function(width, height){
 	this.setBackground = function(image){
 		background = image;
 	}
+}
+
+Room.prototype.addCollisionBoxes = function(boxes){
+	var tempBoxes = [];
+
+	for (var i = 0; i < boxes.length; i++){
+		var temp = function(){
+			var box = boxes[i];
+			
+			this.collisionBox = function(){
+				return box;
+			}
+		}
+
+		tempBoxes.push(new temp());
+	}
+
+	collisionBoxes = collisionBoxes.concat(tempBoxes);
+}
+
+Room.prototype.doesCollide = function(gameObj){
+	for (var i = 0; i < collisionBoxes.length; i++){
+		box = collisionBoxes[i];
+
+		if (gameObj.isColliding(box)){
+			return true;
+		}
+	}
+
+	return false;
 }
 
 Room.prototype.draw = function(){

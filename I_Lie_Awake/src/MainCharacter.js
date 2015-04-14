@@ -8,16 +8,22 @@ var startY = utils.screenHeight()/2;
 var width  = 62;
 var height = 140;
 
-var image = require("./data/characters/mainCharacter/walkCycle.png");
+var image = require("./data/characters/mainCharacter/walkCycle4.png");
+
+var faceRight = true;
 
 var setupCollision = function(mainCharacter){
-	var dx = 0;
+	var dx = 8;
 	var dy = 90;
+
+	var oldMaxY = mainCharacter.rel
 
 	mainCharacter.relativeBoundingBox.min = {
 		x : dx,
 		y : dy
 	};
+
+	mainCharacter.relativeBoundingBox.max.x -= dx;
 }
 
 var setupAnimations = function(mainCharacter){
@@ -72,24 +78,43 @@ MainCharacter.prototype.draw = function(camera){
 		y : transform.y - cameraCorner.y
 	}
 
+	var width = this.getWidth();
+	var height = this.getHeight();;
+
 	// ctx.drawImage(image, 30, 30, 
 	// 		1073, 280, 
 	// 		0, 0,
 	// 		1, 1);
 
-	// this.sprite.draw('walk', 0, 0);
+	if (this.moveVector !== null){
+		if (this.moveVector.rightness < 0){
+			faceRight = false
+		} else if (this.moveVector.rightness > 0){
+			faceRight = true;
+		}
+	}
 
-	// if (this.moveVector === null){
-		ctx.fillRect(onScreenPos.x - this.halfWidth(),
-			onScreenPos.y - this.halfHeight(),
-			this.getWidth(), 
-			this.getHeight());
-	// } else {
+	var scalar = 1;
+	var offset = 0;
 
-		
+	if (!faceRight){
+		ctx.save();
+		ctx.scale(-1, 1);
+		scalar = -1;
+		offset = this.getWidth()
+	}
 
-		
-	// }
+	if (this.moveVector === null){
+		this.sprite.draw('idle', (onScreenPos.x - this.halfWidth() + offset) * scalar, 
+			onScreenPos.y - this.halfHeight(), 
+			0, width, height, 0, 1);
+	} else {
+		this.sprite.draw('walk', (onScreenPos.x - this.halfWidth() + offset) * scalar, 
+			onScreenPos.y - this.halfHeight(), 
+			0, width, height, 0, 1);
+	}
+
+	ctx.restore();
 }
 
 

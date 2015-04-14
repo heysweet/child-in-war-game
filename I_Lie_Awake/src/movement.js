@@ -12,7 +12,11 @@ var minY = 0;
 var maxX = 0;
 var maxY = 0;
 
+var currentRoom;
+
 var updateRoom = function(room){
+	currentRoom = room;
+
 	var mainCharacter = gamestate.mainCharacter;
 
 	var bb = mainCharacter.collisionBox();
@@ -110,20 +114,45 @@ var update = function(elapsed){
 		var xDelta = rightness * elapsed;
 		var yDelta = downness * elapsed;
 
-		// Collision check
 		var newX = transform.x + xDelta;
 		var newY = transform.y + yDelta;
 
 		newX = Math.max(Math.min(newX, maxX), minX);
 		newY = Math.max(Math.min(newY, maxY), minY);
 
+		var isMoving = false;
 
-		if (transform.x != newX || transform.y != newY){
+		if (transform.x != newX){
+			var oldX = transform.x;
+
 			transform.x = newX;
+
+			// Collision check
+			if (!currentRoom.doesCollide(mainCharacter)){
+				mainCharacter.moveVector = { rightness : rightness, downness : downness };
+				isMoving = true;
+			} else {
+				transform.x = oldX;
+			}
+		}
+
+		if (transform.y != newY){
+			var oldY = transform.y;
+
 			transform.y = newY;
 
-			mainCharacter.moveVector = { rightness : rightness, downness : downness };
-		} 
+			// Collision check
+			if (!currentRoom.doesCollide(mainCharacter)){
+				mainCharacter.moveVector = { rightness : rightness, downness : downness };
+				isMoving = true;
+			} else {
+				transform.y = oldY;
+			}
+		}
+
+		if (!isMoving){
+			mainCharacter.moveVector = null;
+		}
 
 		// Camera updates on movement
 		camera.update(elapsed, transform);
