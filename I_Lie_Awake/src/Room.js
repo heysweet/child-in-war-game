@@ -1,7 +1,12 @@
 var gamestate = window.gamestate;
 var camera = require("camera.js");
+var utils = require("utils.js");
 
 var collisionBoxes = [];
+
+var callDraw = function(obj){
+	obj.draw();
+}
 
 var Room = function(width, height){
 	this.width = width;
@@ -9,6 +14,12 @@ var Room = function(width, height){
 
 	var background = null;
 	var teleporters = [];
+
+	// Don't draw
+	var backgroundObjects = new utils.LinkedList();
+
+	// Draw on top of main character
+	var foregroundObjects = new utils.LinkedList();
 
 	this.addTeleporter = function(teleporter){
 		teleporters.push(teleporter);
@@ -33,6 +44,18 @@ var Room = function(width, height){
 	this.setBackground = function(image){
 		background = image;
 	}
+
+	this.getForegroundObjects = function(){
+		return foregroundObjects.asArray();
+	}
+
+	this.drawForeground = function(){
+		return foregroundObjects.forEach(callDraw);
+	}
+
+	this.addForegroundObjects = function(objects){
+		foregroundObjects.pushArray(objects);
+	}
 }
 
 Room.prototype.addCollisionBoxes = function(boxes){
@@ -41,7 +64,7 @@ Room.prototype.addCollisionBoxes = function(boxes){
 	for (var i = 0; i < boxes.length; i++){
 		var temp = function(){
 			var box = boxes[i];
-			
+
 			this.collisionBox = function(){
 				return box;
 			}
@@ -84,7 +107,6 @@ Room.prototype.draw = function(){
 		ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 
 					400, 400);
 	} else {
-
 		ctx.drawImage(background, -cameraCorner.x, -cameraCorner.y);
 	}
 }

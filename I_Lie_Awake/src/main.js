@@ -14,10 +14,16 @@ var mainCharacter = window.gamestate.mainCharacter;
 
 function drawBackground() {
 	var ctx = sald.ctx;
-	
+
 	ctx.clearRect(0, 0, utils.screenWidth(), utils.screenHeight());
 
 	gamestate.currentRoom().draw();
+}
+
+function drawForeground() {
+	var ctx = sald.ctx;
+
+	gamestate.currentRoom().drawForeground();
 }
 
 sald.scene = {
@@ -44,6 +50,8 @@ sald.scene = {
 
 		// Draw the character
 		mainCharacter.draw(camera);
+
+		drawForeground();
 
 		var dialogue = gamestate.currentDialogue();
 

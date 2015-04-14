@@ -17,6 +17,7 @@ var Room = require("Room.js");
 var Teleporter = require("Teleporter.js");
 var utils = require("utils.js");
 var MainCharacter = require("MainCharacter.js");
+var ForegroundObject = require("ForegroundObject.js");
 
 var mainCharacter = new MainCharacter();
 
@@ -49,19 +50,19 @@ var kitchen = new Room(960, 540);
 var bedroom = new Room(430, 430);
 var parentsBedroom = new Room(utils.screenWidth()/2, utils.screenHeight()/2);
 
-var kitchenBackground = require("./data/home/mainRoom.png");
+var kitchenBackground = require("./data/home/kitchen/mainRoom.png");
 var girlBedroomBackground = require("./data/home/girlBedroom.png");
 
 kitchen.setBackground(kitchenBackground);
 bedroom.setBackground(girlBedroomBackground);
 
 var kitchenCollisions = [
-	{min: {x:287, y:0}, max: {x:348, y:85}}, // Fridge to Bedroom
+	{min: {x:287, y:0}, max: {x:348, y:85}}, // Fridge to Bedroom Wall
 	{min: {x:46, y:0}, max: {x:287, y:132}}, // Fridge
 	{min: {x:0, y:131}, max: {x:46, y:490}}, // West Wall
 	{min: {x:51, y:492}, max: {x:904, y:541}}, // South Wall
-	{min: {x:904, y:255}, max: {x:961, y:540}}, //SE Wall
-	{min: {x:904, y:84}, max: {x:961, y:136}}, //NE Wall
+	{min: {x:904, y:255}, max: {x:961, y:540}}, // SE Wall
+	{min: {x:904, y:84}, max: {x:961, y:136}}, // NE Wall
 	{min: {x:789, y:0}, max: {x:959, y:84}}, // North Wall 3
 	{min: {x:456, y:0}, max: {x:666, y:81}}, // North Wall 2
 	{min: {x:613, y:340}, max: {x:748, y:380}}, // TV
@@ -69,10 +70,20 @@ var kitchenCollisions = [
 	{min: {x:107, y:419}, max: {x:148, y:440}}, // Chair 1
 	{min: {x:242, y:337}, max: {x:297, y:380}}, // Chair 2
 	{min: {x:349, y:402}, max: {x:393, y:435}}, // Chair 3
-	{min: {x:171, y:374}, max: {x:319, y:492}}, // Table
+	{min: {x:171, y:382}, max: {x:319, y:492}}, // Table
+];
+
+var kitchenObjects = [
+	new ForegroundObject(require("./data/home/kitchen/TV.png"), {x:608, y:218}),
+	new ForegroundObject(require("./data/home/kitchen/couch.png"), {x:576, y:338}),
+	new ForegroundObject(require("./data/home/kitchen/leftChair.png"), {x:97, y:319}),
+	new ForegroundObject(require("./data/home/kitchen/middleChair.png"), {x:238, y:280}),
+	new ForegroundObject(require("./data/home/kitchen/rightChair.png"), {x:345, y:307}),
+	new ForegroundObject(require("./data/home/kitchen/table.png"), {x:167, y:327}),
 ];
 
 kitchen.addCollisionBoxes(kitchenCollisions);
+kitchen.addForegroundObjects(kitchenObjects);
 
 bedroom.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
 parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 

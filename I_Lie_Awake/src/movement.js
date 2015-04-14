@@ -12,11 +12,7 @@ var minY = 0;
 var maxX = 0;
 var maxY = 0;
 
-var currentRoom;
-
 var updateRoom = function(room){
-	currentRoom = room;
-
 	var mainCharacter = gamestate.mainCharacter;
 
 	var bb = mainCharacter.collisionBox();
@@ -87,6 +83,8 @@ var update = function(elapsed){
 	if (isPaused){
 		return;
 	}
+
+	var currentRoom = gamestate.currentRoom();
 
 	var keys = sald.keys;
 
@@ -159,6 +157,10 @@ var update = function(elapsed){
 	} else {
 		mainCharacter.moveVector = null;
 	};
+
+	if (mainCharacter.moveVector !== null){
+		currentRoom.update();
+	}
 }
 
 module.exports = {
