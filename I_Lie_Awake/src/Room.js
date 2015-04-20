@@ -8,18 +8,41 @@ var callDraw = function(obj){
 	obj.draw();
 }
 
+var callLessThanOrEqualDepth = function(depth){
+	var func = function(obj){
+		if (obj.getDepth() <= depth) return true;
+
+		return false;
+	}
+
+	return func;
+}
+
+var compareLessThanOrEqualTo = function(obj1, obj2){
+	return (obj1.getDepth() <= obj2.getDepth());
+}
+
+var compareGreater = function(obj1, obj2){
+	return (obj1.getDepth() > obj2.getDepth());
+}
+
+var callGreaterThanDepth = function(depth){
+	var func = function(obj){
+		if (obj.getDepth() > depth) return true;
+
+		return false;
+	}
+
+	return func;
+}
+
 var Room = function(width, height){
 	this.width = width;
 	this.height = height;
 
 	var background = null;
 	var teleporters = [];
-
-	// Don't draw
-	var backgroundObjects = new utils.LinkedList();
-
-	// Draw on top of main character
-	var foregroundObjects = new utils.LinkedList();
+	var objects = [ window.gamestate.mainCharacter ]; // main character is in every room, should be considered in drawing order
 
 	this.addTeleporter = function(teleporter){
 		teleporters.push(teleporter);
@@ -45,16 +68,22 @@ var Room = function(width, height){
 		background = image;
 	}
 
-	this.getForegroundObjects = function(){
-		return foregroundObjects.asArray();
+	this.addObject = function(obj){
+		objects.push(obj);
 	}
 
-	this.drawForeground = function(){
-		return foregroundObjects.forEach(callDraw);
+	this.addObjects = function(array){
+		for (var i = 0; i < array.length; i++){
+			this.addObject(array[i]);
+		}
 	}
 
-	this.addForegroundObjects = function(objects){
-		foregroundObjects.pushArray(objects);
+	this.getObjects = function(sort){
+		if (sort !== undefined){
+			objects.sort(sort);
+		}
+
+		return objects;
 	}
 }
 
@@ -95,18 +124,7 @@ Room.prototype.draw = function(){
 
 	var cameraCorner = camera.topLeftCorner();
 
-	if (background == null){
-
-		ctx.fillStyle = 'rgb(256, 256, 200)';
-
-		ctx.fillRect(-cameraCorner.x, -cameraCorner.y, this.width, this.height);
-
-		// Used for showing moving environment
-		ctx.fillStyle = 'rgb(200, 200, 256)';
-
-		ctx.fillRect(200 - cameraCorner.x, 200 - cameraCorner.y, 
-					400, 400);
-	} else {
+	if (background !== null){
 		ctx.drawImage(background, -cameraCorner.x, -cameraCorner.y);
 	}
 }

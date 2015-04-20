@@ -2,6 +2,7 @@ var mainloop = require("sald:mainloop.js");
 
 var setupVars = require("setup.js");
 
+var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var camera = require("camera.js");
 var sound = require("sald:soundController.js");
@@ -11,6 +12,7 @@ var testSound = require("./data/test.ogg");
 var testDialogue = setupVars.testDialogue;
 
 var mainCharacter = window.gamestate.mainCharacter;
+window.gamestate.camera = camera;
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -18,12 +20,6 @@ function drawBackground() {
 	ctx.clearRect(0, 0, utils.screenWidth(), utils.screenHeight());
 
 	gamestate.currentRoom().draw();
-}
-
-function drawForeground() {
-	var ctx = sald.ctx;
-
-	gamestate.currentRoom().drawForeground();
 }
 
 sald.scene = {
@@ -48,10 +44,10 @@ sald.scene = {
 		// Draw Background
 		drawBackground();
 
-		// Draw the character
-		mainCharacter.draw(camera);
+		GameObject.draw();
 
-		drawForeground();
+		// Draw the character
+		// mainCharacter.draw(camera);
 
 		var dialogue = gamestate.currentDialogue();
 

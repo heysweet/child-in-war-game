@@ -1,3 +1,7 @@
+var getActiveObjects = function(sort){
+
+}
+
 var GameState = function(){
 	var currentDialogue = null;
 	var currentRoom = null;
@@ -17,6 +21,7 @@ var GameState = function(){
 	this.setCurrentRoom = function(room){
 		currentRoom = room;
 		
+		window.gamestate.activeGameObjects = room.getObjects;
 		var mainCharacter = window.gamestate.mainCharacter;
 		mainCharacter.movement.updateRoom(room);
 	}

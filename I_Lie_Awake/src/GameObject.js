@@ -1,9 +1,31 @@
 var collision = require("sald:collide.js");
 
-var GameObject = function(x_, y_, width_, height_){
 
-	var width = width_;
-	var height = height_;
+/* json : {
+	sprite, width, height
+} */
+var GameObject = function(x_, y_, json){
+
+	var width = json.width;
+	var height = json.height;
+
+	this.transform = {
+		x : x_,
+		y : y_
+	};
+
+	if (json.hasOwnProperty('zOffset')){
+		this.zOffset = json.zOffset;
+	}
+
+	this.image = null;
+
+	if (json.hasOwnProperty('image')){
+		this.image = json.image;
+	}
+
+	this.sprite = json.sprite;
+
 
 	var halfWidth  = width  / 2;
 	var halfHeight = height / 2;
@@ -54,11 +76,6 @@ var GameObject = function(x_, y_, width_, height_){
 		}
 	}
 
-	this.transform = {
-		x : x_,
-		y : y_
-	};
-
 	// For collisions
 	this.relativeBoundingBox = {
 		min : {
@@ -72,12 +89,79 @@ var GameObject = function(x_, y_, width_, height_){
 	}
 }
 
+var zSort = function(a, b){
+	return a.getZ() - b.getZ();
+}
+
+GameObject.draw = function(){
+	// Fairly efficient in a mostly sorted list, particularly when short
+	// Optimize to be smarter about which objects moved
+	var activeInstances = window.gamestate.activeGameObjects(zSort);
+
+	for (var i = 0; i < activeInstances.length; i++){
+		activeInstances[i].draw();
+	}
+}
+
+// GameObject.prototype.getAnchor = function(){
+// 	if (this.sprite){
+// 		return this.sprite.anchor;
+// 	}
+
+// 	return this.anchor;
+// }
+
+GameObject.prototype.setImage = function(image){
+	this.image = image;
+}
+
+
+GameObject.prototype.getZ = function(){
+	var result = this.transform.y;
+
+	if (this.zOffset !== undefined){
+		return result + this.zOffset;
+	}
+
+	return result;
+
+	// var anchor = this.getAnchor();
+
+	// if (this.sprite && (anchor !== undefined && anchor !== null)){
+	// 	return anchor.y;
+	// }
+
+	// return Number.NEGATIVE_INFINITY;
+}
+
+GameObject.prototype.draw = function(){
+	var camera = window.gamestate.camera;
+
+	var ctx = sald.ctx;
+	var cameraCorner = camera.topLeftCorner();
+
+	if (this.image !== null){
+		ctx.drawImage(this.image, this.transform.x - cameraCorner.x, this.transform.y - cameraCorner.y);
+	} else {
+		var sprite = this.getSprite();
+
+		sprite.draw();
+	}
+}
+
+GameObject.prototype.setSprite = function(sprite){
+	this.sprite = sprite;
+}
+
 GameObject.prototype.collisionBox = function() {
+	var bb = this.relativeBoundingBox;
+
+	if (bb === null) return null;
+
 	var transform = this.getTopLeft();
 	var x = transform.x;
 	var y = transform.y;
 
-	var bb = this.relativeBoundingBox;
 	var min_ = {x : x + bb.min.x,
 				y : y + bb.min.y};
 	var max_ = {	

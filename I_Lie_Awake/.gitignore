@@ -2,3 +2,4 @@ data/
 .*
 !/.gitignore
 build.html
+*.html

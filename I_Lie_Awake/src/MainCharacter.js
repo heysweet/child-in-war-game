@@ -8,7 +8,7 @@ var startY = utils.screenHeight()/2;
 var width  = 62;
 var height = 140;
 
-var image = require("./data/characters/mainCharacter/walkCycle4.png");
+var image = require("./data/characters/mainCharacter/walkCycle1.png");
 
 var faceRight = true;
 
@@ -49,7 +49,13 @@ var setupAnimations = function(mainCharacter){
 }
 
 function MainCharacter(){
-	Character.call(this, startX, startY, width, height);
+	var args = {
+		width : width,
+		height : height,
+		zOffset : 40
+	}
+
+	Character.call(this, startX, startY, args);
 
 	setupCollision(this);
 	setupAnimations(this);
@@ -64,7 +70,9 @@ MainCharacter.prototype.constructor = MainCharacter;
 MainCharacter.prototype.movement = movement;
 
 
-MainCharacter.prototype.draw = function(camera){
+MainCharacter.prototype.draw = function(){
+	var camera = window.gamestate.camera;
+
 	var ctx = sald.ctx;
 
 	var cameraCorner = camera.topLeftCorner();

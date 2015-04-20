@@ -1,7 +1,7 @@
 var GameObject = require("GameObject.js");
 
-function Character(startX, startY, width, height){
-	GameObject.call(this, startX, startY, width, height);
+function Character(startX, startY, args){
+	GameObject.call(this, startX, startY, args);
 }
 
 Character.prototype = Object.create(GameObject.prototype);

@@ -1,8 +1,6 @@
 // Needed to load gamestate
 require("gamestate.js");
 
-var gamestate = window.gamestate;
-
 // Not rescaleable
 // sald.size = {x:320, y:240, mode:"exact"};
 
@@ -17,11 +15,11 @@ var Room = require("Room.js");
 var Teleporter = require("Teleporter.js");
 var utils = require("utils.js");
 var MainCharacter = require("MainCharacter.js");
-var ForegroundObject = require("ForegroundObject.js");
+var GameObject = require("GameObject.js");
 
 var mainCharacter = new MainCharacter();
 
-gamestate.mainCharacter = mainCharacter;
+window.gamestate.mainCharacter = mainCharacter;
 
 // Setup Dialogue
 var Dialogue = require("Dialogue.js");
@@ -73,17 +71,28 @@ var kitchenCollisions = [
 	{min: {x:171, y:382}, max: {x:319, y:492}}, // Table
 ];
 
+/* Make sure to add them in a sorted y-depth draw order */
+
+// var kitchenObjects = [
+// 	new ForegroundObject(require("./data/home/kitchen/TV.png"), {x:608, y:218}, 339),
+	// new ForegroundObject(require("./data/home/kitchen/middleChair.png"), {x:238, y:280}, 399),
+	// new ForegroundObject(require("./data/home/kitchen/rightChair.png"), {x:345, y:307}, 413), 106
+	// new ForegroundObject(require("./data/home/kitchen/leftChair.png"), {x:97, y:319}, 415), 96
+	// new ForegroundObject(require("./data/home/kitchen/couch.png"), {x:576, y:338}, 458), 120
+	// new ForegroundObject(require("./data/home/kitchen/table.png"), {x:167, y:327}, 492), 165
+// ];
+
 var kitchenObjects = [
-	new ForegroundObject(require("./data/home/kitchen/TV.png"), {x:608, y:218}),
-	new ForegroundObject(require("./data/home/kitchen/couch.png"), {x:576, y:338}),
-	new ForegroundObject(require("./data/home/kitchen/leftChair.png"), {x:97, y:319}),
-	new ForegroundObject(require("./data/home/kitchen/middleChair.png"), {x:238, y:280}),
-	new ForegroundObject(require("./data/home/kitchen/rightChair.png"), {x:345, y:307}),
-	new ForegroundObject(require("./data/home/kitchen/table.png"), {x:167, y:327}),
+	new GameObject(608, 218, {image : require("./data/home/kitchen/TV.png"), zOffset : 121}), // TV
+	new GameObject(238, 280, {image : require("./data/home/kitchen/middleChair.png"), zOffset : 119}), // middleChair
+	new GameObject(345, 307, {image : require("./data/home/kitchen/rightChair.png"), zOffset : 106}), // rightChair
+	new GameObject(97,  319, {image : require("./data/home/kitchen/leftChair.png"), zOffset : 96}), // leftChair
+	new GameObject(576, 338, {image : require("./data/home/kitchen/couch.png"), zOffset : 120}), // couch
+	new GameObject(167, 327, {image : require("./data/home/kitchen/table.png"), zOffset : 165}) // table
 ];
 
 kitchen.addCollisionBoxes(kitchenCollisions);
-kitchen.addForegroundObjects(kitchenObjects);
+kitchen.addObjects(kitchenObjects);
 
 bedroom.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
 parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 
