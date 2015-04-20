@@ -2,8 +2,6 @@ var gamestate = window.gamestate;
 var camera = require("camera.js");
 var utils = require("utils.js");
 
-var collisionBoxes = [];
-
 var callDraw = function(obj){
 	obj.draw();
 }
@@ -43,6 +41,8 @@ var Room = function(width, height){
 	var background = null;
 	var teleporters = [];
 	var objects = [ window.gamestate.mainCharacter ]; // main character is in every room, should be considered in drawing order
+
+	var collisionBoxes = [];
 
 	this.addTeleporter = function(teleporter){
 		teleporters.push(teleporter);
@@ -85,36 +85,36 @@ var Room = function(width, height){
 
 		return objects;
 	}
-}
 
-Room.prototype.addCollisionBoxes = function(boxes){
-	var tempBoxes = [];
+	this.addCollisionBoxes = function(boxes){
+		var tempBoxes = [];
 
-	for (var i = 0; i < boxes.length; i++){
-		var temp = function(){
-			var box = boxes[i];
+		for (var i = 0; i < boxes.length; i++){
+			var temp = function(){
+				var box = boxes[i];
 
-			this.collisionBox = function(){
-				return box;
+				this.collisionBox = function(){
+					return box;
+				}
+			}
+
+			tempBoxes.push(new temp());
+		}
+
+		collisionBoxes = collisionBoxes.concat(tempBoxes);
+	}
+
+	this.doesCollide = function(gameObj){
+		for (var i = 0; i < collisionBoxes.length; i++){
+			box = collisionBoxes[i];
+
+			if (gameObj.isColliding(box)){
+				return true;
 			}
 		}
 
-		tempBoxes.push(new temp());
+		return false;
 	}
-
-	collisionBoxes = collisionBoxes.concat(tempBoxes);
-}
-
-Room.prototype.doesCollide = function(gameObj){
-	for (var i = 0; i < collisionBoxes.length; i++){
-		box = collisionBoxes[i];
-
-		if (gameObj.isColliding(box)){
-			return true;
-		}
-	}
-
-	return false;
 }
 
 Room.prototype.draw = function(){
