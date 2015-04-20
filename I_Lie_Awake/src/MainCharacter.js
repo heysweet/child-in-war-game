@@ -18,6 +18,11 @@ var setupCollision = function(mainCharacter){
 
 	var oldMaxY = mainCharacter.rel
 
+	mainCharacter.relativeBoundingBox = {
+		min : {x : 0, y : 0}, 
+		max : {x : mainCharacter.getWidth(), y : mainCharacter.getHeight()}
+	};
+
 	mainCharacter.relativeBoundingBox.min = {
 		x : dx,
 		y : dy
@@ -61,6 +66,7 @@ function MainCharacter(){
 	setupAnimations(this);
 
 	movement.initialize(this);
+	this.isMain = true;
 }
 
 MainCharacter.prototype = Object.create(Character.prototype);

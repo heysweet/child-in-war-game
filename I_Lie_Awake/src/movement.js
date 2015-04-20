@@ -79,6 +79,28 @@ var setupTransform = function(xDelta, yDelta, width, height){
 	transform.yDiag = Math.sin(theta) * transform.yDelta;
 }
 
+var doesCollide = function(collidingObject){
+	// Room Collisions
+	var currentRoom = gamestate.currentRoom();
+
+	if (currentRoom.doesCollide(collidingObject)){
+		return true;
+	}
+
+	// Object Collisions
+	var objects = window.gamestate.activeGameObjects();
+
+	for (var i = 0; i < objects.length; i++){
+		var obj = objects[i];
+
+		if (obj !== collidingObject && obj.isColliding(collidingObject)){
+			return true;
+		}
+	}
+
+	return false;
+}
+
 var update = function(elapsed){
 	if (isPaused){
 		return;
@@ -126,7 +148,7 @@ var update = function(elapsed){
 			transform.x = newX;
 
 			// Collision check
-			if (!currentRoom.doesCollide(mainCharacter)){
+			if (!doesCollide(mainCharacter)){
 				mainCharacter.moveVector = { rightness : rightness, downness : downness };
 				isMoving = true;
 			} else {
@@ -140,7 +162,7 @@ var update = function(elapsed){
 			transform.y = newY;
 
 			// Collision check
-			if (!currentRoom.doesCollide(mainCharacter)){
+			if (!doesCollide(mainCharacter)){
 				mainCharacter.moveVector = { rightness : rightness, downness : downness };
 				isMoving = true;
 			} else {

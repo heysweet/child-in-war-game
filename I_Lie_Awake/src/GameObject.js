@@ -6,8 +6,8 @@ var collision = require("sald:collide.js");
 } */
 var GameObject = function(x_, y_, json){
 
-	var width = json.width;
-	var height = json.height;
+	var width = 0;
+	var height = 0;
 
 	this.transform = {
 		x : x_,
@@ -18,6 +18,14 @@ var GameObject = function(x_, y_, json){
 		this.zOffset = json.zOffset;
 	}
 
+	if (json.hasOwnProperty('width')){
+		width = json.width;
+	}
+
+	if (json.hasOwnProperty('height')){
+		height = json.height;
+	}
+
 	this.image = null;
 
 	if (json.hasOwnProperty('image')){
@@ -25,6 +33,22 @@ var GameObject = function(x_, y_, json){
 	}
 
 	this.sprite = json.sprite;
+
+	if (json.hasOwnProperty('relativeBoundingBox')){
+		this.relativeBoundingBox = json.relativeBoundingBox;
+	} else {
+		// For collisions
+		this.relativeBoundingBox = null;//{
+		// 	min : {
+		// 		x : 0,
+		// 		y : 0
+		// 	},
+		// 	max : {
+		// 		x : width,
+		// 		y : height
+		// 	}
+		// }
+	}
 
 
 	var halfWidth  = width  / 2;
@@ -73,18 +97,6 @@ var GameObject = function(x_, y_, json){
 		return {
 			x : x_,
 			y : y_
-		}
-	}
-
-	// For collisions
-	this.relativeBoundingBox = {
-		min : {
-			x : 0,
-			y : 0
-		},
-		max : {
-			x : width,
-			y : height
 		}
 	}
 }
@@ -181,9 +193,12 @@ GameObject.prototype.updateTransform = function(pos){
 }
 
 GameObject.prototype.isColliding = function(obj2){
+	var rect = this.collisionBox();
 	var rect2 = obj2.collisionBox();
 
-	return collision.rectangleRectangle(this.collisionBox(), rect2);
+	if (rect === null || rect2 === null) return false;
+
+	return collision.rectangleRectangle(rect, rect2);
 };
 
 module.exports = GameObject;
