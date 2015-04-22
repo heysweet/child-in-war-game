@@ -54,12 +54,12 @@ parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width,
 								parentsBedroom.height/2);
 
 // Connect the rooms
-var toBedroomTarget		= { x: 214, y: 321};
-var fromBedroomTarget	= { x: 404, y: 84};
-var toParentsTarget		= { x: parentsBedroom.width - 40, 
-							y: parentsBedroom.height/2};
-var fromParentsTarget	= { x: 24, y: 116};
-var toStreetTarget		= { x: 200, y:200};
+var toBedroomTarget		= { x: 183, y: 251};
+var fromBedroomTarget	= { x: 373, y: 14};
+var toParentsTarget		= { x: parentsBedroom.width - 71, 
+							y: (parentsBedroom.height/2) - 70};
+var fromParentsTarget	= { x: 699, y: 58};
+var toStreetTarget		= { x: 170, y: 130};
 
 var toBedroomBox = { x : 346, y : 0, width : 117, height : 60 };
 var fromBedroomBox = { x : 154, y : 403, width : 118, height : 42 };
