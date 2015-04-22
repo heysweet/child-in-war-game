@@ -49,7 +49,7 @@ var Room = function(width, height){
 	};
 
 	this.update = function(elapsed){
-		var bbox = gamestate.mainCharacter.collisionBox();
+		var bbox = gamestate.mainCharacter.collisionRect();
 		var pos = gamestate.mainCharacter.transform;
 
 		for (var i = 0; i < teleporters.length; i++){
@@ -90,11 +90,12 @@ var Room = function(width, height){
 		var tempBoxes = [];
 
 		for (var i = 0; i < boxes.length; i++){
+			// Function wrapper for collisions
 			var temp = function(){
 				var box = boxes[i];
 
-				this.collisionBox = function(){
-					return box;
+				this.collisionShape = function(){
+					return {rect : box};
 				}
 			}
 

@@ -48,7 +48,7 @@ var kitchen = require("setupKitchen.js");
 var bedroom = require("setupBedroom.js");
 var parentsBedroom = new Room(utils.screenWidth()/2, utils.screenHeight()/2);
 
-var street = new Room(utils.screenWidth(), utils.screenHeight());
+var street = require("setupStreet.js");
 
 parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 
 								parentsBedroom.height/2);
@@ -59,19 +59,24 @@ var fromBedroomTarget	= { x: 404, y: 84};
 var toParentsTarget		= { x: parentsBedroom.width - 40, 
 							y: parentsBedroom.height/2};
 var fromParentsTarget	= { x: 24, y: 116};
+var toStreetTarget		= { x: 200, y:200};
 
 var toBedroomBox = { x : 346, y : 0, width : 117, height : 60 };
 var fromBedroomBox = { x : 154, y : 403, width : 118, height : 42 };
 var toParentsBox = { x : 668, y : 0, width : 117, height : 60 };
 var fromParentsBox = { x : 144, y : 42, width : 20, height : 42 };
 
+var toStreetBox = { x : 928, y : 137, width : 40, height : 117 };
+
 var bedroomDoor      = new Teleporter(bedroom, toBedroomBox, toBedroomTarget);
 var leaveBedroomDoor = new Teleporter(kitchen, fromBedroomBox,fromBedroomTarget);
 var parentsDoor      = new Teleporter(parentsBedroom, toParentsBox, toParentsTarget);
 var leaveParentsDoor = new Teleporter(kitchen, fromParentsBox, fromParentsTarget);
+var streetDoor		 = new Teleporter(street, toStreetBox, toStreetTarget);
 
 kitchen.addTeleporter(bedroomDoor);
 kitchen.addTeleporter(parentsDoor);
+kitchen.addTeleporter(streetDoor);
 
 bedroom.addTeleporter(leaveBedroomDoor);
 parentsBedroom.addTeleporter(leaveParentsDoor);

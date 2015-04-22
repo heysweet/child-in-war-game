@@ -15,8 +15,7 @@ var maxY = 0;
 var updateRoom = function(room){
 	var mainCharacter = gamestate.mainCharacter;
 
-	var bb = mainCharacter.collisionBox();
-	var topLeft = mainCharacter.getTopLeft();
+	var bb = mainCharacter.collisionRect();
 	var transform = mainCharacter.transform;
 
 	var smallX = transform.x - bb.min.x;

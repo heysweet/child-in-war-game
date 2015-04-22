@@ -1,5 +1,5 @@
 var movement = require("movement.js");
-var Character = require("Character.js");
+var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var Sprite = require("sald:Sprite.js");
 
@@ -7,6 +7,7 @@ var startX = utils.screenWidth()/2;
 var startY = utils.screenHeight()/2;
 var width  = 62;
 var height = 140;
+var anchor = { x : 0, y : 0};
 
 var image = require("./data/characters/mainCharacter/walkCycle1.png");
 
@@ -16,19 +17,19 @@ var setupCollision = function(mainCharacter){
 	var dx = 8;
 	var dy = 90;
 
-	var oldMaxY = mainCharacter.rel
-
-	mainCharacter.relativeBoundingBox = {
+	var boundingBox = {
 		min : {x : 0, y : 0}, 
 		max : {x : mainCharacter.getWidth(), y : mainCharacter.getHeight()}
 	};
 
-	mainCharacter.relativeBoundingBox.min = {
+	boundingBox.min = {
 		x : dx,
 		y : dy
 	};
 
-	mainCharacter.relativeBoundingBox.max.x -= dx;
+	boundingBox.max.x -= dx;
+
+	mainCharacter.setCollisionRect(boundingBox, false);
 }
 
 var setupAnimations = function(mainCharacter){
@@ -55,21 +56,22 @@ var setupAnimations = function(mainCharacter){
 
 function MainCharacter(){
 	var args = {
+		anchor : anchor,
+		zOffset : 120,
 		width : width,
-		height : height,
-		zOffset : 40
+		height : height
 	}
 
-	Character.call(this, startX, startY, args);
+	GameObject.call(this, startX, startY, args);
 
 	setupCollision(this);
 	setupAnimations(this);
 
 	movement.initialize(this);
-	this.isMain = true;
 }
 
-MainCharacter.prototype = Object.create(Character.prototype);
+// Prototypical Inheritance
+MainCharacter.prototype = Object.create(GameObject.prototype);
 
 MainCharacter.prototype.constructor = MainCharacter;
 
@@ -118,13 +120,15 @@ MainCharacter.prototype.draw = function(){
 		offset = this.getWidth()
 	}
 
+	var anchor = this.getScaledAnchor();
+
 	if (this.moveVector === null){
-		this.sprite.draw('idle', (onScreenPos.x - this.halfWidth() + offset) * scalar, 
-			onScreenPos.y - this.halfHeight(), 
+		this.sprite.draw('idle', (onScreenPos.x + offset) * scalar, 
+			onScreenPos.y, 
 			0, width, height, 0, 1);
 	} else {
-		this.sprite.draw('walk', (onScreenPos.x - this.halfWidth() + offset) * scalar, 
-			onScreenPos.y - this.halfHeight(), 
+		this.sprite.draw('walk', (onScreenPos.x + offset) * scalar, 
+			onScreenPos.y, 
 			0, width, height, 0, 1);
 	}
 

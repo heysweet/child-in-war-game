@@ -38,7 +38,8 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 				camera.focusCamera(position);
 			}
 
-			mainCharacter.updateTransform(coords);
+			mainCharacter.transform.x = coords.x;
+			mainCharacter.transform.y = coords.y;
 		}
 	}
 

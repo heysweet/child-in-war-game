@@ -3,10 +3,8 @@ var BaseGameObject = require("sald:GameObject.js");
 /* json : {
 	sprite, width, height
 } */
-var GameObject = function(x, y, args){
-	this.prototype = new BaseGameObject();
-
-	BaseGameObject.call(this, x, y, args.width, args.height, args.anchor);
+var GameObject = function(x, y, width, height, anchor){
+	BaseGameObject.call(this, x, y, width, height, anchor);
 
 	var setWidth_ = this.setWidth;
 	var setHeight_ = this.setHeight;
@@ -14,25 +12,10 @@ var GameObject = function(x, y, args){
 	this.zOffset = null;
 	this.image = null;
 	this.sprite = null;
+	this.relativeBoundingBox = null;
 
-	if (args.zOffset) this.zOffset = args.zOffset;
-	if (args.image) this.image = args.image;
-	if (args.sprite) this.sprite = args.sprite;
-	if (args.collisionShape) this.setCollisionShape(args.collisionShape, false);
-
-	var halfWidth;
-	if (args.width){ 
-		halfWidth = args.width  / 2; 
-	} else { 
-		halfWidth = null; 
-	}
-
-	var halfHeight;
-	if (args.height){
-		halfHeight = args.height / 2;
-	} else {
-		halfHeight = null;
-	}
+	var halfWidth  = width  / 2;
+	var halfHeight = height / 2;
 
 	this.setWidth = function(num){
 		setWidth_(num);
@@ -52,11 +35,6 @@ var GameObject = function(x, y, args){
 		return halfHeight;
 	}
 }
-
-// Prototypical Inheritance
-GameObject.prototype = Object.create(BaseGameObject.prototype);
-
-GameObject.prototype.constructor = GameObject;
 
 // /* json : {
 // 	sprite, width, height
@@ -141,13 +119,11 @@ GameObject.prototype.setImage = function(image){
 
 
 GameObject.prototype.getZ = function(){
-	var anchor = this.getScaledAnchor();
 	var result = this.transform.y + anchor.y;
 
 	if (this.zOffset !== undefined){
 		return result + this.zOffset;
 	}
-
 
 	return result;
 }
@@ -169,6 +145,11 @@ GameObject.prototype.draw = function(){
 
 GameObject.prototype.setSprite = function(sprite){
 	this.sprite = sprite;
+}
+
+GameObject.prototype.updateTransform = function(pos){
+	this.transform.x = pos.x;
+	this.transform.y = pos.y;
 }
 
 module.exports = GameObject;
