@@ -5,11 +5,11 @@ var Sprite = require("sald:Sprite.js");
 
 var startX = utils.screenWidth()/2;
 var startY = utils.screenHeight()/2;
-var width  = 62;
+var width  = 70;
 var height = 140;
 var anchor = { x : 0, y : 0};
 
-var image = require("./data/characters/mainCharacter/walkCycle1.png");
+var image = require("./data/characters/mainCharacter/walkCycle.png");
 
 var faceRight = true;
 
@@ -37,14 +37,14 @@ var setupAnimations = function(mainCharacter){
 		'walk' : {
 			x:0,
 			y:0, 
-			width:119,
+			width:141.7,
 			height:280, 
 			size:9 
 		},
 		'idle' : {
 			x:0,
 			y:0, 
-			width:119,
+			width:141,
 			height:280, 
 			size:1
 		}

@@ -4,7 +4,7 @@ var utils = require("utils.js");
 
 var bedroom = new Room(430, 430);
 
-var girlBedroomBackground = require("./data/home/girlBedroom.png");
+var girlBedroomBackground = require("./data/home/bedroom/girlBedroom.png");
 
 bedroom.setBackground(girlBedroomBackground);
 
@@ -20,6 +20,12 @@ var collisions = [
 	{min : {x : 106, y : 224}, max : {x : 243, y : 271}}, // South Bed
 	{min : {x : 106, y : 88}, max : {x : 243, y : 173}}, // North Bed
 	{min : {x : 111, y : 88}, max : {x : 144, y : 261}} // West Bed
+];
+
+var objects = [
+	new GameObject(100, 145, {	image : require("./data/home/bedroom/blanket.png"), 
+								zOffset : 72
+							})
 ];
 
 
@@ -56,6 +62,6 @@ var collisions = [
 // ];
 
 bedroom.addCollisionBoxes(collisions);
-// bedroom.addObjects(objects);
+bedroom.addObjects(objects);
 
 module.exports = bedroom;

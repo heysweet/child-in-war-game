@@ -1,10 +1,16 @@
 var Room = require("Room.js");
 var GameObject = require("GameObject.js");
 var utils = require("utils.js");
+var Treadmill = require("Treadmill.js");
+
+var mainCharacter = window.gamestate.mainCharacter;
+var speed = mainCharacter.transform.xDelta;
 
 var street = new Room(utils.screenWidth(), utils.screenHeight());
 
 street.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
+
+var treadmill = new Treadmill(speed);
 
 street.onEnter = function(){
 	// Disable movement
@@ -14,6 +20,14 @@ street.onEnter = function(){
 	// Setup scrolling background
 
 	// Setup Texting
+}
+
+street.draw = function(){
+	treadmill.draw();
+}
+
+street.update = function(elapsed){
+	treadmill.update(elapsed);
 }
 
 street.onLeave = function(){

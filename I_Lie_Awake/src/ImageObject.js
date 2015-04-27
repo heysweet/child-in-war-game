@@ -4,6 +4,8 @@ var ImageObject = function(x_, y_, image_, distance_){
 	this.image = image_;
 	this.distance = distance_;
 
+	var showingNext = false;
+
 	var speed = 0;
 
 	var transform = {
@@ -11,34 +13,35 @@ var ImageObject = function(x_, y_, image_, distance_){
 		y : y_
 	}
 
-
-	this.setOffscreenRight = function(){
-		transform.x = utils.screenWidth();
+	this.setOffscreenRight = function(offset){
+		transform.x = offset + this.image.width + this.distance;
+		showingNext = false;
 	}
 
-	this.setOffscreenLeft = function(){
-		transform.x = -this.image.width;
+	this.setOffscreenLeft = function(offset){
+		transform.x = offset - this.distance - this.image.width;
+		showingNext = false;
 	}
-	
-	this.setOffscreen = function(){
-		if (speed < 0){
-			this.setOffscreenRight();
+
+	this.setOffscreen = function(offset){
+		if (speed > 0){
+			this.setOffscreenRight(offset);
 		} else {
-			this.setOffscreenLeft();
+			this.setOffscreenLeft(offset);
 		}
 	}
 
 
 	this.isOffscreenLeft = function(){
-		return this.transform.x + this.image.width > 0;
+		return transform.x + this.image.width < 0;
 	}
 
 	this.isOffscreenRight = function(){
-		return this.transform.x < utils.screenWidth();
+		return transform.x > utils.screenWidth();
 	}
 
 	this.hasMovedOffscreen = function(){
-		if (speed < 0){
+		if (speed > 0){
 			return this.isOffscreenLeft();
 		} else {
 			return this.isOffscreenRight();
@@ -46,30 +49,48 @@ var ImageObject = function(x_, y_, image_, distance_){
 	}
 
 
-	this.shouldShowNextToRight = function(){
-		return (transform.x + this.image.width) < this.distance;
+	this.showNextToRightOffset = function(){
+		if (showingNext) return null;
+
+		var offset = transform.x - utils.screenWidth();
+
+		if (offset < this.distance){
+			showingNext = true;
+			return transform.x;
+		}
+
+		return null;
 	}
 
-	this.shouldShowNextToLeft = function(){
-		return transform.x > this.distance;
+	this.showNextToLeftOffset = function(){
+		if (showingNext) return null;
+
+		var offset = transform.x;
+
+		if (offset > this.distance){
+			showingNext = true;
+			return transform.x;
+		}
+
+		return null;
 	}
 
-	this.shouldShowNext = function(){
-		if (speed < 0){
-			return this.shouldShowNextToRight();
+	this.showNextOffset = function(){
+		if (speed > 0){
+			return this.showNextToRightOffset();
 		} else {
-			return this.shouldShowNextToLeft();
+			return this.showNextToLeftOffset();
 		}
 	}
 
 	this.update = function(speed_){
-		transform.x += speed_;
+		transform.x -= speed_;
 		speed = speed_;
 	}
 
 	this.draw = function(){
-		var x = this.transform.x
-		var y = this.transform.y;
+		var x = transform.x
+		var y = transform.y;
 
 		var ctx = sald.ctx;
 

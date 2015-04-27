@@ -1,19 +1,31 @@
 var ImageObject = require("ImageObject.js");
 
+var elapsed;
+
 var grass = [
-	new ImageObject(0, 0, require("./data/street/grass.jpg", 0)),
+	new ImageObject(0, 0, require("./data/street/grass.jpg"), 0),
+	new ImageObject(0, 0, require("./data/street/grass.jpg"), 0),
+	new ImageObject(0, 0, require("./data/street/grass.jpg"), 0),
+];
+
+var road = [
+	new ImageObject(0, 0, require("./data/street/path.png"), 0),
+	new ImageObject(0, 0, require("./data/street/path.png"), 0),
+	new ImageObject(0, 0, require("./data/street/path.png"), 0),
 ];
 
 var house = [
-	new ImageObject(100, 0, require("./data/street/house1/house1.png", 40)), 
-	new ImageObject(100, 0, require("./data/street/house1/house1.png", 40))
+	new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40), 
+	new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40),
+	new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40)
 ];
 
-var drawnGrass = [new ImageObject(0, 0, require("./data/street/grass.jpg", 0))];
-var drawnHouse = [new ImageObject(100, 0, require("./data/street/house1/house1.png", 40))];
+var drawnGrass = [new ImageObject(0, 0, require("./data/street/grass.jpg"), 0)];
+var drawnRoad = [new ImageObject(0, 0, require("./data/street/path.png"), 0)];
+var drawnHouse = [new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40)];
 
-var layersPool = [grass, house];
-var drawnLayers = [drawnGrass, drawnHouse];
+var layersPool = [grass, road, house];
+var drawnLayers = [drawnGrass, drawnRoad, drawnHouse];
 
 var newestObjects = [];
 
@@ -23,6 +35,11 @@ for (var i = 0; i < drawnLayers.length; i++){
 
 var Treadmill = function(speed_) {
 	var speed = speed_;
+	var elapsed;
+
+	this.update = function(elapsed_){
+		elapsed = elapsed_;
+	}
 
 	this.setSpeed = function(amt){
 		speed = amt;
@@ -38,7 +55,7 @@ var Treadmill = function(speed_) {
 		var obj = layer[index];
 
 		if (index > -1) {
-			array.splice(index, 1);
+			layer.splice(index, 1);
 		}
 
 		return obj;
@@ -63,7 +80,7 @@ var Treadmill = function(speed_) {
 				obj = layer[j];
 
 				// It's fine to update in the drawn loop since you can't interact with the background
-				obj.update(speed);
+				obj.update(speed * elapsed);
 
 				obj.draw();
 
@@ -71,15 +88,17 @@ var Treadmill = function(speed_) {
 			}
 
 			if (layer.length > 0){
-				var lastObj = layer[layer.length];
+				var lastObj = layer[layer.length - 1];
 
-				if (lastObj.shouldShowNext()){
+				var offset = lastObj.showNextOffset()
+
+				if (offset !== null){
 					var nextObj = getNextObject(i);
 
 					if (nextObj !== null){
 						// update needed to set which side to setOffscreen
-						nextObj.update(speed);
-						nextObj.setOffscreen();
+						nextObj.update(speed * elapsed);
+						nextObj.setOffscreen(offset);
 
 						layer.push(nextObj);
 					}
