@@ -29,6 +29,8 @@ var Phrase = function(name, text, duration){
 
 			if (choice.phrases !== null){
 				self.addOption(choice.text, choice.phrases[0]);
+			} else {
+				self.addOption(choice.text, null);
 			}
 
 			var phrases = choice.phrases;

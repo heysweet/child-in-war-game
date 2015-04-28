@@ -6,9 +6,12 @@ var dayThreeDialogue = require("setupDayThreeDialogue.js");
 
 var dayFourDialogue = require("setupDayFourDialogue.js");
 
+var dayFiveDialogue = require("setupDayFiveDialogue.js");
+
 module.exports = [
 	dayOneDialogue,
-	// dayTwoDialogue,
-	// dayThreeDialogue,
-	// dayFourDialogue,
+	dayTwoDialogue,
+	dayThreeDialogue,
+	dayFourDialogue,
+	dayFiveDialogue,
 ];
