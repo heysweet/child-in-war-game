@@ -15,7 +15,7 @@ var testDialogue = setupVars.testDialogue;
 var mainCharacter = window.gamestate.mainCharacter;
 window.gamestate.camera = camera;
 
-var phoneInterface = new PhoneInterface();
+window.gamestate.phoneInterface = new PhoneInterface();
 
 window.gamestate.shouldShowPhone = true;
 window.gamestate.isTexting = true;
@@ -63,7 +63,7 @@ sald.scene = {
 		}
 
 		if (window.gamestate.shouldShowPhone){
-			phoneInterface.draw();
+			window.gamestate.phoneInterface.draw();
 		}
 	},
 	key:function(key, down) {
@@ -109,7 +109,7 @@ sald.scene = {
 			console.log(button, down);
 
 			if (window.gamestate.isTexting && !down && button === "LEFT"){
-				phoneInterface.mouse(pos);		
+				window.gamestate.phoneInterface.mouse(pos);		
 			}
 
 			if (down){

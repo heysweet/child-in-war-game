@@ -6,9 +6,18 @@ var TOP_BUBBLE_IMAGE = require("./data/phone/friendsTop.png");
 var MIDDLE_BUBBLE_IMAGE = require("./data/phone/friendsMiddle.png");
 var BOTTOM_BUBBLE_IMAGE = require("./data/phone/friendsBottom.png");
 
-var TextMessage = function(message_, isMine){
+var TextMessage = function(message_, name){
 	var message = "";
 	var numLines = 1;
+
+	var isMine = false;
+	var shouldWriteName = false;
+
+	if (name === undefined){
+		isMine = true;
+	} else if (name !== "Mom" && name !== "Dad"){
+		shouldWriteName = true;
+	}
 
 	var heightPerLine = 10;
 
@@ -20,13 +29,16 @@ var TextMessage = function(message_, isMine){
 
 	var textOffset = {
 		x : 42,
-		y : 22
+		y : 20
 	}
 
 	this.setMessage = function(message_){
 		message = message_;
 
-		numLines = utils.numLines(message_);
+		var ctx = sald.ctx;
+
+		ctx.font = "300 22px Gill Sans";
+		numLines = ctx.measureWrapText(message, 0, 0, 195, 20);
 	}
 
 	this.setMessage(message_);
@@ -34,6 +46,8 @@ var TextMessage = function(message_, isMine){
 	var drawBubble = function(yOffset){
 		var drawY = y - yOffset;
 		var ctx = sald.ctx;
+
+		var height = 0;
 
 		var middle = MIDDLE_BUBBLE_IMAGE;
 
@@ -43,28 +57,34 @@ var TextMessage = function(message_, isMine){
 			drawY -= (middle.height);
 
 			ctx.drawImage(bubble, x + xOffset, drawY - 13);
+
+			height = 53;
 		} else {
 			var top = TOP_BUBBLE_IMAGE; 
 			var bottom = BOTTOM_BUBBLE_IMAGE;
 
 			ctx.drawImage(bottom, x, drawY);
 
+			height += bottom.height;
+
 			// drawY -= bottom.height;//IMAGE_HEIGHT_OF_BOTTOM_BUBBLE_PART;
 
 			for (var i = 0; i < numLines; i++){
 				drawY -= (middle.height);
 				ctx.drawImage(middle, x, drawY);
+				height += middle.height;
 			}
 
+			height += top.height - 1;
 			ctx.drawImage(top, x, drawY - (top.height - 1));
 		}
 
-		
-
-		return drawY;
+		return {height:height, drawY:drawY};
 	}
 
-	var drawText = function(yUpdate){
+	var drawText = function(yOffset, json){
+		var yUpdate = json.drawY;
+
 		var drawY = yUpdate + textOffset.y;
 		var drawX = x + textOffset.x;
 
@@ -76,13 +96,22 @@ var TextMessage = function(message_, isMine){
 
 		ctx.fillStyle = 'rgb(0, 0, 0)';
 
-		ctx.font = "300 24px Gill Sans";
-		ctx.wrapText(message, drawX, drawY, 2000, 20);
+		ctx.font = "300 22px Gill Sans";
+		ctx.wrapText(message, drawX, drawY, 195, 20);
+
+		if (shouldWriteName){
+			ctx.fillStyle = 'rgb(100, 100, 100)';
+			ctx.font = "300 12px Gill Sans";
+
+			ctx.fillText(name, drawX, yUpdate + json.height - 14);
+		}
 	}
 
 	this.draw = function(yOffset){
-		var yUpdate = drawBubble(yOffset);
-		drawText(yUpdate);
+		var json = drawBubble(yOffset);
+		drawText(yOffset, json);
+
+		return json.height;
 	}
 };
 

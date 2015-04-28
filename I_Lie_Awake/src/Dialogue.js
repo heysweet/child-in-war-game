@@ -59,6 +59,8 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 	var phrase = this.getPhrase();
 	var next;
 
+	window.gamestate.phoneInterface.addTextedPhrase(phrase);
+
 	var nextPhrase = phrase.getNext(choiceNum);
 
 	if (nextPhrase === null){

@@ -6,7 +6,14 @@ var BACKGROUND_IMAGE = require("./data/phone/background.png");
 var FOREGROUND_IMAGE = require("./data/phone/foreground.png");
 
 var PhoneInterface = function(){
-	var currentMessages = [];
+	var conversationNum = 0;
+
+	// Mom, Dad, Friends
+	var conversations = [
+		[], [], [],
+	];
+
+	var currentMessages = conversations[0];
 	var dialogue;
 
 	var messageSpacing = 4;
@@ -14,22 +21,16 @@ var PhoneInterface = function(){
 	var backgroundX = 0;
 	var backgroundY = 0;
 
-	var textMessage = new TextMessage("This is a test", true);
-
 	var drawMessages = function(){
 		var ctx = sald.ctx;
-
-		ctx.font = "36px Indie Flower";
-		ctx.fillText("Indie Flower",10,50);
 
 		var runningHeight = 0;
 
 		for (var i = currentMessages.length - 1; i >= 0; i--){
 			var message = currentMessages[i];
 
-			message.draw(runningHeight);
+			var height = message.draw(runningHeight);
 
-			var height = message.height;
 			runningHeight += height + messageSpacing;
 		}
 	}
@@ -48,8 +49,6 @@ var PhoneInterface = function(){
 		drawBackground();
 		drawMessages();
 		drawForeground();
-
-		textMessage.draw(0);
 	}
 
 	this.loadDialogue = function(dialogue_){
@@ -58,6 +57,34 @@ var PhoneInterface = function(){
 
 	this.mouse = function(pos){
 
+	}
+
+	this.addTextedPhrase = function(phrase){
+		if (phrase.name == "Mom"){
+			if (conversationNum !== 0){
+				currentMessages = conversations[0];
+			}
+		} else if (phrase.name == "Dad"){
+			if (conversationNum !== 1){
+				currentMessages = conversations[1];
+			}
+		} else if (conversationNum !== 2){
+			currentMessages = conversations[2];
+		}
+
+		var message = new TextMessage(phrase.text, phrase.name);
+
+		currentMessages.push(message);
+
+		if (currentMessages.length > 6){
+			currentMessages.splice(0, 1);
+		}
+	}
+
+	this.addMyText = function(text){
+		var myMessage = new TextMessage(text);
+
+		currentMessages.push(myMessage);
 	}
 };
 

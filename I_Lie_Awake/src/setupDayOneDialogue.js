@@ -59,7 +59,7 @@ var walkToSchool = [
 	new Phrase("Mom", "Did you leave already?", 2000),
 	new Phrase("Mom", "I am worried about the situations recently", 2000),
 	new Phrase("Mom", "Stay safe, don't go looking for trouble", 2000),
-	new Phrase("Johnny", "yooo coming to school today?", 2000),
+	new Phrase("Johnny", "yooo coming to \nschool today?", 2000),
 	new Phrase("Rachel", "i am! where are you guys?", 2000),
 	new Phrase("Johnny", "already hereeee", 2000),
 	new Phrase("Sarah", "I will be there soon...", 2000),
@@ -86,7 +86,7 @@ var walkFromSchool = [
 	new Phrase("Mom", "I just remembered", 2000),
 	new Phrase("Mom", "Can you pick up a dozen eggs from the grocery store today?", 2000),
 	new Phrase("Rachel", "hey you coming to the park? :)", 2000),
-	new Phrase("Rachel", "we are all going to play hide and seek today! :D", )
+	new Phrase("Rachel", "we are all going to play hide and seek today! :D", null)
 ];
 
 var dialogueFromSchool = new Dialogue(walkFromSchool);

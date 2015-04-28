@@ -4,6 +4,9 @@ function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 //http://stackoverflow.com/questions/5026961/html5-canvas-ctx-filltext-wont-do-line-breaks
 CanvasRenderingContext2D.prototype.wrapText = function (text, x, y, maxWidth, lineHeight) {
 	var lines = text.split("\n");
+
+	var height = 0;
+
 	for (var i = 0; i < lines.length; i++) {
 
 		var words = lines[i].split(' ');
@@ -13,10 +16,12 @@ CanvasRenderingContext2D.prototype.wrapText = function (text, x, y, maxWidth, li
 			var testLine = line + words[n] + ' ';
 			var metrics = this.measureText(testLine);
 			var testWidth = metrics.width;
+
 			if (testWidth > maxWidth && n > 0) {
 				this.fillText(line, x, y);
 				line = words[n] + ' ';
 				y += lineHeight;
+				height += lineHeight;
 			}
 			else {
 				line = testLine;
@@ -25,8 +30,45 @@ CanvasRenderingContext2D.prototype.wrapText = function (text, x, y, maxWidth, li
 
 		this.fillText(line, x, y);
 		y += lineHeight;
+		height += lineHeight;
 	}
+
+	return height;
 }
+
+CanvasRenderingContext2D.prototype.measureWrapText = function (text, x, y, maxWidth, lineHeight) {
+	var lines = text.split("\n");
+
+	var numLines = 0;
+
+	for (var i = 0; i < lines.length; i++) {
+
+		var words = lines[i].split(' ');
+		var line = '';
+
+		for (var n = 0; n < words.length; n++) {
+			var testLine = line + words[n] + ' ';
+			var metrics = this.measureText(testLine);
+			var testWidth = metrics.width;
+
+			if (testWidth > maxWidth && n > 0) {
+				line = words[n] + ' ';
+				y += lineHeight;
+				numLines++;
+			}
+			else {
+				line = testLine;
+			}
+		}
+
+		y += lineHeight;
+		numLines++;
+	}
+
+	return numLines;
+}
+
+
 
 var SCREEN_HEIGHT = sald.size.y / window.gamestate.IMAGE_SCALAR;
 var SCREEN_WIDTH  = sald.size.x / window.gamestate.IMAGE_SCALAR;
