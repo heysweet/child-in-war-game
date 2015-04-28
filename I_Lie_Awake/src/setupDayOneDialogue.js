@@ -34,18 +34,18 @@ var dialogueWithDad = new Dialogue(day_1_dad_1);
 
 // Walk to School
 
-var mikeShucks = [
-	new Phrase("Mike", "awww shucks", 2000),
-	new Phrase("Mike", "see you at school", 2000),
+var johnnyShucks = [
+	new Phrase("Johnny", "awww shucks", 2000),
+	new Phrase("Johnny", "see you at school", 2000),
 ];
 
-var mikeNoWay = [
-	new Phrase("Mike", "dude no wayyyyyyyyy :O", 2000)
+var johnnyNoWay = [
+	new Phrase("Johnny", "dude no wayyyyyyyyy :O", 2000)
 ];
 
 var choices2 = [
-	new Choice("just some soldiers, nothing exciting", mikeShucks),
-	new Choice("oh yeah? i saw a tank", mikeNoWay)
+	new Choice("just some soldiers, nothing exciting", johnnyShucks),
+	new Choice("oh yeah? i saw a tank", johnnyNoWay)
 ];
 
 	// null will make sure it jumps back into the next phrase in the main dialogue
@@ -59,24 +59,49 @@ var walkToSchool = [
 	new Phrase("Mom", "Did you leave already?", 2000),
 	new Phrase("Mom", "I am worried about the situations recently", 2000),
 	new Phrase("Mom", "Stay safe, don't go looking for trouble", 2000),
-	new Phrase("Mike", "yooo coming to school today?", 2000),
+	new Phrase("Johnny", "yooo coming to school today?", 2000),
 	new Phrase("Rachel", "i am! where are you guys?", 2000),
-	new Phrase("Mike", "already hereeee", 2000),
+	new Phrase("Johnny", "already hereeee", 2000),
 	new Phrase("Sarah", "I will be there soon...", 2000),
 	new Phrase("Mom", "Try to avoid crowds and strangers", choices1),
 	new Phrase("Rachel", "omw there are soldiers everywhere!", 2000),
-	new Phrase("Mike", "[skip text]... have you seen anything cool yet?", choices2),
+	new Phrase("Johnny", "brenda just told me he saw a jeep with a big gun on it!", 2000),
+	new Phrase("Andy", "No way brenda is such a liar.", 2000),
+	new Phrase("Johnny", "have you seen anything cool yet?", choices2)
 ];
 
 var dialogueToSchool = new Dialogue(walkToSchool);
 
 
+
+
 // Walk from School
 
+var choices3 = [
+	new Choice("kk i’ll be right there", null),
+	new Choice("sorry but i got to buy eggs for mom today", null)
+];
+
 var walkFromSchool = [
+	new Phrase("Mom", "I just remembered", 2000),
+	new Phrase("Mom", "Can you pick up a dozen eggs from the grocery store today?", 2000),
+	new Phrase("Rachel", "hey you coming to the park? :)", 2000),
+	new Phrase("Rachel", "we are all going to play hide and seek today! :D", )
 ];
 
 var dialogueFromSchool = new Dialogue(walkFromSchool);
+
+
+// Walk to home
+
+var walkToHome = [
+	new Phrase("Johnny", "ttyl dinner with familyyyy", 2000),
+	new Phrase("Rachel", "bye bye :)", 2000),
+	new Phrase("Brenda", "c u tommorw", 2000),
+	new Phrase("Sarah", "Be careful on your way home.", 2000)
+];
+
+var dialogueToHome = new Dialogue(walkToHome);
 
 module.exports = {
 	morning : dialogueWithDad,

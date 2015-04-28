@@ -23,6 +23,15 @@ walkFromSchool = [
 
 dialogueFromSchool = new Dialogue(walkFromSchool);
 
+
+// Walk to home
+
+var walkToHome = [
+];
+
+var dialogueToHome = new Dialogue(walkToHome);
+
+
 module.exports = {
 	morning : dialogueWithDad,
 	toSchool : dialogueToSchool,
