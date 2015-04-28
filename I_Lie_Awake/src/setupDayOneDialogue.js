@@ -49,6 +49,7 @@ var choices2 = [
 ];
 
 	// null will make sure it jumps back into the next phrase in the main dialogue
+	// Whenever a dialogue path
 var choices1 = [
 	new Choice("don't worry mom, i'll be ok", null),
 	new Choice("you worry too much mom", null)
