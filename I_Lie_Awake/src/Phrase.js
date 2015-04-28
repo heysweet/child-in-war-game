@@ -1,6 +1,54 @@
-var Phrase = function(text){
+var processPhrases = function(phrases){
+	console.log(phrases);
+
+	if (phrases.length > 0){
+		var lastPhrase = phrases[0];
+
+		for (var i = 1; i < phrases.length; i++){
+			var phrase = phrases[i];
+
+			if (phrase.duration !== undefined){
+				lastPhrase.setNextPhrase(phrase);
+			}
+
+			lastPhrase = phrase;
+		}
+	}
+}
+
+var Phrase = function(name, text, duration){
+	console.log(this, "TEST");
+	this.name = name;
 	this.text = text;
+
 	this.choices = [];
+
+	var processChoices = function(self, choices){
+		for (var i = 0; i < choices.length; i++){
+			var choice = choices[i];
+
+			if (choice.phrases !== null){
+				self.addOption(choice.text, choice.phrases[0]);
+			}
+
+			var phrases = choice.phrases;
+
+			if (phrases !== null){
+				processPhrases(phrases);
+			}
+		}
+	}
+
+	if (isNaN(duration)){
+		// what was passed was actually a list of choices
+		var choices = duration;
+		processChoices(this, choices);
+	} else {
+		if (duration !== null){
+			this.duration = duration;
+		}
+	}
+	
 	this.next = null;
 }
 
@@ -54,6 +102,7 @@ Phrase.prototype.draw = function(box){
 		yOffset += yOffsetDelta;
 	}
 }
+
 
 
 // Phrase.draw = Phrase.prototype.setNextPhrase;

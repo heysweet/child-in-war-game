@@ -1,28 +1,34 @@
 var ImageObject = require("ImageObject.js");
 
+var GRASS_IMAGE = require("./data/street/grass.jpg");
+var PATH_IMAGE = require("./data/street/path.png");
+var HOUSE_1_IMAGE = require("./data/street/house1/house1.png");
+
+var utils = require("utils.js");
+
 var elapsed;
 
 var grass = [
-	new ImageObject(0, 0, require("./data/street/grass.jpg"), 0),
-	new ImageObject(0, 0, require("./data/street/grass.jpg"), 0),
-	new ImageObject(0, 0, require("./data/street/grass.jpg"), 0),
+	new ImageObject(0, 0, GRASS_IMAGE, 0),
+	new ImageObject(0, 0, GRASS_IMAGE, 0),
+	new ImageObject(0, 0, GRASS_IMAGE, 0),
 ];
 
 var road = [
-	new ImageObject(0, 0, require("./data/street/path.png"), 0),
-	new ImageObject(0, 0, require("./data/street/path.png"), 0),
-	new ImageObject(0, 0, require("./data/street/path.png"), 0),
+	new ImageObject(0, 0, PATH_IMAGE, 0),
+	new ImageObject(0, 0, PATH_IMAGE, 0),
+	new ImageObject(0, 0, PATH_IMAGE, 0),
 ];
 
 var house = [
-	new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40), 
-	new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40),
-	new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40)
+	new ImageObject(100, 0, HOUSE_1_IMAGE, 40), 
+	new ImageObject(100, 0, HOUSE_1_IMAGE, 40),
+	new ImageObject(100, 0, HOUSE_1_IMAGE, 40)
 ];
 
-var drawnGrass = [new ImageObject(0, 0, require("./data/street/grass.jpg"), 0)];
-var drawnRoad = [new ImageObject(0, 0, require("./data/street/path.png"), 0)];
-var drawnHouse = [new ImageObject(100, 0, require("./data/street/house1/house1.png"), 40)];
+var drawnGrass = [new ImageObject(0, 0, GRASS_IMAGE, 0)];
+var drawnRoad = [new ImageObject(0, 0, PATH_IMAGE, 0)];
+var drawnHouse = [new ImageObject(100, 0, HOUSE_1_IMAGE, 40)];
 
 var layersPool = [grass, road, house];
 var drawnLayers = [drawnGrass, drawnRoad, drawnHouse];
@@ -36,6 +42,27 @@ for (var i = 0; i < drawnLayers.length; i++){
 var Treadmill = function(speed_) {
 	var speed = speed_;
 	var elapsed;
+
+	this.setSaturation = function(saturationAmount){
+		var desaturatedGrass = utils.desaturateImage(GRASS_IMAGE, saturationAmount);
+		var desaturatedHouse = utils.desaturateImage(HOUSE_1_IMAGE, saturationAmount);
+
+		for (var i = 0; i < grass.length; i++){
+			grass[i].image = desaturatedGrass;
+		}
+
+		for (var i = 0; i < drawnGrass.length; i++){
+			drawnGrass[i].image = desaturatedGrass;
+		}
+
+		for (var i = 0; i < house.length; i++){
+			house[i].image = desaturatedHouse;
+		}
+
+		for (var i = 0; i < drawnHouse.length; i++){
+			drawnHouse[i].image = desaturatedHouse;
+		}
+	}
 
 	this.update = function(elapsed_){
 		elapsed = elapsed_;

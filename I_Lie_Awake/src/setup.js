@@ -22,22 +22,7 @@ var mainCharacter = new MainCharacter();
 window.gamestate.mainCharacter = mainCharacter;
 
 // Setup Dialogue
-var Dialogue = require("Dialogue.js");
-var Phrase = require("Phrase.js");
-
-var shouldLoopDialogue = true;
-var testDialogue = new Dialogue(shouldLoopDialogue);
-var lastPhrase1 = new Phrase("Ending 1!");
-var lastPhrase2 = new Phrase("Ending 2!");
-var choicePhrase = new Phrase("Question?");
-
-choicePhrase.addOption("choice 1", lastPhrase1);
-choicePhrase.addOption("choice 2", lastPhrase2);
-
-var firstPhrase = new Phrase("Statement!");
-firstPhrase.setNextPhrase(choicePhrase);
-
-testDialogue.setFirstPhrase(firstPhrase);
+var dialogue = require("setupDialogue.js");
 
 
 // Update the game state
@@ -59,7 +44,7 @@ var fromBedroomTarget	= { x: 373, y: 14};
 var toParentsTarget		= { x: parentsBedroom.width - 71, 
 							y: (parentsBedroom.height/2) - 70};
 var fromParentsTarget	= { x: 699, y: 58};
-var toStreetTarget		= { x: 170, y: 130};
+var toStreetTarget		= { x: 170, y: 190};
 
 var toBedroomBox = { x : 346, y : 0, width : 117, height : 60 };
 var fromBedroomBox = { x : 154, y : 403, width : 118, height : 42 };
@@ -84,5 +69,5 @@ parentsBedroom.addTeleporter(leaveParentsDoor);
 gamestate.setCurrentRoom(kitchen);
 
 module.exports = {
-	testDialogue:testDialogue
+	testDialogue:dialogue[0].toSchool
 };

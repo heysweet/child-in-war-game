@@ -13,6 +13,8 @@ var image = require("./data/characters/mainCharacter/walkCycle.png");
 
 var faceRight = true;
 
+var forceWalking = false;
+
 var setupCollision = function(mainCharacter){
 	var dx = 8;
 	var dy = 90;
@@ -68,6 +70,10 @@ function MainCharacter(){
 	setupAnimations(this);
 
 	movement.initialize(this);
+
+	this.forceWalking = function(bool){
+		forceWalking = bool;
+	}
 }
 
 // Prototypical Inheritance
@@ -122,7 +128,7 @@ MainCharacter.prototype.draw = function(){
 
 	var anchor = this.getScaledAnchor();
 
-	if (this.moveVector === null){
+	if (this.moveVector === null && !forceWalking){
 		this.sprite.draw('idle', (onScreenPos.x + offset) * scalar, 
 			onScreenPos.y, 
 			0, width, height, 0, 1);

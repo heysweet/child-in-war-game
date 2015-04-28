@@ -6,6 +6,7 @@ var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var camera = require("camera.js");
 var sound = require("sald:soundController.js");
+var PhoneInterface = require("PhoneInterface.js");
 
 var testSound = require("./data/test.ogg");
 
@@ -13,6 +14,8 @@ var testDialogue = setupVars.testDialogue;
 
 var mainCharacter = window.gamestate.mainCharacter;
 window.gamestate.camera = camera;
+
+var phoneInterface = new PhoneInterface();
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -55,6 +58,8 @@ sald.scene = {
 		if (dialogue !== null){
 			dialogue.draw();
 		}
+
+		phoneInterface.draw();
 	},
 	key:function(key, down) {
 		if (!down){

@@ -8,14 +8,21 @@ var speed = mainCharacter.transform.xDelta;
 
 var street = new Room(utils.screenWidth(), utils.screenHeight());
 
+var movement = require("movement.js");
+
 street.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
 
 var treadmill = new Treadmill(speed);
 
 street.onEnter = function(){
 	// Disable movement
+	movement.pause(true);
 
 	// Setup character movement animations
+	mainCharacter.forceWalking(true);
+
+	// Set Saturation
+	treadmill.setSaturation(1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS)));
 
 	// Setup scrolling background
 
@@ -32,8 +39,10 @@ street.update = function(elapsed){
 
 street.onLeave = function(){
 	// Enable movement
+	movement.pause(false);
 
 	// Revert character movement animations
+	mainCharacter.forceWalking(false);
 
 	// Get rid of scrolling background?
 

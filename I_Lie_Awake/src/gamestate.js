@@ -3,6 +3,8 @@ var GameState = function(){
 	var currentRoom = null;
 	var dayNum = 0;
 
+	this.MAX_DAYS = 4;
+
 	this.currentDialogue = function(){
 		return currentDialogue;
 	}
