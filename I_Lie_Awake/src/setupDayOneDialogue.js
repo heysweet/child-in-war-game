@@ -86,7 +86,7 @@ var walkFromSchool = [
 	new Phrase("Mom", "I just remembered", 2000),
 	new Phrase("Mom", "Can you pick up a dozen eggs from the grocery store today?", 2000),
 	new Phrase("Rachel", "hey you coming to the park? :)", 2000),
-	new Phrase("Rachel", "we are all going to play hide and seek today! :D", )
+	new Phrase("Rachel", "we are all going to play hide and seek today! :D", choices3)
 ];
 
 var dialogueFromSchool = new Dialogue(walkFromSchool);
