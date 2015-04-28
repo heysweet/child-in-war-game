@@ -93,8 +93,6 @@ MainCharacter.prototype.draw = function(){
 
 	var transform = this.transform;
 
-	ctx.fillStyle = 'rgb(256, 0, 0)';
-
 	var onScreenPos = {
 		x : transform.x - cameraCorner.x,
 		y : transform.y - cameraCorner.y
@@ -102,11 +100,6 @@ MainCharacter.prototype.draw = function(){
 
 	var width = this.getWidth();
 	var height = this.getHeight();;
-
-	// ctx.drawImage(image, 30, 30, 
-	// 		1073, 280, 
-	// 		0, 0,
-	// 		1, 1);
 
 	if (this.moveVector !== null){
 		if (this.moveVector.rightness < 0){

@@ -8,18 +8,18 @@ var ImageObject = function(x_, y_, image_, distance_){
 
 	var speed = 0;
 
-	var transform = {
+	this.transform = {
 		x : x_,
 		y : y_
 	}
 
 	this.setOffscreenRight = function(offset){
-		transform.x = offset + this.image.width + this.distance;
+		this.transform.x = offset + this.image.width + this.distance;
 		showingNext = false;
 	}
 
 	this.setOffscreenLeft = function(offset){
-		transform.x = offset - this.distance - this.image.width;
+		this.transform.x = offset - this.distance - this.image.width;
 		showingNext = false;
 	}
 
@@ -33,11 +33,11 @@ var ImageObject = function(x_, y_, image_, distance_){
 
 
 	this.isOffscreenLeft = function(){
-		return transform.x + this.image.width < 0;
+		return this.transform.x + this.image.width < 0;
 	}
 
 	this.isOffscreenRight = function(){
-		return transform.x > utils.screenWidth();
+		return this.transform.x > utils.screenWidth();
 	}
 
 	this.hasMovedOffscreen = function(){
@@ -52,11 +52,11 @@ var ImageObject = function(x_, y_, image_, distance_){
 	this.showNextToRightOffset = function(){
 		if (showingNext) return null;
 
-		var offset = transform.x - utils.screenWidth();
+		var offset = this.transform.x - utils.screenWidth();
 
 		if (offset < this.distance){
 			showingNext = true;
-			return transform.x;
+			return this.transform.x;
 		}
 
 		return null;
@@ -65,11 +65,11 @@ var ImageObject = function(x_, y_, image_, distance_){
 	this.showNextToLeftOffset = function(){
 		if (showingNext) return null;
 
-		var offset = transform.x;
+		var offset = this.transform.x;
 
 		if (offset > this.distance){
 			showingNext = true;
-			return transform.x;
+			return this.transform.x;
 		}
 
 		return null;
@@ -84,13 +84,13 @@ var ImageObject = function(x_, y_, image_, distance_){
 	}
 
 	this.update = function(speed_){
-		transform.x -= speed_;
+		this.transform.x -= speed_;
 		speed = speed_;
 	}
 
 	this.draw = function(){
-		var x = transform.x
-		var y = transform.y;
+		var x = this.transform.x
+		var y = this.transform.y;
 
 		var ctx = sald.ctx;
 

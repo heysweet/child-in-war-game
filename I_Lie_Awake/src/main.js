@@ -17,6 +17,9 @@ window.gamestate.camera = camera;
 
 var phoneInterface = new PhoneInterface();
 
+window.gamestate.shouldShowPhone = true;
+window.gamestate.isTexting = true;
+
 function drawBackground() {
 	var ctx = sald.ctx;
 
@@ -59,7 +62,9 @@ sald.scene = {
 			dialogue.draw();
 		}
 
-		phoneInterface.draw();
+		if (window.gamestate.shouldShowPhone){
+			phoneInterface.draw();
+		}
 	},
 	key:function(key, down) {
 		if (!down){
@@ -100,9 +105,16 @@ sald.scene = {
 		}
 	},
 	mouse:function(pos, button, down) {
-		//Mouse handling.
-		if (down){
-			console.log(camera.getTranslatedPoint(pos));
+		if (button !== undefined){
+			console.log(button, down);
+
+			if (window.gamestate.isTexting && !down && button === "LEFT"){
+				phoneInterface.mouse(pos);		
+			}
+
+			if (down){
+				console.log(camera.getTranslatedPoint(pos), utils.screenWidth(), utils.screenHeight());
+			}
 		}
 	},
 	resize:function(){
