@@ -248,19 +248,39 @@ var updateMovement = function(elapsed){
 						}
 					}
 
-					if (!isMovingX){
-						if (Math.abs(dVector.dy) < 60){
-							isMoving = false;
-							transform.y = oldY;
+					var absDx = Math.abs(dVector.dx);
+					var absDy = Math.abs(dVector.dy);
+
+
+					console.log(dVector);
+
+					if (!isMovingX && isMovingY){
+						if (absDy < 60){
+							if (absDx - absDy < 60){
+								newY = oldY + (utils.sign(dVector.dy) * 20 * elapsed);
+								newY = Math.max(Math.min(newY, maxY), minY);
+								transform.y = newY;
+							} else {
+								isMoving = false;
+								transform.y = oldY;
+							}
 						}
 					}
 
-					if (!isMovingY){
-						if (Math.abs(dVector.dx) < 100){
-							isMoving = false;
-							transform.x = oldX;
+					if (!isMovingY && isMovingX){
+						if (absDx < 100){
+							if (absDy - absDx < 60){
+								newX = oldX + (utils.sign(dVector.dx) * 40 * elapsed);
+								newX = Math.max(Math.min(newX, maxX), minX);
+								transform.x = newX;
+							} else {
+								isMoving = false;
+								transform.x = oldX;
+							}
 						}
 					}
+
+					console.log("Actual Move", transform.x - oldX, transform.y - oldY);
 
 					if (!isMoving){
 						object.moveVector = null;

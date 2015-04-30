@@ -60,6 +60,8 @@ Teleporter.teleportTo = function(room, coords){
 
 	mainCharacter.transform.x = coords.x;
 	mainCharacter.transform.y = coords.y;
+	mainCharacter.path = undefined;
+	mainCharacter.moveVector = null;
 };
 
 module.exports = Teleporter;

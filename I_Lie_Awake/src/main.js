@@ -99,6 +99,7 @@ sald.scene = {
 	},
 	mouse:function(pos, button, down) {
 		if (button === "LEFT"){
+			camPos = camera.getTranslatedPoint(pos);
 			pos = utils.getScaledPoint(pos);
 
 			if (window.gamestate.isTexting && !down){
@@ -107,12 +108,12 @@ sald.scene = {
 
 			if (down){
 				var targetPos = {
-					x: pos.x - 35,
-					y: pos.y - 120
+					x: camPos.x - 35,
+					y: camPos.y - 135
 				};
 
 				mainCharacter.path = new WrapperPath(targetPos);
-				// console.log(pos, utils.screenWidth(), utils.screenHeight());
+				console.log(pos, utils.screenWidth(), utils.screenHeight());
 			}
 		}
 	},
