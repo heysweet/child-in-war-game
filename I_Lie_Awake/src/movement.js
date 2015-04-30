@@ -251,9 +251,6 @@ var updateMovement = function(elapsed){
 					var absDx = Math.abs(dVector.dx);
 					var absDy = Math.abs(dVector.dy);
 
-
-					console.log(dVector);
-
 					if (!isMovingX && isMovingY){
 						if (absDy < 60){
 							if (absDx - absDy < 60){
@@ -279,8 +276,6 @@ var updateMovement = function(elapsed){
 							}
 						}
 					}
-
-					console.log("Actual Move", transform.x - oldX, transform.y - oldY);
 
 					if (!isMoving){
 						object.moveVector = null;
