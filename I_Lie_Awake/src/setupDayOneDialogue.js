@@ -1,6 +1,7 @@
 var Dialogue = require("Dialogue.js");
 var Phrase = require("Phrase.js");
 var Choice = require("Choice.js");
+var defaults = require("dialogueDefaults.js");
 
 /**
 
@@ -71,6 +72,7 @@ var walkToSchool = [
 ];
 
 var dialogueToSchool = new Dialogue(walkToSchool);
+dialogueToSchool.onEnd = defaults.arriveAtSchool;
 
 
 // Walk from School
@@ -88,7 +90,7 @@ var walkFromSchool = [
 ];
 
 var dialogueFromSchool = new Dialogue(walkFromSchool);
-
+dialogueFromSchool.onEnd = defaults.arriveAtHome;
 
 // Walk to home
 
@@ -100,6 +102,7 @@ var walkToHome = [
 ];
 
 var dialogueToHome = new Dialogue(walkToHome);
+dialogueToHome.onEnd = defaults.arriveAtHome;
 
 module.exports = {
 	morning : dialogueWithDad,
