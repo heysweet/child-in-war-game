@@ -74,10 +74,9 @@ var parentsDoor      = new Teleporter(parentsBedroom, toParentsBox, toParentsTar
 var leaveParentsDoor = new Teleporter(kitchen, fromParentsBox, fromParentsTarget);
 var streetDoor		 = new Teleporter(street, toStreetBox, toStreetTarget);
 
-var temp = street.onTrigger;
 streetDoor.onTrigger = function() {
 	streetDoor.setIsEnabled(false);
-	streetDoor.onTrigger();
+	street.dialogueName = "toSchool";
 };
 
 var reenableStreetDoor = function(){

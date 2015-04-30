@@ -10,7 +10,7 @@ var choices1 = [
 ];
 
 morningTexts = [
-	new Phrase("Dad", "Morning sweetie, food’s on table", 2000),
+	new Phrase("Dad", "Morning sweetie, food's on table", 2000),
 	new Phrase("Dad", "be careful on way to school", choices1)
 ];
 
@@ -24,7 +24,7 @@ walkToSchool = [
 	new Phrase("Johnny", "i heard jet planes flying last night!", 2000),
 	new Phrase("Andy", "I heard them and explosions too.", 2000),
 	new Phrase("Sarah", "Mom said west side of town got bombed.", 2000),
-	new Phrase("Andy", "That’s pretty scary...", 2000)
+	new Phrase("Andy", "That's pretty scary...", 2000)
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);
@@ -68,5 +68,6 @@ dialogueToHome.onEnd = defaults.goToHome;
 module.exports = {
 	morning : dialogueWithDad,
 	toSchool : dialogueToSchool,
-	fromSchool : dialogueFromSchool
+	fromSchool : dialogueFromSchool,
+	toHome : dialogueToHome
 };

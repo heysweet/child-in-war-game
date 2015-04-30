@@ -17,6 +17,8 @@ window.gamestate.startDialogue = function(dialogueName){
 
 	var dialogue = allDialogue[dayNum];
 
+	console.log(dialogue, dialogueName);
+
 	dialogue[dialogueName].start();
 	dialogue[dialogueName].goToNext();
 

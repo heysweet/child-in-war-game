@@ -62,7 +62,7 @@ var brendaSrsly = [
 ];
 
 var choices4 = [
-	new Choice("i’ll be there", mikeYayy),
+	new Choice("i'll be there", mikeYayy),
 	new Choice("sorry but I have to help out mom", brendaSrsly)
 ];
 
@@ -90,5 +90,6 @@ dialogueToHome.onEnd = defaults.goToHome;
 module.exports = {
 	morning : dialogueWithDad,
 	toSchool : dialogueToSchool,
-	fromSchool : dialogueFromSchool
+	fromSchool : dialogueFromSchool,
+	toHome : dialogueToHome
 };

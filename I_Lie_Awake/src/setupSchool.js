@@ -3,6 +3,7 @@ var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var movementPath = require("movementPath.js");
 var RelativeMovementPath = movementPath.RelativeMovementPath;
+var Teleporter = require("Teleporter.js");
 
 var school = new Room(960, 540);
 
@@ -42,11 +43,8 @@ walkToSchoolRelativePath.setMovingObject(mainCharacter);
 school.path = walkToSchoolRelativePath;
 
 var leaveSchool = function(){
-	// Teleporter.teleportTo(utils.rooms.street);
-	var mainCharacter = window.gamestate.mainCharacter;
-
-	mainCharacter.transform.x = targetLeaveSchoolChoords.x;
-	mainCharacter.transform.y = targetLeaveSchoolChoords.y;
+	utils.rooms.street.dialogueName = "fromSchool";
+	Teleporter.teleportTo(utils.rooms.street, targetLeaveSchoolChoords);
 }
 
 var leaveSchoolRelativePath = new RelativeMovementPath([{x : -2, y : 126}, {x : -400, y : 126}], leaveSchool);

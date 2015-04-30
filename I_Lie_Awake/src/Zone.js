@@ -110,7 +110,7 @@ var Zone = function(x_, y_, width_, height_){
 }
 
 Zone.prototype.trigger = function(){
-	if (this.onTrigger !== undefined){
+	if (this.onTrigger){
 		return this.onTrigger();
 	} else {
 		return undefined;

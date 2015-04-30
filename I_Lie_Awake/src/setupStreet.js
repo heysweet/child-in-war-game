@@ -15,6 +15,7 @@ var movement = require("movement.js");
 var treadmill = new Treadmill(speed);
 
 street.onEnter = function(){
+	console.log("on ENTER STREET");
 	// Disable movement
 	movement.pauseInput(true);
 
@@ -33,7 +34,7 @@ street.onEnter = function(){
 	window.gamestate.shouldShowPhone = true;
 	window.gamestate.isTexting = true;
 
-	window.gamestate.startDialogue("toSchool");
+	window.gamestate.startDialogue(street.dialogueName);
 }
 
 street.draw = function(){

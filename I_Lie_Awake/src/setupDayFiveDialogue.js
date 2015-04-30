@@ -39,5 +39,6 @@ dialogueToHome.onEnd = defaults.goToHome;
 module.exports = {
 	morning : dialogueWithDad,
 	toSchool : dialogueToSchool,
-	fromSchool : dialogueFromSchool
+	fromSchool : dialogueFromSchool,
+	toHome : dialogueToHome
 };

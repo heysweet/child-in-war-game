@@ -6,6 +6,8 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 	var coords = targetCoords;
 	var isEnabled = true;
 
+	var this_ = this;
+
 	var zone = new Zone(fromBox.x, fromBox.y, fromBox.width, fromBox.height);
 
 	this.setTargetRoom = function(room_){
@@ -25,12 +27,26 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 	}
 
 	this.teleport = function(){
-		if (isEnabled){
+		if (this_.isEnabled()){
+			console.log("TELEPORT!", room, coords);
 			Teleporter.teleportTo(room, coords);
 		}
 	}
 
-	zone.onTrigger = this.teleport;
+	var onTrigger_ = function(){
+		var shouldTP = this_.isEnabled();
+		if (this_.onTrigger){
+			this_.onTrigger();
+		}
+
+		var updatedValue = this_.isEnabled();
+		isEnabled = shouldTP;
+
+		this_.teleport();
+		isEnabled = updatedValue;
+	};
+
+	zone.onTrigger = onTrigger_;
 
 	this.getZone = function(){
 		return zone;
@@ -63,7 +79,7 @@ Teleporter.teleportTo = function(room, coords){
 
 	mainCharacter.transform.x = coords.x;
 	mainCharacter.transform.y = coords.y;
-	
+
 	mainCharacter.moveVector = null;
 };
 

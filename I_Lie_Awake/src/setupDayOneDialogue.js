@@ -60,7 +60,7 @@ var walkToSchool = [
 	new Phrase("Mom", "Did you leave already?", 100),
 	new Phrase("Mom", "I am worried about the situations recently", 100),
 	new Phrase("Mom", "Stay safe, don't go looking for trouble", 100),
-	new Phrase("Johnny", "yooo coming to \nschool today?", 100),
+	new Phrase("Johnny", "yooo coming to school today?", 100),
 	new Phrase("Rachel", "i am! where are you guys?", 100),
 	new Phrase("Johnny", "already hereeee", 100),
 	new Phrase("Sarah", "I will be there soon...", 100),
@@ -78,7 +78,7 @@ dialogueToSchool.onEnd = defaults.goToSchool;
 // Walk from School
 
 var choices3 = [
-	new Choice("kk i’ll be right there", null),
+	new Choice("kk i'll be right there", null),
 	new Choice("sorry but i got to buy eggs for mom today", null)
 ];
 
@@ -107,5 +107,6 @@ dialogueToHome.onEnd = defaults.goToHome;
 module.exports = {
 	morning : dialogueWithDad,
 	toSchool : dialogueToSchool,
-	fromSchool : dialogueFromSchool
+	fromSchool : dialogueFromSchool,
+	toHome : dialogueToHome
 };
