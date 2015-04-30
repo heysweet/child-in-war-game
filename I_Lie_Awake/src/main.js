@@ -1,6 +1,6 @@
 var mainloop = require("sald:mainloop.js");
 
-var setupVars = require("setup.js");
+require("setup.js");
 
 var GameObject = require("GameObject.js");
 var utils = require("utils.js");
@@ -10,15 +10,13 @@ var PhoneInterface = require("PhoneInterface.js");
 
 var testSound = require("./data/test.ogg");
 
-var testDialogue = setupVars.testDialogue;
-
 var mainCharacter = window.gamestate.mainCharacter;
 window.gamestate.camera = camera;
 
 window.gamestate.phoneInterface = new PhoneInterface();
 
-window.gamestate.shouldShowPhone = true;
-window.gamestate.isTexting = true;
+window.gamestate.shouldShowPhone = false;
+window.gamestate.isTexting = false;
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -52,68 +50,62 @@ sald.scene = {
 
 		GameObject.draw();
 
-		// Draw the character
-		// mainCharacter.draw(camera);
-
-		var dialogue = gamestate.currentDialogue();
-
-		// Draw the foreground
-		if (dialogue !== null){
-			dialogue.draw();
-		}
-
 		if (window.gamestate.shouldShowPhone){
 			window.gamestate.phoneInterface.draw();
 		}
 	},
 	key:function(key, down) {
-		if (!down){
-			var dialogue = gamestate.currentDialogue();
+		// if (!down){
+		// 	var dialogue = gamestate.currentDialogue();
 
-			if (dialogue !== null){
-				if (key === "ONE") {
-					dialogue.goToNext(0);
-				} else if (key === "TWO") {
-					dialogue.goToNext(1);
-				}
-			}
+		// 	if (dialogue !== null){
+		// 		if (key === "ONE") {
+		// 			dialogue.goToNext(0);
+		// 		} else if (key === "TWO") {
+		// 			dialogue.goToNext(1);
+		// 		}
+		// 	}
 
-			if (key === "SPACE") {
-				if (dialogue === null){
-					testDialogue.start();
-				} else {
-					dialogue.goToNext();
-				}
-			}
+		// 	if (key === "SPACE") {
+		// 		if (dialogue === null){
+		// 			testDialogue.start();
+		// 		} else {
+		// 			dialogue.goToNext();
+		// 		}
+		// 	}
 
-			if (key == "T"){
-				testSound.currentTime = 0;
-				testSound.play();
-			} else if (key == "M"){
-				if (sound.isMuted()){
-					sound.unmute();
-				} else {
-					sound.mute();
-				}
-			} else if (key == "P") {
-				if (sound.isPaused()){
-					sound.resume();
-				} else {
-					sound.pause();
-				}
-			}
-		}
+		// 	if (key == "Z"){
+		// 		console.log(mainCharacter.transform);
+		// 	}
+
+		// 	if (key == "T"){
+		// 		testSound.currentTime = 0;
+		// 		testSound.play();
+		// 	} else if (key == "M"){
+		// 		if (sound.isMuted()){
+		// 			sound.unmute();
+		// 		} else {
+		// 			sound.mute();
+		// 		}
+		// 	} else if (key == "P") {
+		// 		if (sound.isPaused()){
+		// 			sound.resume();
+		// 		} else {
+		// 			sound.pause();
+		// 		}
+		// 	}
+		// }
 	},
 	mouse:function(pos, button, down) {
-		if (button !== undefined){
-			console.log(button, down);
+		pos = utils.getScaledPoint(pos);
 
+		if (button !== undefined){
 			if (window.gamestate.isTexting && !down && button === "LEFT"){
 				window.gamestate.phoneInterface.mouse(pos);		
 			}
 
 			if (down){
-				console.log(camera.getTranslatedPoint(pos), utils.screenWidth(), utils.screenHeight());
+				console.log(pos, utils.screenWidth(), utils.screenHeight());
 			}
 		}
 	},

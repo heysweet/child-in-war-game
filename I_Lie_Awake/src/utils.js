@@ -1,3 +1,5 @@
+var onNewDayList = [];
+
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 
 
@@ -123,6 +125,35 @@ var desaturateImage = function(image, saturationAmount){
 	return result;
 }
 
+var mergeImages = function(images){
+	var canvas = document.createElement('canvas');
+	var canvasContext = canvas.getContext('2d');
+
+	var imgW = 0;
+	var imgH = 0;
+
+	for (var i = 0; i < images.length; i++){
+		imgW = Math.max(imgW, images[i].width);
+		imgH = Math.max(imgH, images[i].height);
+		console.log(images[i].width, images[i].height);
+	}
+
+	canvas.width = imgW;
+	canvas.height = imgH;
+
+	for (var i = 0; i < images.length; i++){
+		canvasContext.drawImage(images[i], 0, 0);
+	}
+
+	var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
+
+	var result = new Image(imgPixels.width, imgPixels.height);
+
+	result.src = canvas.toDataURL();
+
+	return result;
+}
+
 var numLines = function(str){
 	lines = str.split(/\r\n|\r|\n/);
 	return lines.length;
@@ -172,6 +203,27 @@ var imageScalarInverted = function(){
 	return invertedScalar;
 }
 
+var goToTheNextDay = function(){
+	window.gamestate.nextDay();
+
+	for (var i = 0; i < onNewDayList.length; i++){
+		onNewDayList[i]();
+	}
+}
+
+var addToOnNewDay = function(f){
+	onNewDayList.push(f);
+}
+
+var getScaledPoint = function(pt){
+	var scalar = imageScalarInverted();
+
+	var x_ = (pt.x * scalar);
+	var y_ = (pt.y * scalar);
+
+	return { x : x_, y : y_ };
+}
+
 module.exports = {
 	sign:sign,
 	screenWidth:screenWidth,
@@ -183,4 +235,7 @@ module.exports = {
 	onScreenSizeChange:onScreenSizeChange,
 	numLines:numLines,
 	desaturateImage:desaturateImage,
+	addToOnNewDay:addToOnNewDay,
+	getScaledPoint:getScaledPoint,
+	mergeImages:mergeImages
 };

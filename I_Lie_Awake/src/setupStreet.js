@@ -14,19 +14,29 @@ street.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()
 
 var treadmill = new Treadmill(speed);
 
+var school = require("setupSchool.js");
+school.leaveTo = street;
+
 street.onEnter = function(){
 	// Disable movement
 	movement.pause(true);
 
+	var direction = 1;
+
 	// Setup character movement animations
-	mainCharacter.forceWalking(true);
+	mainCharacter.forceWalking(true, 1);
 
 	// Set Saturation
 	treadmill.setSaturation(1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS)));
 
 	// Setup scrolling background
+	treadmill.setSpeed(mainCharacter.moveVector.rightness);
 
 	// Setup Texting
+	window.gamestate.shouldShowPhone = true;
+	window.gamestate.isTexting = true;
+
+	window.gamestate.startDialogue("toSchool");
 }
 
 street.draw = function(){
@@ -47,6 +57,25 @@ street.onLeave = function(){
 	// Get rid of scrolling background?
 
 	// Disable Texting
+	window.gamestate.shouldShowPhone = false;
+	window.gamestate.isTexting = false;
+}
+
+street.goToSchool = function(){
+	window.gamestate.setCurrentRoom(school);
+	var mainCharacter = window.gamestate.mainCharacter;
+
+	// if (school.staticCamera !== undefined){
+	// 	camera.updateTransform(school.staticCamera);
+	// } else {
+	// 	// Make the camera move to the correct position
+	// 	var position = window.gamestate.mainCharacter.transform;
+
+	// 	camera.focusCamera(position);
+	// }
+
+	mainCharacter.transform.x = coords.x;
+	mainCharacter.transform.y = coords.y;
 }
 
 // var collisions = [

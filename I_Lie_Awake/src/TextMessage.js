@@ -13,6 +13,8 @@ var TextMessage = function(message_, name){
 	var isMine = false;
 	var shouldWriteName = false;
 
+	var messageFont = "300 16px Gill Sans";
+
 	if (name === undefined){
 		isMine = true;
 	} else if (name !== "Mom" && name !== "Dad"){
@@ -37,7 +39,7 @@ var TextMessage = function(message_, name){
 
 		var ctx = sald.ctx;
 
-		ctx.font = "300 22px Gill Sans";
+		ctx.font = messageFont;
 		numLines = ctx.measureWrapText(message, 0, 0, 195, 20);
 	}
 
@@ -89,14 +91,21 @@ var TextMessage = function(message_, name){
 		var drawX = x + textOffset.x;
 
 		if (isMine){
+			var offset = 0;
+
+			if (numLines > 1){
+				offset = 8;
+			}
+
 			drawX += textXOffset;
+			drawY -= offset;
 		}
 
 		var ctx = sald.ctx;
 
 		ctx.fillStyle = 'rgb(0, 0, 0)';
 
-		ctx.font = "300 22px Gill Sans";
+		ctx.font = messageFont;
 		ctx.wrapText(message, drawX, drawY, 195, 20);
 
 		if (shouldWriteName){

@@ -21,8 +21,11 @@ var mainCharacter = new MainCharacter();
 
 window.gamestate.mainCharacter = mainCharacter;
 
+mainCharacter.transform.x = 149.41686328001853;
+mainCharacter.transform.y = 83.45958860959138;
+
 // Setup Dialogue
-var dialogue = require("setupDialogue.js");
+require("setupDialogue.js");
 
 
 // Update the game state
@@ -59,6 +62,18 @@ var parentsDoor      = new Teleporter(parentsBedroom, toParentsBox, toParentsTar
 var leaveParentsDoor = new Teleporter(kitchen, fromParentsBox, fromParentsTarget);
 var streetDoor		 = new Teleporter(street, toStreetBox, toStreetTarget);
 
+var temp = street.onTrigger;
+streetDoor.onTrigger = function() {
+	streetDoor.setIsEnabled(false);
+	streetDoor.onTrigger();
+};
+
+var reenableStreetDoor = function(){
+	streetDoor.setIsEnabled(true);
+}
+
+utils.addToOnNewDay(reenableStreetDoor);
+
 kitchen.addTeleporter(bedroomDoor);
 kitchen.addTeleporter(parentsDoor);
 kitchen.addTeleporter(streetDoor);
@@ -66,8 +81,4 @@ kitchen.addTeleporter(streetDoor);
 bedroom.addTeleporter(leaveBedroomDoor);
 parentsBedroom.addTeleporter(leaveParentsDoor);
 
-gamestate.setCurrentRoom(kitchen);
-
-module.exports = {
-	testDialogue:dialogue[0].toSchool
-};
+gamestate.setCurrentRoom(bedroom);

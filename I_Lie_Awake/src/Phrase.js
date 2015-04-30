@@ -1,6 +1,4 @@
 var processPhrases = function(phrases){
-	console.log(phrases);
-
 	if (phrases.length > 0){
 		var lastPhrase = phrases[0];
 
@@ -17,7 +15,6 @@ var processPhrases = function(phrases){
 }
 
 var Phrase = function(name, text, duration){
-	console.log(this, "TEST");
 	this.name = name;
 	this.text = text;
 

@@ -71,8 +71,20 @@ function MainCharacter(){
 
 	movement.initialize(this);
 
-	this.forceWalking = function(bool){
+	this.forceWalking = function(bool, direction){
 		forceWalking = bool;
+
+		if (forceWalking){
+			this.moveVector.rightness = Math.abs(this.moveVector.rightness) * direction;
+		}
+	}
+
+	this.faceLeft = function(){
+		faceRight = false;
+	}
+
+	this.faceRight = function(){
+		faceRight = true;
 	}
 }
 

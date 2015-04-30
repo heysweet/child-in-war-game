@@ -67,16 +67,12 @@ var Treadmill = function(speed_) {
 		for (var i = 0; i < house.length; i++){
 			if (!house[i].isDestroyed){
 				house[i].image = desaturatedHouse;
-			} else {
-				console.log("WOOT!");
 			}
 		}
 
 		for (var i = 0; i < drawnHouse.length; i++){
 			if (!drawnHouse[i].isDestroyed){
 				drawnHouse[i].image = desaturatedHouse;
-			} else {
-				console.log("WOOT!");
 			}
 		}
 	}

@@ -73,8 +73,6 @@ var walkToSchool = [
 var dialogueToSchool = new Dialogue(walkToSchool);
 
 
-
-
 // Walk from School
 
 var choices3 = [

@@ -1,4 +1,5 @@
 var BaseGameObject = require("sald:GameObject.js");
+var movement = require("movement.js");
 
 /* json : {
 	sprite, width, height
@@ -58,69 +59,6 @@ GameObject.prototype = Object.create(BaseGameObject.prototype);
 
 GameObject.prototype.constructor = GameObject;
 
-// /* json : {
-// 	sprite, width, height
-// } */
-// var GameObject = function(x_, y_, json){
-
-// 	var width = 0;
-// 	var height = 0;
-
-// 	this.transform = {
-// 		x : x_,
-// 		y : y_
-// 	};
-
-// 	var halfWidth  = width  / 2;
-// 	var halfHeight = height / 2;
-
-// 	this.getWidth = function() {
-// 		return width;
-// 	}
-
-// 	this.getHeight = function() {
-// 		return height;
-// 	}
-
-// 	this.setWidth = function(num){
-// 		width = num;
-// 		halfWidth = width / 2;
-// 	}
-
-// 	this.setHeight = function(num){
-// 		height = num;
-// 		halfHeight = height / 2;
-// 	}
-
-// 	this.halfWidth = function() {
-// 		return halfWidth;
-// 	}
-
-// 	this.halfHeight = function() {
-// 		return halfHeight;
-// 	}
-
-// 	this.getTopLeft = function(){
-// 		var x_ = this.transform.x - halfWidth;
-// 		var y_ = this.transform.y - halfHeight;
-
-// 		return {
-// 			x : x_,
-// 			y : y_
-// 		}
-// 	}
-
-// 	this.getBottomCenter = function(){
-// 		var x_ = this.transform.x + halfWidth;
-// 		var y_ = this.transform.y + halfHeight;
-
-// 		return {
-// 			x : x_,
-// 			y : y_
-// 		}
-// 	}
-// }
-
 var zSort = function(a, b){
 	return a.getZ() - b.getZ();
 }
@@ -137,6 +75,11 @@ GameObject.draw = function(){
 
 GameObject.prototype.setImage = function(image){
 	this.image = image;
+}
+
+GameObject.prototype.followPath = function(path, onFinish){
+	this.finishPath = onFinish;
+	movement.addMovingObject(this);
 }
 
 

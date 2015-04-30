@@ -49,7 +49,9 @@ var Dialogue = function(listOfPhrases){
 }
 
 function getPhraseAfterXSeconds(dialogue, duration) {
-	timeout = setTimeout(function(){dialogue.goToNext()}, duration);
+	timeout = setTimeout(function(){
+		dialogue.goToNext()
+	}, duration);
 }
 
 Dialogue.prototype.goToNext = function(choiceNum) {
@@ -58,8 +60,6 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 	
 	var phrase = this.getPhrase();
 	var next;
-
-	window.gamestate.phoneInterface.addTextedPhrase(phrase);
 
 	var nextPhrase = phrase.getNext(choiceNum);
 
@@ -81,6 +81,7 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 		}
 
 		this.updatePhrase(nextPhrase);
+		window.gamestate.phoneInterface.addTextedPhrase(nextPhrase);
 
 		return nextPhrase;
 	}
