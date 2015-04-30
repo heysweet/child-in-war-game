@@ -14,9 +14,6 @@ street.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()
 
 var treadmill = new Treadmill(speed);
 
-var school = require("setupSchool.js");
-school.leaveTo = street;
-
 street.onEnter = function(){
 	// Disable movement
 	movement.pause(true);
@@ -62,7 +59,7 @@ street.onLeave = function(){
 }
 
 street.goToSchool = function(){
-	window.gamestate.setCurrentRoom(school);
+	window.gamestate.setCurrentRoom(utils.rooms.school);
 	var mainCharacter = window.gamestate.mainCharacter;
 
 	// if (school.staticCamera !== undefined){

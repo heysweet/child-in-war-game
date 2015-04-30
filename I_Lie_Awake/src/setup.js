@@ -21,8 +21,8 @@ var mainCharacter = new MainCharacter();
 
 window.gamestate.mainCharacter = mainCharacter;
 
-mainCharacter.transform.x = 149.41686328001853;
-mainCharacter.transform.y = 83.45958860959138;
+mainCharacter.transform.x = utils.sleepingCoords.x;
+mainCharacter.transform.y = utils.sleepingCoords.y;
 
 // Setup Dialogue
 require("setupDialogue.js");
@@ -37,6 +37,18 @@ var bedroom = require("setupBedroom.js");
 var parentsBedroom = new Room(utils.screenWidth()/2, utils.screenHeight()/2);
 
 var street = require("setupStreet.js");
+var school = require("setupSchool.js");
+school.leaveTo = street;
+
+var rooms = {
+	kitchen:kitchen,
+	bedroom:bedroom,
+	parentsBedroom:parentsBedroom,
+	street:street,
+	school:school
+}
+
+utils.rooms = rooms;
 
 parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 
 								parentsBedroom.height/2);

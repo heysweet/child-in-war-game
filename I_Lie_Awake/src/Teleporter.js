@@ -26,20 +26,7 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 
 	this.teleport = function(){
 		if (isEnabled){
-			window.gamestate.setCurrentRoom(room);
-			var mainCharacter = window.gamestate.mainCharacter;
-
-			if (room.staticCamera !== undefined){
-				camera.updateTransform(room.staticCamera);
-			} else {
-				// Make the camera move to the correct position
-				var position = window.gamestate.mainCharacter.transform;
-
-				camera.focusCamera(position);
-			}
-
-			mainCharacter.transform.x = coords.x;
-			mainCharacter.transform.y = coords.y;
+			Teleporter.teleportTo(room, coords);
 		}
 	}
 
@@ -57,5 +44,22 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 		isEnabled = bool;
 	}
 }
+
+Teleporter.teleportTo = function(room, coords){
+	window.gamestate.setCurrentRoom(room);
+	var mainCharacter = window.gamestate.mainCharacter;
+
+	if (room.staticCamera !== undefined){
+		camera.updateTransform(room.staticCamera);
+	} else {
+		// Make the camera move to the correct position
+		var position = window.gamestate.mainCharacter.transform;
+
+		camera.focusCamera(position);
+	}
+
+	mainCharacter.transform.x = coords.x;
+	mainCharacter.transform.y = coords.y;
+};
 
 module.exports = Teleporter;

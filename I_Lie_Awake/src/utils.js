@@ -1,5 +1,20 @@
 var onNewDayList = [];
 
+var sleepingCoords = {
+	x : 149.41686328001853,
+	y : 83.45958860959138;
+};
+
+var playgroundCoords = {
+	x : 149.41686328001853,
+	y : 83.45958860959138;
+};
+
+var schoolCoords = {
+	x : 149.41686328001853,
+	y : 83.45958860959138;
+};
+
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 
 
@@ -237,5 +252,8 @@ module.exports = {
 	desaturateImage:desaturateImage,
 	addToOnNewDay:addToOnNewDay,
 	getScaledPoint:getScaledPoint,
-	mergeImages:mergeImages
+	mergeImages:mergeImages,
+	sleepingCoords:sleepingCoords,
+	playgroundCoords:playgroundCoords,
+	schoolCoords:schoolCoords,
 };
