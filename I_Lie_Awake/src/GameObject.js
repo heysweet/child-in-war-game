@@ -1,5 +1,4 @@
 var BaseGameObject = require("sald:GameObject.js");
-var movement = require("movement.js");
 
 /* json : {
 	sprite, width, height
@@ -11,6 +10,8 @@ var GameObject = function(x, y, args){
 
 	var setWidth_ = this.setWidth;
 	var setHeight_ = this.setHeight;
+
+	var isHidden;
 
 	this.zOffset = null;
 	this.image = null;
@@ -36,6 +37,14 @@ var GameObject = function(x, y, args){
 		halfHeight = args.height / 2;
 	} else {
 		halfHeight = null;
+	}
+
+	this.setHidden = function(bool){
+		isHidden = bool;
+	}
+
+	this.isHidden = function(){
+		return isHidden;
 	}
 
 	this.setWidth = function(num){
@@ -76,7 +85,11 @@ GameObject.draw = function(){
 	var activeInstances = window.gamestate.activeGameObjects(zSort);
 
 	for (var i = 0; i < activeInstances.length; i++){
-		activeInstances[i].draw();
+		var obj = activeInstances[i];
+
+		if (!obj.isHidden()){
+			obj.draw();
+		}
 	}
 }
 
@@ -85,13 +98,24 @@ GameObject.prototype.setImage = function(image){
 }
 
 GameObject.prototype.followPath = function(path, onFinish){
-	this.path = path;
-	this.finishPath = onFinish;
+	var movement = window.gamestate.movement;
 
+	console.log("THIS", this, path);
+	this.path = path;
+
+	if (onFinish === null || onFinish === undefined){
+		this.onFinish = function(){return};
+	} else {
+		this.finishPath = onFinish;
+	}
+
+	console.log(this.path, movement);
 	movement.addMovingObject(this);
 }
 
 GameObject.prototype.goTo = function(point){
+	var movement = window.gamestate.movement;
+
 	this.path = [point];
 	movement.addMovingObject(this);
 }

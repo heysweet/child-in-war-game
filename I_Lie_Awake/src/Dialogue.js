@@ -113,7 +113,7 @@ Dialogue.prototype.draw = function(){
 
 Dialogue.prototype.start = function(){
 	if (this.shouldStart()){
-		movement.pause(true);
+		movement.pauseInput(true);
 		gamestate.setCurrentDialogue(this);
 
 		// Callback hooks
@@ -130,11 +130,12 @@ Dialogue.prototype.end = function(){
 		this.reset();
 	}
 
-	movement.pause(false);
+	movement.pauseInput(false);
 	gamestate.setCurrentDialogue(null);
 
 	// Callback hooks
 	if (this.onEnd !== undefined && this.onEnd !== null){
+		console.log("On End Conversation");
 		return this.onEnd();
 	} else {
 		return null;

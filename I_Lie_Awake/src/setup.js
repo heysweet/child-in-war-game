@@ -59,7 +59,7 @@ var fromBedroomTarget	= { x: 373, y: 14};
 var toParentsTarget		= { x: parentsBedroom.width - 71, 
 							y: (parentsBedroom.height/2) - 70};
 var fromParentsTarget	= { x: 699, y: 58};
-var toStreetTarget		= { x: 170, y: 190};
+var toStreetTarget		= { x: 340, y: 298};
 
 var toBedroomBox = { x : 346, y : 0, width : 117, height : 60 };
 var fromBedroomBox = { x : 154, y : 403, width : 118, height : 42 };

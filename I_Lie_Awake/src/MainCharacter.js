@@ -95,6 +95,7 @@ MainCharacter.prototype = Object.create(GameObject.prototype);
 MainCharacter.prototype.constructor = MainCharacter;
 
 MainCharacter.prototype.movement = movement;
+window.gamestate.movement = movement;
 
 
 MainCharacter.prototype.draw = function(){

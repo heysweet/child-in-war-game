@@ -6,6 +6,7 @@ var gamestate = window.gamestate;
 
 var character;
 var isPaused = false;
+var isInputPaused = false;
 
 var minX = 0;
 var minY = 0;
@@ -39,6 +40,18 @@ var updateRoom = function(room){
 
 var pause = function(bool){
 	isPaused = bool;
+}
+
+var pauseInput = function(bool){
+	isInputPaused = bool;
+}
+
+var isPaused_ = function(){
+	return isPaused;
+}
+
+var isInputPaused_ =  function(){
+	return isInputPaused;
 }
 
 var Vector = function(x, y){
@@ -166,7 +179,7 @@ var updateMovement = function(elapsed){
 				
 				target = object.path.target();
 
-				if (target === undefined){
+				if (target === undefined || target === null){
 					finishedPath = true;
 					break;
 				}
@@ -180,8 +193,13 @@ var updateMovement = function(elapsed){
 				if (Math.abs(toTargetVector.y) < 1) toTargetVector.y = 0;
 
 				// Reached current target
-				if (Math.abs(toTargetVector.x) === 0 && Math.abs(toTargetVector.y) === 1){
+				if (Math.abs(toTargetVector.x) === 0 && Math.abs(toTargetVector.y) === 0){
 					object.path.reachedNode();
+
+					if (pathSize > 1){
+						console.log("REACHED NODE!");
+						
+					}
 					
 					// Only remains true if i == pathSize - 1
 					finishedPath = true;
@@ -191,7 +209,10 @@ var updateMovement = function(elapsed){
 			}
 
 			if (finishedPath){
+				console.log("OBJECT", object);
 				object.finishPath();
+				object.moveVector = null;
+				object.path = undefined;
 			} else {
 				if (i !== mainCharacterNum){
 					updatedMovingObjects.push(object);
@@ -315,6 +336,9 @@ module.exports = {
 	update:update,
 	initialize:initialize,
 	pause:pause,
+	pauseInput:pauseInput,
 	updateRoom:updateRoom,
-	addMovingObject:addMovingObject
+	addMovingObject:addMovingObject,
+	isPaused:isPaused_,
+	isInputPaused:isInputPaused_
 };

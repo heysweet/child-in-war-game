@@ -11,8 +11,8 @@ var playgroundCoords = {
 };
 
 var schoolCoords = {
-	x : 149.41686328001853,
-	y : 83.45958860959138
+	x : 137,
+	y : 295
 };
 
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }

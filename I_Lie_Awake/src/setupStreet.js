@@ -10,13 +10,13 @@ var street = new Room(utils.screenWidth(), utils.screenHeight());
 
 var movement = require("movement.js");
 
-street.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
+// street.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
 
 var treadmill = new Treadmill(speed);
 
 street.onEnter = function(){
 	// Disable movement
-	movement.pause(true);
+	movement.pauseInput(true);
 
 	var direction = 1;
 
@@ -27,7 +27,7 @@ street.onEnter = function(){
 	treadmill.setSaturation(1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS)));
 
 	// Setup scrolling background
-	treadmill.setSpeed(mainCharacter.moveVector.rightness);
+	treadmill.setSpeed(utils.sign(mainCharacter.moveVector.rightness) * mainCharacter.transform.xDelta);
 
 	// Setup Texting
 	window.gamestate.shouldShowPhone = true;
@@ -46,7 +46,7 @@ street.update = function(elapsed){
 
 street.onLeave = function(){
 	// Enable movement
-	movement.pause(false);
+	// movement.pauseInput(false);
 
 	// Revert character movement animations
 	mainCharacter.forceWalking(false);

@@ -109,11 +109,14 @@ sald.scene = {
 			if (down){
 				var targetPos = {
 					x: camPos.x - 35,
-					y: camPos.y - 135
+					y: camPos.y - 135 
 				};
 
-				mainCharacter.path = new WrapperPath(targetPos);
+				if (!mainCharacter.movement.isInputPaused()){
+					mainCharacter.path = new WrapperPath(targetPos);
+				}
 				console.log(pos, utils.screenWidth(), utils.screenHeight());
+				console.log(mainCharacter.path);
 			}
 		}
 	},

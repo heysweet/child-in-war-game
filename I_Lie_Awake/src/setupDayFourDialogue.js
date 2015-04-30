@@ -26,7 +26,7 @@ walkToSchool = [
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);
-dialogueToSchool.onEnd = defaults.arriveAtSchool;
+dialogueToSchool.onEnd = defaults.goToSchool;
 
 // Walk from School
 
@@ -41,7 +41,7 @@ walkFromSchool = [
 ];
 
 dialogueFromSchool = new Dialogue(walkFromSchool);
-dialogueFromSchool.onEnd = defaults.arriveAtHome;
+dialogueFromSchool.onEnd = defaults.goToHome;
 
 
 // Walk to home
@@ -50,7 +50,7 @@ var walkToHome = [
 ];
 
 var dialogueToHome = new Dialogue(walkToHome);
-dialogueToHome.onEnd = defaults.arriveAtHome;
+dialogueToHome.onEnd = defaults.goToHome;
 
 
 module.exports = {

@@ -7,6 +7,9 @@ var FOREGROUND_IMAGE = require("./data/phone/foreground.png");
 
 var CHOICE_IMAGE = require("./data/phone/choiceBubble.png");
 
+var RECIEVED_SOUND = require("./data/sound/Recieve_Message.ogg");
+var SENT_SOUND = require("./data/sound/Send_Message.ogg");
+
 var PhoneInterface = function(){
 	var conversationNum = 0;
 
@@ -172,12 +175,16 @@ var PhoneInterface = function(){
 		if (currentMessages.length > 6){
 			currentMessages.splice(0, 1);
 		}
+
+		RECIEVED_SOUND.play();
 	}
 
 	this.addMyText = function(text){
 		var myMessage = new TextMessage(text);
 
 		currentMessages.push(myMessage);
+
+		SENT_SOUND.play();
 	}
 };
 

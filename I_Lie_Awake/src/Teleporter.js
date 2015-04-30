@@ -46,8 +46,11 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 }
 
 Teleporter.teleportTo = function(room, coords){
-	window.gamestate.setCurrentRoom(room);
 	var mainCharacter = window.gamestate.mainCharacter;
+
+	mainCharacter.path = undefined;
+
+	window.gamestate.setCurrentRoom(room);
 
 	if (room.staticCamera !== undefined){
 		camera.updateTransform(room.staticCamera);
@@ -60,7 +63,7 @@ Teleporter.teleportTo = function(room, coords){
 
 	mainCharacter.transform.x = coords.x;
 	mainCharacter.transform.y = coords.y;
-	mainCharacter.path = undefined;
+	
 	mainCharacter.moveVector = null;
 };
 
