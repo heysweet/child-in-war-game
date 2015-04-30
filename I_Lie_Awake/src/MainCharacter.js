@@ -70,6 +70,7 @@ function MainCharacter(){
 	setupAnimations(this);
 
 	movement.initialize(this);
+	this.moveVector = null;
 
 	this.forceWalking = function(bool, direction){
 		forceWalking = bool;

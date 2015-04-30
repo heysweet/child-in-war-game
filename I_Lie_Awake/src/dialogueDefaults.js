@@ -25,7 +25,7 @@ var goToHome = function(){
 	Teleporter.teleportTo(room, coords);
 }
 
-module.exports: {
+module.exports = {
 	goToSchool:goToSchool,
 	goToPlayground:goToPlayground,
 	goToHome:goToHome

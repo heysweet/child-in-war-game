@@ -79,6 +79,20 @@ var RelativeMovementPath = function(deltasPath, onFinish) {
 	}
 }
 
+var WrapperPath = function(target){
+	this.size = function(){
+		return 1;
+	}
+
+	this.target = function(){
+		return target;
+	}
+
+	this.reachedNode = function(){
+		target = undefined;
+	}
+}
+
 // Prototypical Inheritance
 RelativeMovementPath.prototype = Object.create(MovementPath.prototype);
 
@@ -86,5 +100,6 @@ RelativeMovementPath.prototype.constructor = RelativeMovementPath;
 
 module.exports = {
 	AbsoluteMovementPath : AbsoluteMovementPath,
-	RelativeMovementPath : RelativeMovementPath
+	RelativeMovementPath : RelativeMovementPath,
+	WrapperPath : WrapperPath
 }

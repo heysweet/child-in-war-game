@@ -12,7 +12,11 @@ var minY = 0;
 var maxX = 0;
 var maxY = 0;
 
-var movingObjects = [];
+var movingObjects = new Set();
+
+var addMovingObject = function(obj){
+	movingObjects.add(obj);
+}
 
 var updateRoom = function(room){
 	var mainCharacter = gamestate.mainCharacter;
@@ -80,17 +84,31 @@ var setupTransform = function(xDelta, yDelta, width, height){
 	transform.yDiag = Math.sin(theta) * transform.yDelta;
 }
 
-var movementVector = function(xDelta, xDeltaMax, yDelta, yDeltaMax){
-	if (xDelta < xDeltaMax && yDelta < yDeltaMax){
-		return { x : xDelta, y : yDelta };
-	}
+var movementVector = function(toTargetVector, transform){
+	if (toTargetVector.x === toTargetVector.y && toTargetVector.x === 0) return {
+		dx : toTargetVector.x,
+		dy : toTargetVector.y
+	};
+
+	xDelta = toTargetVector.x;
+	xDeltaMax = transform.xDelta; 
+
+	var invert = 1;
+
+	if (toTargetVector.y < 0) invert = -1;
+
+	yDelta = toTargetVector.y;
+	yDeltaMax = transform.yDelta;
 
 	var theta = getTheta(xDelta, yDelta);
 
 	var result = {};
 
 	result.dx = Math.cos(theta) * xDeltaMax;
-	result.dy = Math.sin(theta) * yDeltaMax;
+	result.dy = Math.sin(theta) * yDeltaMax * invert;
+
+	if (Math.abs(result.dx) < 1){result.dx = 0};
+	if (Math.abs(result.dy) < 1){result.dy = 0};
 
 	return result;
 }
@@ -120,7 +138,7 @@ var doesCollide = function(collidingObject){
 var updateMovement = function(elapsed){
 	var mainCharacter = gamestate.mainCharacter;
 
-	movingObjects.push(mainCharacter);
+	movingObjects.add(mainCharacter);
 
 	var updatedMovingObjects = [];
 	var currentRoom = gamestate.currentRoom();
@@ -129,10 +147,10 @@ var updateMovement = function(elapsed){
 
 	var somethingMoved = false;
 
-	for (var i = 0; i < movingObjects.length; i++){
-		var object = movingObjects[i];
-
-		var pathSize = object.path.size();
+	movingObjects.forEach(function(object){
+		if (object.path){
+			var pathSize = object.path.size();
+		}
 
 		if (object.path && pathSize > 0){
 			var finishedPath = false;
@@ -146,16 +164,26 @@ var updateMovement = function(elapsed){
 			for (var i = 0; i < pathSize; i++){
 				finishedPath = false;
 				
-				target = path.target();
+				target = object.path.target();
+
+				if (target === undefined){
+					finishedPath = true;
+					break;
+				}
 
 				toTargetVector = {
 					x : target.x - transform.x,
 					y : target.y - transform.y
 				};
 
+				if (Math.abs(toTargetVector.x) < 1) toTargetVector.x = 0;
+				if (Math.abs(toTargetVector.y) < 1) toTargetVector.y = 0;
+
 				// Reached current target
-				if (toTargetVector.x < 1 && toTargetVector.y < 1){
+				if (Math.abs(toTargetVector.x) === 0 && Math.abs(toTargetVector.y) === 1){
 					object.path.reachedNode();
+					
+					// Only remains true if i == pathSize - 1
 					finishedPath = true;
 				} else {
 					break;
@@ -169,15 +197,13 @@ var updateMovement = function(elapsed){
 					updatedMovingObjects.push(object);
 				}
 
-				var dVector = movementVector(toTargetVector.x, transform.xDelta, toTargetVector.y, transform.yDelta);
+				var dVector = movementVector(toTargetVector, transform);
+				var rightness = dVector.dx;
+				var downness = dVector.dy;
 
 				// Compute movement if there should be some
 				if (rightness !== 0 || downness !== 0) {
 					// Unit circle the input, avoiding "fast diagonal movement"
-					if (rightness !== 0 && downness !== 0){
-						rightness = utils.sign(rightness) * transform.xDiag;
-						downness = utils.sign(downness) * transform.yDiag;
-					}
 
 					var xDelta = rightness * elapsed;
 					var yDelta = downness * elapsed;
@@ -190,9 +216,13 @@ var updateMovement = function(elapsed){
 
 					var isMoving = false;
 
-					if (transform.x != newX){
-						var oldX = transform.x;
+					var oldX = transform.x;
+					var oldY = transform.y;
 
+					var isMovingX = true;
+					var isMovingY = true;
+
+					if (transform.x != newX){
 						transform.x = newX;
 
 						// Collision check
@@ -200,13 +230,12 @@ var updateMovement = function(elapsed){
 							object.moveVector = { rightness : rightness, downness : downness };
 							isMoving = true;
 						} else {
+							isMovingX = false;
 							transform.x = oldX;
 						}
 					}
 
 					if (transform.y != newY){
-						var oldY = transform.y;
-
 						transform.y = newY;
 
 						// Collision check
@@ -214,7 +243,22 @@ var updateMovement = function(elapsed){
 							object.moveVector = { rightness : rightness, downness : downness };
 							isMoving = true;
 						} else {
+							isMovingY = false;
 							transform.y = oldY;
+						}
+					}
+
+					if (!isMovingX){
+						if (Math.abs(dVector.dy) < 60){
+							isMoving = false;
+							transform.y = oldY;
+						}
+					}
+
+					if (!isMovingY){
+						if (Math.abs(dVector.dx) < 100){
+							isMoving = false;
+							transform.x = oldX;
 						}
 					}
 
@@ -235,13 +279,13 @@ var updateMovement = function(elapsed){
 				}
 			}
 		}
-	}
+	});
 
 	if (somethingMoved){
 		currentRoom.update();
 	}
 
-	movingObjects = updatedMovingObjects;
+	movingObjects = new Set(updatedMovingObjects);
 }
 
 var update = function(elapsed){
@@ -256,5 +300,6 @@ module.exports = {
 	update:update,
 	initialize:initialize,
 	pause:pause,
-	updateRoom:updateRoom
+	updateRoom:updateRoom,
+	addMovingObject:addMovingObject
 };

@@ -7,6 +7,7 @@ var utils = require("utils.js");
 var camera = require("camera.js");
 var sound = require("sald:soundController.js");
 var PhoneInterface = require("PhoneInterface.js");
+var WrapperPath = require("movementPath.js").WrapperPath;
 
 var testSound = require("./data/test.ogg");
 
@@ -97,15 +98,21 @@ sald.scene = {
 		// }
 	},
 	mouse:function(pos, button, down) {
-		pos = utils.getScaledPoint(pos);
+		if (button === "LEFT"){
+			pos = utils.getScaledPoint(pos);
 
-		if (button !== undefined){
-			if (window.gamestate.isTexting && !down && button === "LEFT"){
+			if (window.gamestate.isTexting && !down){
 				window.gamestate.phoneInterface.mouse(pos);		
 			}
 
 			if (down){
-				console.log(pos, utils.screenWidth(), utils.screenHeight());
+				var targetPos = {
+					x: pos.x - 35,
+					y: pos.y - 120
+				};
+
+				mainCharacter.path = new WrapperPath(targetPos);
+				// console.log(pos, utils.screenWidth(), utils.screenHeight());
 			}
 		}
 	},

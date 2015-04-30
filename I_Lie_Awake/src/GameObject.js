@@ -16,6 +16,9 @@ var GameObject = function(x, y, args){
 	this.image = null;
 	this.sprite = null;
 
+	this.transform.xDelta = 136;
+	this.transform.yDelta = 100;
+
 	if (args.zOffset) this.zOffset = args.zOffset;
 	if (args.image) this.image = args.image;
 	if (args.sprite) this.sprite = args.sprite;
@@ -52,6 +55,10 @@ var GameObject = function(x, y, args){
 	this.halfHeight = function() {
 		return halfHeight;
 	}
+
+	this.finishPath = function(){
+		return;
+	}
 }
 
 // Prototypical Inheritance
@@ -78,7 +85,14 @@ GameObject.prototype.setImage = function(image){
 }
 
 GameObject.prototype.followPath = function(path, onFinish){
+	this.path = path;
 	this.finishPath = onFinish;
+
+	movement.addMovingObject(this);
+}
+
+GameObject.prototype.goTo = function(point){
+	this.path = [point];
 	movement.addMovingObject(this);
 }
 
