@@ -49,13 +49,19 @@ sald.scene = {
 			// Draw Background
 			drawBackground();
 
-			GameObject.draw();
+			if (window.gamestate.currentRoom() !== utils.rooms.street){
+				GameObject.draw();
+			}
 
 			if (window.gamestate.shouldShowPhone){
 				window.gamestate.phoneInterface.draw();
 			}
 
 			window.gamestate.diaryText.draw();
+
+			if (window.gamestate.explosion){
+				window.gamestate.explosion.draw();
+			}
 		} else {
 			ctx.clearRect( 0, 0, utils.screenHeight()*30, utils.screenWidth()*30);
 		}

@@ -32,7 +32,8 @@ var showSchoolText = function(){
 
 	setTimeout(
 		function() {
-	utils.rooms.street.treadmill.initializeLayers()}, 100);
+	utils.rooms.street.treadmill.initializeLayers()
+		}, 100);
 
 	setTimeout(
 		function() {

@@ -2,6 +2,7 @@ var Room = require("Room.js");
 var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var Treadmill = require("Treadmill.js");
+var Teleporter = require("Teleporter.js");
 
 var mainCharacter = window.gamestate.mainCharacter;
 var speed = mainCharacter.transform.xDelta;
@@ -77,6 +78,46 @@ street.goToSchool = function(){
 
 	mainCharacter.transform.x = coords.x;
 	mainCharacter.transform.y = coords.y;
+}
+
+
+var explosionSound = require("./data/sound/carExplosion.ogg");
+ 
+
+var wakeUpInBed = function(){
+	window.gamestate.hasBeenToSchool = false;
+
+	// Go to bed
+	var room = utils.rooms.bedroom;
+	var coords = utils.sleepingCoords;
+
+	window.gamestate.musicPlayer.stop();
+
+	Teleporter.teleportTo(room, coords);
+	utils.pausePlayerMovement(true);
+
+	utils.goToTheNextDay();
+}
+
+var onExplode = function(){
+	window.gamestate.musicPlayer.stop();
+	explosionSound.play();
+
+	setTimeout(
+		function() {
+			window.gamestate.explosion.hide();
+			wakeUpInBed();
+	}, 7430);
+}
+
+street.setCarBomb = function(){
+	var explode = function(){
+		onExplode();
+
+		window.gamestate.explosion.start();
+	}
+
+	street.treadmill.addCarBomb(explode);
 }
 
 // var collisions = [
