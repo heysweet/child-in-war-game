@@ -62,7 +62,7 @@ var walkToSchool = [
 	new Phrase("Sarah", "I will be there soon...", 4000),
 	new Phrase("Mom", "Try to avoid crowds and strangers", choices1),
 	new Phrase("Rachel", "omw there are soldiers everywhere!", 3000),
-	new Phrase("Johnny", "brenda just told me he saw a jeep with a big gun on it!", 3000),
+	new Phrase("Johnny", "brenda just told me she saw a jeep with a big gun on it!", 3000),
 	new Phrase("Andy", "No way brenda is such a liar.", 2000),
 	new Phrase("Johnny", "have you seen anything cool yet?", choices2)
 ];
