@@ -105,7 +105,7 @@ var PhoneInterface = function(){
 		var ctx = sald.ctx;
 
 		if (isDead){
-			ctx.fillStyle = 'rgb(0, 0, 0)';
+			ctx.fillStyle = 'rgb(35, 35, 35)';
 			ctx.fillRect(backgroundX, backgroundY, BACKGROUND_IMAGE.width, BACKGROUND_IMAGE.height);
 		} else {
 			ctx.drawImage(BACKGROUND_IMAGE, backgroundX, backgroundY);
