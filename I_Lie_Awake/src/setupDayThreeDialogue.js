@@ -10,7 +10,7 @@ var choices1 = [
 ];
 
 morningTexts = [
-	new Phrase("Dad", "Morning sweetie, food's on table", 2000),
+	new Phrase("Dad", "Morning sweetie, food's on table", 3000),
 	new Phrase("Dad", "be careful on way to school", choices1)
 ];
 
@@ -20,11 +20,11 @@ dialogueWithDad = new Dialogue(morningTexts);
 	
 walkToSchool = [
 	new Phrase("Mom", "Good morning honey.", 2000),
-	new Phrase("Mom", "Be careful on your way to and back from school today.", 2000),
+	new Phrase("Mom", "Be careful on your way to and back from school today.", 4000),
 	new Phrase("Johnny", "i heard jet planes flying last night!", 2000),
-	new Phrase("Andy", "I heard them and explosions too.", 2000),
-	new Phrase("Sarah", "Mom said west side of town got bombed.", 2000),
-	new Phrase("Andy", "That's pretty scary...", 2000)
+	new Phrase("Andy", "I heard them and explosions too.", 3000),
+	new Phrase("Sarah", "Mom said west side of town got bombed.", 4000),
+	new Phrase("Andy", "That's pretty scary...", 3000)
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);
@@ -40,9 +40,9 @@ var choices2 = [
 
 walkFromSchool = [
 	new Phrase("Andy", "Dad called", 2000),
-	new Phrase("Andy", "Gonna leave early today.", 2000),
-	new Phrase("Mom", "Can you fetch some water on your way home? We are running a bit low.", 2000),
-	new Phrase("Johnny", "andy you quitter", 2000),
+	new Phrase("Andy", "Gonna leave early today.", 4000),
+	new Phrase("Mom", "Can you fetch some water on your way home? We are running a bit low.", 4000),
+	new Phrase("Johnny", "andy you quitter", 4000),
 	new Phrase("Sarah", "Johnny, stop being a bully...", 2000),
 	new Phrase("Johnny", "im nottt", 2000),
 	new Phrase("Johnny", "but you will come right?", choices2)
@@ -56,8 +56,8 @@ dialogueFromSchool.onEnd = defaults.goToHome;
 
 var walkToHome = [
 	new Phrase("Johnny", "hey andy ", 2000),
-	new Phrase("Johnny", "you will be able to play tomorrow righhhtt?", 2000),
-	new Phrase("Johnny", "you are always the best at hide and seek", 2000),
+	new Phrase("Johnny", "you will be able to play tomorrow righhhtt?", 3000),
+	new Phrase("Johnny", "you are always the best at hide and seek", 3000),
 	new Phrase("Johnny", "without you sarah destroyeeeedddd us", 2000)
 ];
 

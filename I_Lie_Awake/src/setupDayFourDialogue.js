@@ -21,11 +21,11 @@ var choices1 = [
 walkToSchool = [
 	new Phrase("Mom", "Hey", 1600),
 	new Phrase("Mom", "Have you heard from Dad yet?", choices1),
-	new Phrase("Mom", "I'm heading out to find him. Stay out of trouble.", 2000),
+	new Phrase("Mom", "I'm heading out to find him. Stay out of trouble.", 5000),
 	new Phrase("Sarah", "I am not going to be at school today, sorry guys.", 2000),
-	new Phrase("Sarah", "My mom won't let me.", 2000),
-	new Phrase("Johnny", "aite but will you play with us after school?", 2000),
-	new Phrase("Sarah", "They won't even let me out of the house.", 2000)
+	new Phrase("Sarah", "My mom won't let me.", 4000),
+	new Phrase("Johnny", "aite but will you play with us after school?", 4000),
+	new Phrase("Sarah", "They won't even let me out of the house.", 5000)
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);

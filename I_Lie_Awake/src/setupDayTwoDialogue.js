@@ -10,7 +10,7 @@ var choices1 = [
 ];
 
 morningTexts = [
-	new Phrase("Dad", "Morning honey, I left food on the table", 2000),
+	new Phrase("Dad", "Morning honey, I left food on the table", 3000),
 	new Phrase("Dad", "Be careful on your trip to school", choices1)
 ];
 
@@ -32,17 +32,17 @@ var choices3 = [
 walkToSchool = [
 	new Phrase("Mom", "Good morning", 2000),
 	new Phrase("Mom", "How are you doing?", choices2),
-	new Phrase("Mom", "Well you should be more careful", 2000),
-	new Phrase("Mom", "Apparently a bomb blew up yesterday afternoon on the path you take to school", 2000),
-	new Phrase("Mom", "I was worried sick. What if you had been near that?", 2000),
-	new Phrase("Mike", "hey hey did you guys hear? there was an explosion yesterday!", 2000),
+	new Phrase("Mom", "Well you should be more careful", 4000),
+	new Phrase("Mom", "Apparently a bomb blew up yesterday afternoon on the path you take to school", 5000),
+	new Phrase("Mom", "I was worried sick. What if you had been near that?", 4000),
+	new Phrase("Mike", "hey hey did you guys hear? there was an explosion yesterday!", 3000),
 	new Phrase("Andy", "No way.", 2000),
-	new Phrase("Brenda", "yeah i heard it omw home!", 2000),
+	new Phrase("Brenda", "yeah i heard it omw home!", 1500),
 	new Phrase("Brenda", "didnt c anyting :(", 2000),
-	new Phrase("Sarah", "Why do you sound excited? People died.", 2000),
-	new Phrase("Mike", "what a downer, ruining the convo", 2000),
-	new Phrase("Brenda", "party pooper!", 2000),
-	new Phrase("Mike", "party pooper!", 2000),
+	new Phrase("Sarah", "Why do you sound excited? People died.", 4000),
+	new Phrase("Mike", "what a downer, ruining the convo", 2500),
+	new Phrase("Brenda", "party pooper!", 1500),
+	new Phrase("Mike", "party pooper!", 1500),
 	new Phrase("Brenda", "party pooper!", choices3)
 ];
 
@@ -68,7 +68,7 @@ var choices4 = [
 
 
 walkFromSchool = [
-	new Phrase("Mom", "Can you grab some bread on your way home?", 2000),
+	new Phrase("Mom", "Can you grab some bread on your way home?", 5000),
 	new Phrase("Brenda", "hey you are coming to hang out with us today right?", 2000),
 	new Phrase("Mike", "i hope you dont ditch like rachel", choices4)
 ];

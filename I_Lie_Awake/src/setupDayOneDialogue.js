@@ -20,7 +20,6 @@ var choicesDad = [
 ];
 
 var dadTalks = [
-	new Phrase("Dad", "", 2500),
 	new Phrase("Dad", "Morning sweetie, I left some breakfast on the table", 3000),
 	new Phrase("Dad", "Have a safe trip to school", 2500),
 	new Phrase("Dad", "Don't wake mom, she still needs her rest", choicesDad)
