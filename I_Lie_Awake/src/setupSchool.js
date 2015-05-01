@@ -23,6 +23,9 @@ var targetLeaveSchoolChoords = {
 };
 
 var showSchoolText = function(){
+	// Stop Music
+	window.gamestate.musicPlayer.stop();
+
 	mainCharacter.setHidden(true);
 	mainCharacter.faceLeft();
 	window.gamestate.diaryText.setIsHidden(false);
@@ -33,6 +36,7 @@ var showSchoolText = function(){
 
 	setTimeout(
 		function() {
+			window.gamestate.musicPlayer.playNextSong();
 			window.gamestate.diaryText.setIsHidden(true);
 			mainCharacter.setHidden(false);
 			leaveSchoolRelativePath.start();

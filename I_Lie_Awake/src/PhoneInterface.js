@@ -133,54 +133,31 @@ var PhoneInterface = function(){
 
 			var phrase;
 
-			console.log(choices);
-
 			if (pos.y >= choice1.min.y && pos.y <= choice1.max.y){
 				var choice = choices[0];
 				this.addMyText(choice.text);
-
-				if (choice){
-					console.log("YES CHOICE 0", choice, choice.onChoice);
-					if (choice.onChoice){
-						console.log("YES ON.CHOICE 0");
-					}
-				}
-
-				console.log(choice);
+				
 				if (choice && choice.onChoice){
 					choice.onChoice();
 				}
 
 				dialogue.goToNext(0);
-
-				console.log("BUTTON 1");
 			} else if (pos.y >= choice2.min.y && pos.y <= choice2.max.y){
 				var choice = choices[1];
 
 				this.addMyText(choice.text);
-
-				if (choice){
-					console.log("YES CHOICE 1");
-					if (choice.onChoice){
-						console.log("YES ON.CHOICE 1");
-					}
-				}
 
 				if (choice && choice.onChoice){
 					choice.onChoice();
 				}
 
 				dialogue.goToNext(1);
-				
-				console.log("BUTTON 2");
 			}
 		}
 	}
 
 	this.addTextedPhrase = function(phrase){
 		choices = phrase.choices;
-
-		console.log(choices, phrase.name, conversationNum);
 
 		if (phrase.name == "Mom"){
 			if (conversationNum !== 0){

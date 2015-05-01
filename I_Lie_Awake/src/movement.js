@@ -195,11 +195,6 @@ var updateMovement = function(elapsed){
 				// Reached current target
 				if (Math.abs(toTargetVector.x) === 0 && Math.abs(toTargetVector.y) === 0){
 					object.path.reachedNode();
-
-					if (pathSize > 1){
-						console.log("REACHED NODE!");
-						
-					}
 					
 					// Only remains true if i == pathSize - 1
 					finishedPath = true;
@@ -209,7 +204,6 @@ var updateMovement = function(elapsed){
 			}
 
 			if (finishedPath){
-				console.log("OBJECT", object);
 				object.finishPath();
 				object.moveVector = null;
 				object.path = undefined;

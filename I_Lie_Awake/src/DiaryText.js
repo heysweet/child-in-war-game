@@ -29,9 +29,13 @@ var DiaryText = function (string_) {
 		function() {
 			var ctx = sald.ctx;
 
-			ctx.font = font;
-			ctx.wrapText(string, x, y, maxWidth, lineheight);
-		}, 1000);
+			if (ctx == null){
+				loadFont()
+			} else {
+				ctx.font = font;
+				ctx.wrapText(string, x, y, maxWidth, lineheight);
+			}
+		}, 10000);
 	}
 
 	loadFont();
@@ -39,7 +43,6 @@ var DiaryText = function (string_) {
 
 	this.setText = function(text){
 		string = text;
-		console.log(string);
 	}
 
 	this.setIsHidden = function(bool){

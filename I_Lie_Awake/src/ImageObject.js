@@ -26,10 +26,8 @@ var ImageObject = function(x_, y_, image_, distance_){
 
 	this.setOffscreen = function(offset){
 		if (speed > 0){
-			console.log("Set Offscreen Right");
 			this.setOffscreenRight(offset);
 		} else {
-			console.log("Set Offscreen Left");
 			this.setOffscreenLeft(offset);
 		}
 	}

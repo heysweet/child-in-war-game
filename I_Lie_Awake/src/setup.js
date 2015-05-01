@@ -42,6 +42,9 @@ var street = require("setupStreet.js");
 var school = require("setupSchool.js");
 school.leaveTo = street;
 
+
+window.gamestate.musicPlayer = require("musicPlayer.js");
+
 var rooms = {
 	kitchen:kitchen,
 	bedroom:bedroom,
@@ -79,7 +82,13 @@ var streetDoor		 = new Teleporter(street, toStreetBox, toStreetTarget);
 streetDoor.onTrigger = function() {
 	streetDoor.setIsEnabled(false);
 	street.dialogueName = "toSchool";
+	window.gamestate.musicPlayer.playNextSong();
 };
+
+leaveBedroomDoor.onTrigger = function(){
+	window.gamestate.shouldShowPhone = false;
+	window.gamestate.isTexting = false;
+}
 
 var reenableStreetDoor = function(){
 	streetDoor.setIsEnabled(true);

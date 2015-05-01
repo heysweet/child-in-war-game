@@ -15,7 +15,6 @@ var movement = require("movement.js");
 street.treadmill = new Treadmill(speed);
 
 street.onEnter = function(){
-	console.log("on ENTER STREET");
 	// Disable movement
 	movement.pauseInput(true);
 

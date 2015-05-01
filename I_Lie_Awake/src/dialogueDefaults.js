@@ -32,6 +32,7 @@ var goToPlayground = function(){
 }
 
 var goToHome = function(){
+
 	setTimeout(
 		function() {
 
@@ -40,6 +41,13 @@ var goToHome = function(){
 			// Go to bed
 			var room = utils.rooms.bedroom;
 			var coords = utils.sleepingCoords;
+
+			console.log("DAY NUM ", window.gamestate.dayNum());
+			if (window.gamestate.dayNum() == 0){
+				window.gamestate.musicPlayer.playNextSong(false);
+			} else {
+				window.gamestate.musicPlayer.stop();
+			}
 
 			Teleporter.teleportTo(room, coords);
 			utils.pausePlayerMovement(true);
