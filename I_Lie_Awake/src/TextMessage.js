@@ -43,7 +43,7 @@ var TextMessage = function(message_, name){
 			ctx.font = messageFont;
 			numLines = ctx.measureWrapText(message, 0, 0, 195, 20);
 		} else {
-			numLines = 1;
+			numLines = 2;
 		}
 	}
 

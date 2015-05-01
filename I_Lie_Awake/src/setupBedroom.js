@@ -17,7 +17,7 @@ var collisions = [
 	{min : {x : 61, y : 352}, max : {x : 156, y : 430}}, // SouthWest Walls
 	{min : {x : 273, y : 352}, max : {x : 382, y : 430}}, // SouthEast Walls
 	{min : {x : 255, y : 106}, max : {x : 326, y : 166}}, // Nightstand
-	{min : {x : 106, y : 224}, max : {x : 243, y : 271}}, // South Bed
+	{min : {x : 106, y : 224}, max : {x : 243, y : 262}}, // South Bed
 	{min : {x : 106, y : 88}, max : {x : 243, y : 173}}, // North Bed
 	{min : {x : 111, y : 88}, max : {x : 144, y : 261}} // West Bed
 ];
