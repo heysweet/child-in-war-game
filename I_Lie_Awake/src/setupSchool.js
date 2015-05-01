@@ -25,7 +25,6 @@ var targetLeaveSchoolChoords = {
 var showSchoolText = function(){
 	mainCharacter.setHidden(true);
 	mainCharacter.faceLeft();
-	window.gamestate.diaryText.setText("Testing 123\ntesting123");
 	window.gamestate.diaryText.setIsHidden(false);
 
 	setTimeout(
@@ -37,7 +36,7 @@ var showSchoolText = function(){
 			window.gamestate.diaryText.setIsHidden(true);
 			mainCharacter.setHidden(false);
 			leaveSchoolRelativePath.start();
-		}, 4500);
+		}, 12500);
 }
 
 var walkToSchoolRelativePath = new RelativeMovementPath([{x : 208, y : 0}, {x : 210, y : -126}], showSchoolText);

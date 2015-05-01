@@ -3,7 +3,7 @@ var utils = require("utils.js");
 
 var goToSchool = function(){
 	window.gamestate.setSchoolDiary();
-	
+
 	setTimeout(
 		function() {
 
@@ -32,8 +32,6 @@ var goToPlayground = function(){
 }
 
 var goToHome = function(){
-	window.gamestate.setHomeDiary();
-
 	setTimeout(
 		function() {
 
@@ -54,7 +52,7 @@ var goToHome = function(){
 						function(){
 							window.gamestate.diaryText.setIsHidden(true);
 							utils.goToTheNextDay();
-						}, 4200);
+						}, 12500);
 
 				}, 1600);
 

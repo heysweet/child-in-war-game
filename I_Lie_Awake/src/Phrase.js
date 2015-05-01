@@ -25,9 +25,9 @@ var Phrase = function(name, text, duration){
 			var choice = choices[i];
 
 			if (choice.phrases !== null){
-				self.addOption(choice.text, choice.phrases[0]);
+				self.addOption(choice.text, choice.phrases[0], choice.onChoice);
 			} else {
-				self.addOption(choice.text, null);
+				self.addOption(choice.text, null, choice.onChoice);
 			}
 
 			var phrases = choice.phrases;
@@ -55,10 +55,11 @@ Phrase.prototype.setNextPhrase = function(phrase){
 	this.next = phrase;
 };
 
-Phrase.prototype.addOption = function(text_, nextPhrase_){
+Phrase.prototype.addOption = function(text_, nextPhrase_, onChoice_){
 	var option = {
 		text : text_,
-		next : nextPhrase_
+		next : nextPhrase_,
+		onChoice : onChoice_
 	};
 
 	this.choices.push(option);

@@ -62,8 +62,8 @@ var brendaSrsly = [
 ];
 
 var choices4 = [
-	new Choice("i'll be there", mikeYayy),
-	new Choice("sorry but I have to help out mom", brendaSrsly)
+	new Choice("i'll be there", mikeYayy, "Friends"),
+	new Choice("sorry but I have to help out mom", brendaSrsly, "Parents")
 ];
 
 

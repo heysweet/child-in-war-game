@@ -33,8 +33,8 @@ dialogueToSchool.onEnd = defaults.goToSchool;
 // Walk from School
 
 var choices2 = [
-	new Choice("sure", null),
-	new Choice("sorry, have to get water for mom", null)
+	new Choice("sure", null, "Friends"),
+	new Choice("sorry, have to get water for mom", null, "Parents")
 ];
 
 

@@ -39,6 +39,7 @@ var DiaryText = function (string_) {
 
 	this.setText = function(text){
 		string = text;
+		console.log(string);
 	}
 
 	this.setIsHidden = function(bool){
@@ -60,6 +61,7 @@ var setFriendsDiary = function(){
 
 var setParentsDiary = function(){
 	var dayNum = window.gamestate.dayNum();
+
 
 	window.gamestate.diaryText.setText(parentsDiaries[dayNum]);
 }

@@ -8,8 +8,6 @@ var camera = require("camera.js");
 var sound = require("sald:soundController.js");
 var WrapperPath = require("movementPath.js").WrapperPath;
 
-var testSound = require("./data/test.ogg");
-
 var PhoneInterface = require("PhoneInterface.js");
 window.gamestate.phoneInterface = new PhoneInterface();
 
@@ -86,10 +84,7 @@ sald.scene = {
 		// 		console.log(mainCharacter.transform);
 		// 	}
 
-		// 	if (key == "T"){
-		// 		testSound.currentTime = 0;
-		// 		testSound.play();
-		// 	} else if (key == "M"){
+		// 	if (key == "M"){
 		// 		if (sound.isMuted()){
 		// 			sound.unmute();
 		// 		} else {
@@ -119,7 +114,7 @@ sald.scene = {
 					y: camPos.y - 135 
 				};
 
-				if (!mainCharacter.movement.isInputPaused()){
+				if (!mainCharacter.movement.isInputPaused() && window.gamestate.currentRoom() !== utils.rooms.street){
 					mainCharacter.path = new WrapperPath(targetPos);
 				}
 				console.log(pos, utils.screenWidth(), utils.screenHeight());
