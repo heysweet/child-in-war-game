@@ -74,8 +74,8 @@ dialogueToSchool.onEnd = defaults.goToSchool;
 // Walk from School
 
 var choices3 = [
-	new Choice("kk i'll be right there", null, "Parents"),
-	new Choice("sorry but i got to buy eggs for mom today", null, "Friends")
+	new Choice("kk i'll be right there", null, "Friends"),
+	new Choice("sorry but i got to buy eggs for mom today", null, "Parents")
 ];
 
 var walkFromSchool = [
