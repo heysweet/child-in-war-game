@@ -12,7 +12,7 @@ var movement = require("movement.js");
 
 // street.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
 
-var treadmill = new Treadmill(speed);
+street.treadmill = new Treadmill(speed);
 
 street.onEnter = function(){
 	console.log("on ENTER STREET");
@@ -21,14 +21,18 @@ street.onEnter = function(){
 
 	var direction = 1;
 
+	if (window.gamestate.hasBeenToSchool){
+		direction = -1;
+	}
+
 	// Setup character movement animations
-	mainCharacter.forceWalking(true, 1);
+	mainCharacter.forceWalking(true, direction);
 
 	// Set Saturation
-	treadmill.setSaturation(1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS)));
+	street.treadmill.setSaturation(1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS)));
 
 	// Setup scrolling background
-	treadmill.setSpeed(utils.sign(mainCharacter.moveVector.rightness) * mainCharacter.transform.xDelta);
+	street.treadmill.setSpeed(direction * mainCharacter.transform.xDelta);
 
 	// Setup Texting
 	window.gamestate.shouldShowPhone = true;
@@ -38,11 +42,11 @@ street.onEnter = function(){
 }
 
 street.draw = function(){
-	treadmill.draw();
+	street.treadmill.draw();
 }
 
 street.update = function(elapsed){
-	treadmill.update(elapsed);
+	street.treadmill.update(elapsed);
 }
 
 street.onLeave = function(){

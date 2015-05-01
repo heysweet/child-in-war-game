@@ -6,6 +6,7 @@ var defaults = require("dialogueDefaults.js");
 // Dad Morning
 
 morningTexts = [
+	new Phrase("Dad", null, 800),
 ];
 
 dialogueWithDad = new Dialogue(morningTexts);
@@ -17,6 +18,7 @@ var choices1 = [
 ];
 
 walkToSchool = [
+	new Phrase("Mom", "Hey", 1600),
 	new Phrase("Mom", "Have you heard from Dad yet?", choices1),
 	new Phrase("Mom", "I'm heading out to find him. Stay out of trouble.", 2000),
 	new Phrase("Sarah", "I am not going to be at school today, sorry guys.", 2000),

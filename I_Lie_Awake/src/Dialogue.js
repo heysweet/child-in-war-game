@@ -61,6 +61,11 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 	var phrase = this.getPhrase();
 	var next;
 
+	if (phrase === undefined){
+		this.end();
+		return null;
+	}
+
 	var nextPhrase = phrase.getNext(choiceNum);
 
 	if (nextPhrase === null){
@@ -68,6 +73,7 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 			nextPhrase = this.phrases[this.currentIndex];
 			this.currentIndex++;
 		} else {
+
 			this.end();
 			return null;
 		}

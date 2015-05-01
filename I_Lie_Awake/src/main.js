@@ -6,18 +6,18 @@ var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var camera = require("camera.js");
 var sound = require("sald:soundController.js");
-var PhoneInterface = require("PhoneInterface.js");
 var WrapperPath = require("movementPath.js").WrapperPath;
 
 var testSound = require("./data/test.ogg");
 
-var mainCharacter = window.gamestate.mainCharacter;
-window.gamestate.camera = camera;
-
+var PhoneInterface = require("PhoneInterface.js");
 window.gamestate.phoneInterface = new PhoneInterface();
 
 window.gamestate.shouldShowPhone = false;
 window.gamestate.isTexting = false;
+
+var mainCharacter = window.gamestate.mainCharacter;
+window.gamestate.camera = camera;
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -42,17 +42,24 @@ sald.scene = {
 		var scalar = utils.imageScalar();
 
 		ctx.setTransform(scalar,0, 0,scalar, 0,0);
-		ctx.clearRect( 0, 0, ctx.width, ctx.height );
 
-		var cameraCorner = camera.topLeftCorner();
+		if (!window.gamestate.drawNothing){
+			ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
 
-		// Draw Background
-		drawBackground();
+			var cameraCorner = camera.topLeftCorner();
 
-		GameObject.draw();
+			// Draw Background
+			drawBackground();
 
-		if (window.gamestate.shouldShowPhone){
-			window.gamestate.phoneInterface.draw();
+			GameObject.draw();
+
+			if (window.gamestate.shouldShowPhone){
+				window.gamestate.phoneInterface.draw();
+			}
+
+			window.gamestate.diaryText.draw();
+		} else {
+			ctx.clearRect( 0, 0, utils.screenHeight()*30, utils.screenWidth()*30);
 		}
 	},
 	key:function(key, down) {

@@ -6,6 +6,7 @@ var ImageObject = function(x_, y_, image_, distance_){
 
 	var showingNext = false;
 
+	var isHidden = false;
 	var speed = 0;
 
 	this.transform = {
@@ -25,8 +26,10 @@ var ImageObject = function(x_, y_, image_, distance_){
 
 	this.setOffscreen = function(offset){
 		if (speed > 0){
+			console.log("Set Offscreen Right");
 			this.setOffscreenRight(offset);
 		} else {
+			console.log("Set Offscreen Left");
 			this.setOffscreenLeft(offset);
 		}
 	}
@@ -89,12 +92,18 @@ var ImageObject = function(x_, y_, image_, distance_){
 	}
 
 	this.draw = function(){
-		var x = this.transform.x
-		var y = this.transform.y;
+		if (!isHidden){
+			var x = this.transform.x
+			var y = this.transform.y;
 
-		var ctx = sald.ctx;
+			var ctx = sald.ctx;
 
-		ctx.drawImage(this.image, x, y);
+			ctx.drawImage(this.image, x, y);
+		}
+	}
+
+	this.setHidden = function(bool){
+		isHidden = bool;
 	}
 }
 

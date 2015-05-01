@@ -2,27 +2,63 @@ var Teleporter = require("Teleporter.js");
 var utils = require("utils.js");
 
 var goToSchool = function(){
-	// Go to school
-	var room = utils.rooms.school;
-	var coords = utils.schoolCoords;
+	window.gamestate.setSchoolDiary();
+	
+	setTimeout(
+		function() {
 
-	Teleporter.teleportTo(room, coords);
+			window.gamestate.hasBeenToSchool = true;
+
+			// Go to school
+			var room = utils.rooms.school;
+			var coords = utils.schoolCoords;
+
+			Teleporter.teleportTo(room, coords);
+
+		}, 2000);
 }
 
 var goToPlayground = function(){
-	// Go to playground
-	var room = utils.rooms.playground;
-	var coords = utils.playgroundCoords;
+	setTimeout(
+		function() {
 
-	Teleporter.teleportTo(room, coords);
+			// Go to playground
+			var room = utils.rooms.playground;
+			var coords = utils.playgroundCoords;
+
+			Teleporter.teleportTo(room, coords);
+
+		}, 2000);
 }
 
 var goToHome = function(){
-	// Go to bed
-	var room = utils.rooms.bedroom;
-	var coords = utils.sleepingCoords;
+	window.gamestate.setHomeDiary();
 
-	Teleporter.teleportTo(room, coords);
+	setTimeout(
+		function() {
+
+			window.gamestate.hasBeenToSchool = false;
+
+			// Go to bed
+			var room = utils.rooms.bedroom;
+			var coords = utils.sleepingCoords;
+
+			Teleporter.teleportTo(room, coords);
+			utils.pausePlayerMovement(true);
+
+			setTimeout(
+				function(){
+					window.gamestate.diaryText.setIsHidden(false);
+
+					setTimeout(
+						function(){
+							window.gamestate.diaryText.setIsHidden(true);
+							utils.goToTheNextDay();
+						}, 4200);
+
+				}, 1600);
+
+		}, 2000);
 }
 
 module.exports = {

@@ -2,7 +2,10 @@ var GameState = function(){
 	var currentDialogue = null;
 	var currentRoom = null;
 	var dayNum = 0;
-	
+
+	this.hasBeenToSchool = false;
+	this.gameOver = false;
+
 	this.MAX_DAYS = 4;
 
 	this.currentDialogue = function(){
@@ -19,6 +22,7 @@ var GameState = function(){
 
 	this.nextDay = function(){
 		dayNum++;
+		if (dayNum > this.MAX_DAYS) this.gameOver = true;
 	}
 
 	this.currentRoom = function(){

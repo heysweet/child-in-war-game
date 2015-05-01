@@ -18,21 +18,26 @@ var background = utils.mergeImages([grassImage, sidewalkImage, schoolImage]);
 school.setBackground(background);
 
 var targetLeaveSchoolChoords = {
-	x : 200,
-	y : 200
+	x : 320,
+	y : 300
 };
 
 var showSchoolText = function(){
 	mainCharacter.setHidden(true);
 	mainCharacter.faceLeft();
-	console.log("Show Text");
+	window.gamestate.diaryText.setText("Testing 123\ntesting123");
+	window.gamestate.diaryText.setIsHidden(false);
 
 	setTimeout(
 		function() {
+	utils.rooms.street.treadmill.initializeLayers()}, 100);
+
+	setTimeout(
+		function() {
+			window.gamestate.diaryText.setIsHidden(true);
 			mainCharacter.setHidden(false);
 			leaveSchoolRelativePath.start();
-			console.log("Leave School!");
-		}, 500);
+		}, 4500);
 }
 
 var walkToSchoolRelativePath = new RelativeMovementPath([{x : 208, y : 0}, {x : 210, y : -126}], showSchoolText);
@@ -54,8 +59,6 @@ school.onEnter = function(){
 	window.gamestate.movement.pauseInput(true);
 	walkToSchoolRelativePath.start();
 }
-
-
 
 // school.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
 

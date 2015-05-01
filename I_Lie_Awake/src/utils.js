@@ -239,6 +239,10 @@ var getScaledPoint = function(pt){
 	return { x : x_, y : y_ };
 }
 
+var pausePlayerMovement = function(bool){
+	window.gamestate.movement.pauseInput(bool);
+}
+
 module.exports = {
 	sign:sign,
 	screenWidth:screenWidth,
@@ -250,10 +254,12 @@ module.exports = {
 	onScreenSizeChange:onScreenSizeChange,
 	numLines:numLines,
 	desaturateImage:desaturateImage,
+	goToTheNextDay:goToTheNextDay,
 	addToOnNewDay:addToOnNewDay,
 	getScaledPoint:getScaledPoint,
 	mergeImages:mergeImages,
 	sleepingCoords:sleepingCoords,
 	playgroundCoords:playgroundCoords,
 	schoolCoords:schoolCoords,
+	pausePlayerMovement:pausePlayerMovement
 };

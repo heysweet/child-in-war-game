@@ -17,6 +17,8 @@ var utils = require("utils.js");
 var MainCharacter = require("MainCharacter.js");
 var GameObject = require("GameObject.js");
 
+require("DiaryText.js");
+
 var mainCharacter = new MainCharacter();
 
 window.gamestate.mainCharacter = mainCharacter;
@@ -83,13 +85,52 @@ var reenableStreetDoor = function(){
 	streetDoor.setIsEnabled(true);
 }
 
+window.gamestate.drawNothing = false;
+
+var onRestoreFromBlack = function(){
+	var delayedHidePhone = function(time){return function(){setTimeout(
+		function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
+
+	window.gamestate.shouldShowPhone = true;
+	window.gamestate.isTexting = true;
+	window.gamestate.startDialogue("morning", delayedHidePhone(1800));
+}
+
+var hitBlack = function(){
+	window.gamestate.drawNothing = true;
+	utils.rooms.street.treadmill.initializeLayers();
+
+	setTimeout(
+		function() {
+			if (!window.gamestate.gameOver){
+				window.gamestate.drawNothing = false;
+				onRestoreFromBlack();
+			}
+		}, 1800);
+}
+
 utils.addToOnNewDay(reenableStreetDoor);
+utils.addToOnNewDay(hitBlack);
 
 kitchen.addTeleporter(bedroomDoor);
 kitchen.addTeleporter(parentsDoor);
 kitchen.addTeleporter(streetDoor);
+parentsDoor.setIsEnabled(false);
 
 bedroom.addTeleporter(leaveBedroomDoor);
 parentsBedroom.addTeleporter(leaveParentsDoor);
 
-gamestate.setCurrentRoom(bedroom);
+Teleporter.teleportTo(bedroom, mainCharacter.transform);
+
+window.gamestate.movement.pauseInput(true);
+
+setTimeout(
+		function() {
+
+	var delayedHidePhone = function(time){return function(){setTimeout(
+		function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
+
+	window.gamestate.shouldShowPhone = true;
+	window.gamestate.isTexting = true;
+	window.gamestate.startDialogue("morning", delayedHidePhone(1800));
+}, 1600);

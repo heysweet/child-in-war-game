@@ -15,21 +15,17 @@ var defaults = require("dialogueDefaults.js");
 
 
 // Dad Morning
+var choicesDad = [
+	new Choice("ok", null)
+];
 
-var day_1_dad_3 = new Phrase("Dad", "Don't wake mom, she still needs her rest", null);
+var dadTalks = [
+	new Phrase("Dad", "Have a safe trip to school :)", 100),
+	new Phrase("Dad", "Morning sweetie, I left some breakfast on the table", 100),
+	new Phrase("Dad", "Don't wake mom, she still needs her rest", choicesDad)
+];
 
-	// null is the next phrase that the option would take you to
-day_1_dad_3.addOption("ok", null);
-
-	// Who it's from, what the message is, number of milliseconds until next message
-var day_1_dad_2 = new Phrase("Dad", "Have a safe trip to school :)", 100);
-var day_1_dad_1 = new Phrase("Dad", "Morning sweetie, I left some breakfast on the table", 100);
-
-day_1_dad_1.setNextPhrase(day_1_dad_2);
-day_1_dad_2.setNextPhrase(day_1_dad_3);
-
-
-var dialogueWithDad = new Dialogue(day_1_dad_1);
+var dialogueWithDad = new Dialogue(dadTalks);
 
 
 

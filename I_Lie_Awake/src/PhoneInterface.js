@@ -18,7 +18,7 @@ var PhoneInterface = function(){
 		[], [], [],
 	];
 
-	var conversationName = "  Mom";
+	var conversationName = "   Dad";
 
 	var choices = [];
 
@@ -89,7 +89,13 @@ var PhoneInterface = function(){
 				ctx.fillStyle = 'rgb(0, 0, 0)';
 				ctx.font = "300 16px Gill Sans";
 
-				ctx.fillText(choices[i].text, x, y - 20);
+				var numLines = ctx.measureWrapText(choices[i].text, x, y - 20, 195, 18);
+
+				var offset = 20;
+
+				if (numLines > 1) offset += 8;
+
+				ctx.wrapText(choices[i].text, x, y - offset, 195, 18);
 			}
 		}
 	}
@@ -154,13 +160,13 @@ var PhoneInterface = function(){
 			if (conversationNum !== 0){
 				conversationNum = 0;
 				currentMessages = conversations[0];
-				conversationName = "  Mom";
+				conversationName = "   Mom";
 			}
 		} else if (phrase.name == "Dad"){
 			if (conversationNum !== 1){
 				conversationNum = 1;
 				currentMessages = conversations[1];
-				conversationName = "  Dad";
+				conversationName = "   Dad";
 			}
 		} else if (conversationNum !== 2){
 			conversationNum = 2;
@@ -168,23 +174,30 @@ var PhoneInterface = function(){
 			conversationName = "Friends";
 		}
 
-		var message = new TextMessage(phrase.text, phrase.name);
+		if (phrase.text !== null){
+			var message = new TextMessage(phrase.text, phrase.name);
 
-		currentMessages.push(message);
+			currentMessages.push(message);
 
-		if (currentMessages.length > 6){
-			currentMessages.splice(0, 1);
+			if (currentMessages.length > 6){
+				currentMessages.splice(0, 1);
+			}
+
+			RECIEVED_SOUND.play();
 		}
-
-		RECIEVED_SOUND.play();
 	}
 
 	this.addMyText = function(text){
+		choices = [];
 		var myMessage = new TextMessage(text);
 
 		currentMessages.push(myMessage);
 
 		SENT_SOUND.play();
+	}
+
+	this.hidePhone = function(){
+		window.gamestate.shouldShowPhone = false;
 	}
 };
 

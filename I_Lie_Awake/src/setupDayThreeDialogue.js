@@ -43,7 +43,7 @@ walkFromSchool = [
 	new Phrase("Andy", "Gonna leave early today.", 2000),
 	new Phrase("Mom", "Can you fetch some water on your way home? We are running a bit low.", 2000),
 	new Phrase("Johnny", "andy you quitter", 2000),
-	new Phrase("Sarah", "Johnny, stop being a bully…", 2000),
+	new Phrase("Sarah", "Johnny, stop being a bully...", 2000),
 	new Phrase("Johnny", "im nottt", 2000),
 	new Phrase("Johnny", "but you will come right?", choices2)
 ];

@@ -12,15 +12,17 @@ var allDialogue = [
 	dayFiveDialogue,
 ];
 
-window.gamestate.startDialogue = function(dialogueName){
+window.gamestate.startDialogue = function(dialogueName, onEnd){
 	var dayNum = window.gamestate.dayNum();
 
 	var dialogue = allDialogue[dayNum];
 
-	console.log(dialogue, dialogueName);
+	var currentDialogue = dialogue[dialogueName];
 
-	dialogue[dialogueName].start();
-	dialogue[dialogueName].goToNext();
+	currentDialogue.start();
+	currentDialogue.goToNext();
 
-	console.log(dialogue[dialogueName]);
+	if (onEnd !== undefined){
+		currentDialogue.onEnd = onEnd;
+	}
 }
