@@ -12,6 +12,7 @@ var SENT_SOUND = require("./data/sound/Send_Message.ogg");
 
 var PhoneInterface = function(){
 	var conversationNum = 0;
+	var isDead = false;
 
 	// Mom, Dad, Friends
 	var conversations = [
@@ -102,7 +103,13 @@ var PhoneInterface = function(){
 
 	var drawBackground = function(){
 		var ctx = sald.ctx;
-		ctx.drawImage(BACKGROUND_IMAGE, backgroundX, backgroundY);
+
+		if (isDead){
+			ctx.fillStyle = 'rgb(35, 35, 35)';
+			ctx.fillRect(backgroundX, backgroundY, BACKGROUND_IMAGE.width, BACKGROUND_IMAGE.height);
+		} else {
+			ctx.drawImage(BACKGROUND_IMAGE, backgroundX, backgroundY);
+		}
 	}
 
 	var drawForeground = function(){
@@ -116,10 +123,13 @@ var PhoneInterface = function(){
 
 	this.draw = function(){
 		drawBackground();
-		drawMessages();
-		drawForeground();
 
-		drawChoices();
+		if (!isDead){
+			drawMessages();
+			drawForeground();
+
+			drawChoices();
+		}
 	}
 
 	this.loadDialogue = function(dialogue_){
@@ -136,7 +146,7 @@ var PhoneInterface = function(){
 			if (pos.y >= choice1.min.y && pos.y <= choice1.max.y){
 				var choice = choices[0];
 				this.addMyText(choice.text);
-				
+
 				if (choice && choice.onChoice){
 					choice.onChoice();
 				}
@@ -201,6 +211,10 @@ var PhoneInterface = function(){
 
 	this.hidePhone = function(){
 		window.gamestate.shouldShowPhone = false;
+	}
+
+	this.killPhone = function(){
+		isDead = true;
 	}
 };
 

@@ -39,8 +39,12 @@ var TextMessage = function(message_, name){
 
 		var ctx = sald.ctx;
 
-		ctx.font = messageFont;
-		numLines = ctx.measureWrapText(message, 0, 0, 195, 20);
+		if (ctx){
+			ctx.font = messageFont;
+			numLines = ctx.measureWrapText(message, 0, 0, 195, 20);
+		} else {
+			numLines = 2;
+		}
 	}
 
 	this.setMessage(message_);

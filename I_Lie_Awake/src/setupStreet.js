@@ -2,6 +2,7 @@ var Room = require("Room.js");
 var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var Treadmill = require("Treadmill.js");
+var Teleporter = require("Teleporter.js");
 
 var mainCharacter = window.gamestate.mainCharacter;
 var speed = mainCharacter.transform.xDelta;
@@ -26,9 +27,6 @@ street.onEnter = function(){
 
 	// Setup character movement animations
 	mainCharacter.forceWalking(true, direction);
-
-	// Set Saturation
-	street.treadmill.setSaturation(1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS)));
 
 	// Setup scrolling background
 	street.treadmill.setSpeed(direction * mainCharacter.transform.xDelta);
@@ -78,6 +76,54 @@ street.goToSchool = function(){
 	mainCharacter.transform.x = coords.x;
 	mainCharacter.transform.y = coords.y;
 }
+
+
+var explosionSound = require("./data/sound/carExplosion.ogg");
+ 
+
+var wakeUpInBed = function(){
+	window.gamestate.hasBeenToSchool = false;
+
+	// Go to bed
+	var room = utils.rooms.bedroom;
+	var coords = utils.sleepingCoords;
+
+	window.gamestate.musicPlayer.stop();
+
+	Teleporter.teleportTo(room, coords);
+	utils.pausePlayerMovement(true);
+
+	utils.goToTheNextDay();
+}
+
+street.onExplode = function(){
+	window.gamestate.musicPlayer.stop();
+
+	setTimeout(
+		function() {
+			window.gamestate.explosion.hide();
+			wakeUpInBed();
+	}, 7430);
+}
+
+street.setCarBomb = function(){
+	var explode = function(){
+		street.onExplode();
+		explosionSound.play();
+
+		window.gamestate.explosion.start();
+	}
+
+	street.treadmill.addCarBomb(explode);
+}
+
+var updateSaturation = function(){
+	var saturationAmount = 1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS));
+	street.treadmill.setSaturation(saturationAmount);
+	utils.rooms.school.setSaturation(saturationAmount);
+}
+
+utils.addToOnNewDay(updateSaturation);
 
 // var collisions = [
 // 	{min : {x : 39, y : 30}, max : {x : 61, y : 368}}, // West Wall

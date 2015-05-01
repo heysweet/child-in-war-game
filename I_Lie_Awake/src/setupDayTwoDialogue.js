@@ -74,7 +74,8 @@ walkFromSchool = [
 ];
 
 dialogueFromSchool = new Dialogue(walkFromSchool);
-dialogueFromSchool.onEnd = defaults.goToHome;
+// dialogueFromSchool.onEnd = defaults.goToHome;
+dialogueFromSchool.carBomb = 2;
 
 
 // Walk to home

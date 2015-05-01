@@ -59,6 +59,16 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 	clearTimeout(timeout);
 	
 	var phrase = this.getPhrase();
+
+	if (phrase.onText){
+		phrase.onText();
+	}
+
+	console.log("BOMB", this.currentIndex, this.carBomb);
+	if (this.currentIndex == this.carBomb){
+		utils.rooms.street.setCarBomb();
+	}
+
 	var next;
 
 	if (phrase === undefined){

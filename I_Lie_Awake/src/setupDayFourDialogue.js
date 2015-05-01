@@ -2,6 +2,7 @@ var Dialogue = require("Dialogue.js");
 var Phrase = require("Phrase.js");
 var Choice = require("Choice.js");
 var defaults = require("dialogueDefaults.js");
+var Explosion = require("Explosion.js");
 
 // Dad Morning
 
@@ -43,7 +44,8 @@ walkFromSchool = [
 ];
 
 dialogueFromSchool = new Dialogue(walkFromSchool);
-dialogueFromSchool.onEnd = defaults.goToHome;
+// dialogueFromSchool.onEnd = defaults.goToHome;
+dialogueFromSchool.onEnd = Explosion.airstrike;
 
 
 // Walk to home
