@@ -17,6 +17,10 @@ var background = utils.mergeImages([grassImage, sidewalkImage, schoolImage]);
 
 school.setBackground(background);
 
+school.setSaturation = function(saturationAmount){
+	school.setBackground(utils.desaturateImage(background, saturationAmount));
+}
+
 var targetLeaveSchoolChoords = {
 	x : 320,
 	y : 300

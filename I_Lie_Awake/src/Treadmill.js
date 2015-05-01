@@ -5,6 +5,9 @@ var GRASS_IMAGE = require("./data/street/grass.jpg");
 var PATH_IMAGE = require("./data/street/path.png");
 var HOUSE_1_IMAGE = require("./data/street/house1/house1.png");
 
+var desaturatedGrass = GRASS_IMAGE;
+var desaturatedHouse = HOUSE_1_IMAGE;
+
 var CAR_1_IMAGE = require("./data/street/cars/car1.png");
 var CAR_2_IMAGE = require("./data/street/cars/car2.png");
 var CAR_3_IMAGE = require("./data/street/cars/car3.png");
@@ -41,9 +44,9 @@ var initializeLayers = function(){
 	window.gamestate.explosion = new Explosion();
 
 	grass = [
-		new ImageObject(0, 0, GRASS_IMAGE, 0),
-		new ImageObject(0, 0, GRASS_IMAGE, 0),
-		new ImageObject(0, 0, GRASS_IMAGE, 0),
+		new ImageObject(0, 0, desaturatedGrass, 0),
+		new ImageObject(0, 0, desaturatedGrass, 0),
+		new ImageObject(0, 0, desaturatedGrass, 0),
 	];
 
 	road = [
@@ -57,8 +60,8 @@ var initializeLayers = function(){
 	animatedDestroyedHouse.isDestroyed = true;
 
 	house = [
-		new ImageObject(100, 0, HOUSE_1_IMAGE, 40), 
-		new ImageObject(100, 0, HOUSE_1_IMAGE, 40),
+		new ImageObject(100, 0, desaturatedHouse, 40), 
+		new ImageObject(100, 0, desaturatedHouse, 40),
 		animatedDestroyedHouse,
 		// new ImageObject(100, 0, HOUSE_1_IMAGE, 40)
 	];
@@ -70,9 +73,9 @@ var initializeLayers = function(){
 		new ImageObject(100, 400, CAR_5_IMAGE, 900), 
 	];
 
-	drawnGrass = [new ImageObject(0, 0, GRASS_IMAGE, 0)];
+	drawnGrass = [new ImageObject(0, 0, desaturatedGrass, 0)];
 	drawnRoad = [new ImageObject(0, 0, PATH_IMAGE, 0)];
-	drawnHouse = [new ImageObject(100, 0, HOUSE_1_IMAGE, 40)];
+	drawnHouse = [new ImageObject(100, 0, desaturatedHouse, 40)];
 	drawnCars = [];
 
 	layersPool = [grass, road, house, cars];
@@ -103,8 +106,8 @@ var Treadmill = function(speed_) {
 	this.initializeLayers = init;
 
 	this.setSaturation = function(saturationAmount){
-		var desaturatedGrass = utils.desaturateImage(GRASS_IMAGE, saturationAmount);
-		var desaturatedHouse = utils.desaturateImage(HOUSE_1_IMAGE, saturationAmount);
+		desaturatedGrass = utils.desaturateImage(GRASS_IMAGE, saturationAmount);
+		desaturatedHouse = utils.desaturateImage(HOUSE_1_IMAGE, saturationAmount);
 
 		for (var i = 0; i < grass.length; i++){
 			grass[i].image = desaturatedGrass;

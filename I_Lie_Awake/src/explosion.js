@@ -2,6 +2,7 @@ var Sprite = require("sald:Sprite.js");
 var image = require("./data/street/explosion/explosion.png");
 
 var utils = require("utils.js");
+var airstrikeSound = require("./data/sound/bombExplosion.ogg");
 
 var frames = 12;
 var framerate = 10;
@@ -42,6 +43,18 @@ var Explosion = function(){
 	this.start = function(){
 		isExploding = true;
 	}
+}
+
+Explosion.airstrike = function(){
+	window.gamestate.explosion = new Explosion();
+	airstrikeSound.play();
+
+	setTimeout(
+		function() {
+			window.gamestate.explosion.start();
+			utils.rooms.street.onExplode();
+			window.gamestate.phoneInterface.killPhone();
+	}, 4477);
 }
 
 module.exports = Explosion;

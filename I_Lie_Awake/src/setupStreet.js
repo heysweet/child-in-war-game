@@ -28,9 +28,6 @@ street.onEnter = function(){
 	// Setup character movement animations
 	mainCharacter.forceWalking(true, direction);
 
-	// Set Saturation
-	street.treadmill.setSaturation(1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS)));
-
 	// Setup scrolling background
 	street.treadmill.setSpeed(direction * mainCharacter.transform.xDelta);
 
@@ -99,9 +96,8 @@ var wakeUpInBed = function(){
 	utils.goToTheNextDay();
 }
 
-var onExplode = function(){
+street.onExplode = function(){
 	window.gamestate.musicPlayer.stop();
-	explosionSound.play();
 
 	setTimeout(
 		function() {
@@ -112,13 +108,22 @@ var onExplode = function(){
 
 street.setCarBomb = function(){
 	var explode = function(){
-		onExplode();
+		street.onExplode();
+		explosionSound.play();
 
 		window.gamestate.explosion.start();
 	}
 
 	street.treadmill.addCarBomb(explode);
 }
+
+var updateSaturation = function(){
+	var saturationAmount = 1 - (window.gamestate.dayNum() / (2 * window.gamestate.MAX_DAYS));
+	street.treadmill.setSaturation(saturationAmount);
+	utils.rooms.school.setSaturation(saturationAmount);
+}
+
+utils.addToOnNewDay(updateSaturation);
 
 // var collisions = [
 // 	{min : {x : 39, y : 30}, max : {x : 61, y : 368}}, // West Wall
