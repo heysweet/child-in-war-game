@@ -57,6 +57,15 @@ function MovementPath(path_, onFinish){
 	this.reachedNode = function(){
 		index++;
 	}
+
+	this.clear = function(){
+		path = [];
+		index = 0;
+		
+		if (this.onFinish){
+			this.onFinish();
+		}
+	}
 }
 
 var AbsoluteMovementPath = function (path, onFinish) {

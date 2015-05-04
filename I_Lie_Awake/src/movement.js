@@ -148,6 +148,8 @@ var doesCollide = function(collidingObject){
 	return false;
 }
 
+// Thrown together code tbh
+// Switched between mouse and keyboard input
 var updateMovement = function(elapsed){
 	var mainCharacter = gamestate.mainCharacter;
 
@@ -156,7 +158,7 @@ var updateMovement = function(elapsed){
 	var updatedMovingObjects = [];
 	var currentRoom = gamestate.currentRoom();
 
-	var mainCharacterNum = movingObjects.length - 1;
+	// var mainCharacterNum = movingObjects.length - 1;
 
 	var somethingMoved = false;
 
@@ -165,14 +167,17 @@ var updateMovement = function(elapsed){
 			var pathSize = object.path.size();
 		}
 
+		var hasPath = false;
+		var hasKeyPress = false;
+
+		var rightness = 0;
+		var downness = 0;
+		var transform = object.transform;
+		var target;
+		var toTargetVector;
+
 		if (object.path && pathSize > 0){
 			var finishedPath = false;
-
-			var rightness = 0;
-			var downness = 0;
-			var transform = object.transform;;
-			var target;
-			var toTargetVector;
 
 			for (var i = 0; i < pathSize; i++){
 				finishedPath = false;
@@ -208,105 +213,133 @@ var updateMovement = function(elapsed){
 				object.moveVector = null;
 				object.path = undefined;
 			} else {
-				if (i !== mainCharacterNum){
-					updatedMovingObjects.push(object);
+				hasPath = true;
+			}
+		} else {
+			if (object == mainCharacter && !isPaused && !isInputPaused){
+				if (sald.keys.W || sald.keys.UP){
+					downness -= transform.yDelta;
+				}
+				if (sald.keys.S || sald.keys.DOWN){
+					downness += transform.yDelta;
+				}
+				if (sald.keys.A || sald.keys.LEFT){
+					rightness -= transform.xDelta;
+				}
+				if (sald.keys.D || sald.keys.RIGHT){
+					rightness += transform.xDelta;
 				}
 
-				var dVector = movementVector(toTargetVector, transform);
-				var rightness = dVector.dx;
-				var downness = dVector.dy;
+				toTargetVector = {
+					x : rightness,
+					y : downness
+				}
 
-				// Compute movement if there should be some
-				if (rightness !== 0 || downness !== 0) {
-					// Unit circle the input, avoiding "fast diagonal movement"
+				if (rightness != 0 || downness != 0){
+					hasKeyPress = true;
+				} else {
+					object.moveVector = null;
+				}
+			}
+		}
 
-					var xDelta = rightness * elapsed;
-					var yDelta = downness * elapsed;
+		if (hasPath || hasKeyPress){
+			updatedMovingObjects.push(object);
 
-					var newX = transform.x + xDelta;
-					var newY = transform.y + yDelta;
+			var dVector = movementVector(toTargetVector, transform);
+			rightness = dVector.dx;
+			downness = dVector.dy;
 
-					newX = Math.max(Math.min(newX, maxX), minX);
-					newY = Math.max(Math.min(newY, maxY), minY);
+			// Compute movement if there should be some
+			if (rightness !== 0 || downness !== 0) {
+				// Unit circle the input, avoiding "fast diagonal movement"
 
-					var isMoving = false;
+				var xDelta = rightness * elapsed;
+				var yDelta = downness * elapsed;
 
-					var oldX = transform.x;
-					var oldY = transform.y;
+				var newX = transform.x + xDelta;
+				var newY = transform.y + yDelta;
 
-					var isMovingX = true;
-					var isMovingY = true;
+				newX = Math.max(Math.min(newX, maxX), minX);
+				newY = Math.max(Math.min(newY, maxY), minY);
 
-					if (transform.x != newX){
-						transform.x = newX;
+				var isMoving = false;
 
-						// Collision check
-						if (!doesCollide(object)){
-							object.moveVector = { rightness : rightness, downness : downness };
-							isMoving = true;
-						} else {
-							isMovingX = false;
-							transform.x = oldX;
-						}
+				var oldX = transform.x;
+				var oldY = transform.y;
+
+				var isMovingX = true;
+				var isMovingY = true;
+
+				if (transform.x != newX){
+					transform.x = newX;
+
+					// Collision check
+					if (!doesCollide(object)){
+						object.moveVector = { rightness : rightness, downness : downness };
+						isMoving = true;
+					} else {
+						isMovingX = false;
+						transform.x = oldX;
 					}
+				}
 
-					if (transform.y != newY){
-						transform.y = newY;
+				if (transform.y != newY){
+					transform.y = newY;
 
-						// Collision check
-						if (!doesCollide(object)){
-							object.moveVector = { rightness : rightness, downness : downness };
-							isMoving = true;
+					// Collision check
+					if (!doesCollide(object)){
+						object.moveVector = { rightness : rightness, downness : downness };
+						isMoving = true;
+					} else {
+						isMovingY = false;
+						transform.y = oldY;
+					}
+				}
+
+				var absDx = Math.abs(rightness);
+				var absDy = Math.abs(downness);
+
+				if (!isMovingX && isMovingY){
+					if (absDy < 60){
+						if (absDx - absDy < 60){
+							newY = oldY + (utils.sign(dVector.dy) * 20 * elapsed);
+							newY = Math.max(Math.min(newY, maxY), minY);
+							transform.y = newY;
 						} else {
-							isMovingY = false;
+							isMoving = false;
 							transform.y = oldY;
 						}
 					}
-
-					var absDx = Math.abs(dVector.dx);
-					var absDy = Math.abs(dVector.dy);
-
-					if (!isMovingX && isMovingY){
-						if (absDy < 60){
-							if (absDx - absDy < 60){
-								newY = oldY + (utils.sign(dVector.dy) * 20 * elapsed);
-								newY = Math.max(Math.min(newY, maxY), minY);
-								transform.y = newY;
-							} else {
-								isMoving = false;
-								transform.y = oldY;
-							}
-						}
-					}
-
-					if (!isMovingY && isMovingX){
-						if (absDx < 100){
-							if (absDy - absDx < 60){
-								newX = oldX + (utils.sign(dVector.dx) * 40 * elapsed);
-								newX = Math.max(Math.min(newX, maxX), minX);
-								transform.x = newX;
-							} else {
-								isMoving = false;
-								transform.x = oldX;
-							}
-						}
-					}
-
-					if (!isMoving){
-						object.moveVector = null;
-					}
-
-					if (mainCharacterNum === i){
-						// Camera updates on movement
-						camera.update(elapsed, transform);
-					}
-				} else {
-					object.moveVector = null;
-				};
-
-				if (object.moveVector !== null){
-					somethingMoved = true;
 				}
+
+				if (!isMovingY && isMovingX){
+					if (absDx < 100){
+						if (absDy - absDx < 60){
+							newX = oldX + (utils.sign(dVector.dx) * 40 * elapsed);
+							newX = Math.max(Math.min(newX, maxX), minX);
+							transform.x = newX;
+						} else {
+							isMoving = false;
+							transform.x = oldX;
+						}
+					}
+				}
+
+				if (!isMoving){
+					object.moveVector = null;
+				}
+
+				// if (mainCharacterNum === i){
+				// 	// Camera updates on movement
+				// 	camera.update(elapsed, transform);
+				// }
+			} else {
+				object.moveVector = null;
+			};
+
+			if (object.moveVector !== null){
+				somethingMoved = true;
 			}
 		}
 	});

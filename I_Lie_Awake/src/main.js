@@ -120,9 +120,9 @@ sald.scene = {
 					y: camPos.y - 135 
 				};
 
-				if (!mainCharacter.movement.isInputPaused() && window.gamestate.currentRoom() !== utils.rooms.street){
-					mainCharacter.path = new WrapperPath(targetPos);
-				}
+				// if (!mainCharacter.movement.isInputPaused() && window.gamestate.currentRoom() !== utils.rooms.street){
+				// 	mainCharacter.path = new WrapperPath(targetPos);
+				// }
 				// console.log(pos, utils.screenWidth(), utils.screenHeight());
 				// console.log(mainCharacter.path);
 			}
