@@ -216,7 +216,7 @@ var updateMovement = function(elapsed){
 				hasPath = true;
 			}
 		} else {
-			if (object == mainCharacter && !isPaused && !isInputPaused){
+			if (object == mainCharacter && !isPaused && !isInputPaused && window.gamestate.currentRoom() !== utils.rooms.street){
 				if (sald.keys.W || sald.keys.UP){
 					downness -= transform.yDelta;
 				}
