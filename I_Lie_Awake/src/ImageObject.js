@@ -15,13 +15,21 @@ var ImageObject = function(x_, y_, image_, distance_){
 	}
 
 	this.setOffscreenRight = function(offset){
-		this.transform.x = offset + this.image.width + this.distance;
-		showingNext = false;
+		if (offset == undefined){
+			this.transform.x = utils.screenWidth();
+		} else {
+			this.transform.x = offset + this.image.width + this.distance;
+			showingNext = false;
+		}
 	}
 
 	this.setOffscreenLeft = function(offset){
-		this.transform.x = offset - this.distance - this.image.width;
-		showingNext = false;
+		if (offset == undefined){
+			this.transform.x = -this.image.width;
+		} else {
+			this.transform.x = offset - this.distance - this.image.width;
+			showingNext = false;
+		}
 	}
 
 	this.setOffscreen = function(offset){
@@ -34,7 +42,7 @@ var ImageObject = function(x_, y_, image_, distance_){
 
 
 	this.isOffscreenLeft = function(){
-		return this.transform.x + this.image.width < 0;
+		return this.transform.x + this.image.width <= 0;
 	}
 
 	this.isOffscreenRight = function(){

@@ -61,7 +61,7 @@ function MovementPath(path_, onFinish){
 	this.clear = function(){
 		path = [];
 		index = 0;
-		
+
 		if (this.onFinish){
 			this.onFinish();
 		}
@@ -70,17 +70,6 @@ function MovementPath(path_, onFinish){
 
 var AbsoluteMovementPath = function (path, onFinish) {
 	MovementPath.call(this, path, onFinish);
-
-	var start_ = this.start;
-
-	this.start = function(){
-		var object = this.getMovingObject();
-
-		object.transform.x = start.x;
-		object.transform.y = start.y;
-
-		start_();
-	}
 }
 
 // Prototypical Inheritance
@@ -113,6 +102,7 @@ var RelativeMovementPath = function(deltasPath, onFinish) {
 
 		var object = this.getMovingObject();
 
+		console.log("THIS OBJECT IN ABSTRACT", object);
 		var startCoord = object.transform;
 
 		for (var i = 0; i < deltasPath.length; i++){

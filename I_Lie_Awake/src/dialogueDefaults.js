@@ -11,7 +11,7 @@ var goToSchool = function(){
 
 			// Go to school
 			var room = utils.rooms.school;
-			var coords = utils.schoolCoords;
+			var coords = utils.schoolCoords();
 
 			Teleporter.teleportTo(room, coords);
 

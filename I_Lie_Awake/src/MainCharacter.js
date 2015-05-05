@@ -5,11 +5,11 @@ var Sprite = require("sald:Sprite.js");
 
 var startX = utils.screenWidth()/2;
 var startY = utils.screenHeight()/2;
-var width  = 70;
-var height = 140;
+var width  = 60.9;
+var height = 140.5;
 var anchor = { x : 0, y : 0};
 
-var image = require("./data/characters/mainCharacter/walkCycle.png");
+var image = require("./data/characters/mainCharacter/walk.png");
 
 var faceRight = true;
 
@@ -39,21 +39,61 @@ var setupAnimations = function(mainCharacter){
 		'walk' : {
 			x:0,
 			y:0, 
-			width:141.7,
-			height:280, 
+			width:121.8,
+			height:281, 
 			size:9 
 		},
 		'idle' : {
 			x:0,
 			y:0, 
-			width:141,
-			height:280, 
+			width:121.8,
+			height:281, 
 			size:1
 		}
 	});
 
 	mainCharacter.sprite.animators['walk'].speed(12);
 	mainCharacter.sprite.animators['walk'].loop(true);
+
+	mainCharacter.text_sprite = new Sprite(require("./data/characters/mainCharacter/textwalk.png"), { 
+		'walk' : {
+			x:0,
+			y:0, 
+			width:121.8,
+			height:281, 
+			size:9 
+		},
+		'idle' : {
+			x:0,
+			y:0, 
+			width:121.8,
+			height:281, 
+			size:1
+		}
+	});
+
+	mainCharacter.text_sprite.animators['walk'].speed(12);
+	mainCharacter.text_sprite.animators['walk'].loop(true);
+
+	mainCharacter.text_blink_sprite = new Sprite(require("./data/characters/mainCharacter/textblink.png"), {
+		'walk' : {
+			x:0,
+			y:0, 
+			width:121.8,
+			height:281, 
+			size:9 
+		},
+		'idle' : {
+			x:0,
+			y:0, 
+			width:121.8,
+			height:281, 
+			size:1
+		}
+	});
+
+	mainCharacter.text_blink_sprite.animators['walk'].speed(12);
+	mainCharacter.text_blink_sprite.animators['walk'].loop(true);
 }
 
 function MainCharacter(){
@@ -135,15 +175,30 @@ MainCharacter.prototype.draw = function(){
 
 	var anchor = this.getScaledAnchor();
 
-	if (this.moveVector === null && !forceWalking){
-		this.sprite.draw('idle', (onScreenPos.x + offset) * scalar, 
-			onScreenPos.y, 
-			0, width, height, 0, 1);
+
+	if (window.gamestate.shouldShowPhone){
+		if (this.moveVector === null && !forceWalking){
+			this.text_sprite.draw('idle', (onScreenPos.x + offset) * scalar, 
+				onScreenPos.y, 
+				0, width, height, 0, 1);
+		} else {
+			this.text_sprite.draw('walk', (onScreenPos.x + offset) * scalar, 
+				onScreenPos.y, 
+				0, width, height, 0, 1);
+		}
 	} else {
-		this.sprite.draw('walk', (onScreenPos.x + offset) * scalar, 
-			onScreenPos.y, 
-			0, width, height, 0, 1);
+		if (this.moveVector === null && !forceWalking){
+			this.sprite.draw('idle', (onScreenPos.x + offset) * scalar, 
+				onScreenPos.y, 
+				0, width, height, 0, 1);
+		} else {
+			this.sprite.draw('walk', (onScreenPos.x + offset) * scalar, 
+				onScreenPos.y, 
+				0, width, height, 0, 1);
+		}
 	}
+
+	
 
 	ctx.restore();
 }

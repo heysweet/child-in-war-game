@@ -75,8 +75,8 @@ street.goToSchool = function(){
 	// 	camera.focusCamera(position);
 	// }
 
-	mainCharacter.transform.x = coords.x;
-	mainCharacter.transform.y = coords.y;
+	// mainCharacter.transform.x = coords.x;
+	// mainCharacter.transform.y = coords.y;
 }
 
 

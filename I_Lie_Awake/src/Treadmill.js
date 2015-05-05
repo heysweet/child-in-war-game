@@ -199,6 +199,7 @@ var Treadmill = function(speed_) {
 					if (nextObj !== null){
 						// update needed to set which side to setOffscreen
 						nextObj.update(speed * elapsed);
+
 						nextObj.setOffscreen(offset);
 
 						layer.push(nextObj);

@@ -3,6 +3,7 @@ var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var movementPath = require("movementPath.js");
 var RelativeMovementPath = movementPath.RelativeMovementPath;
+var AbsoluteMovementPath = movementPath.AbsoluteMovementPath;
 var Teleporter = require("Teleporter.js");
 
 var school = new Room(960, 540);
@@ -48,14 +49,25 @@ var showSchoolText = function(){
 		}, 12500);
 }
 
+var walkToSchoolPaths = [
+	new AbsoluteMovementPath([{x : 546, y : 250}, {x : 548, y : 177}], showSchoolText),
+	new AbsoluteMovementPath([{x : 546, y : 303}, {x : 548, y : 177}], showSchoolText),
+	new AbsoluteMovementPath([{x : 546, y : 303}, {x : 548, y : 177}], showSchoolText),
+	new AbsoluteMovementPath([{x : 546, y : 303}, {x : 548, y : 177}], showSchoolText),
+	new AbsoluteMovementPath([{x : 546, y : 303}, {x : 548, y : 177}], showSchoolText)
+];
+
 var walkToSchoolRelativePath = new RelativeMovementPath([{x : 208, y : 0}, {x : 210, y : -126}], showSchoolText);
 
-walkToSchoolRelativePath.setMovingObject(mainCharacter);
+// walkToSchoolRelativePath.setMovingObject(mainCharacter);
+walkToSchoolPaths[0].setMovingObject(mainCharacter);
 
 
-school.path = walkToSchoolRelativePath;
+// school.path = walkToSchoolRelativePath;
+school.path = walkToSchoolPaths[0];
 
 var leaveSchool = function(){
+	console.log("LEAVE school");
 	utils.rooms.street.dialogueName = "fromSchool";
 	Teleporter.teleportTo(utils.rooms.street, targetLeaveSchoolChoords);
 }
@@ -65,7 +77,8 @@ leaveSchoolRelativePath.setMovingObject(mainCharacter);
 
 school.onEnter = function(){
 	window.gamestate.movement.pauseInput(true);
-	walkToSchoolRelativePath.start();
+	// walkToSchoolRelativePath.start();
+	walkToSchoolPaths[0].start();
 }
 
 // school.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);

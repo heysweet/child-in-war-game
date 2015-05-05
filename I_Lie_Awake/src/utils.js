@@ -10,10 +10,22 @@ var playgroundCoords = {
 	y : 83.45958860959138
 };
 
-var schoolCoords = {
-	x : 137,
-	y : 295
-};
+var schoolCoords = function(){
+	var dayNum = window.gamestate.dayNum();
+
+	if (dayNum == 0){
+		return {x : 10, y : 303};
+		return {x : 546, y : 303};
+	} else if (dayNum == 1){
+		return {x : 350, y : 303};
+	} else if (dayNum == 2){
+		return {x : 250, y : 303};
+	} else if (dayNum == 3){
+		return {x : 120, y : 303};
+	} else {
+		return {x : 10, y : 303};
+	}
+}
 
 function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 

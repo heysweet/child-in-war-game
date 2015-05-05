@@ -67,7 +67,7 @@ sald.scene = {
 		}
 	},
 	key:function(key, down) {
-		// if (!down){
+		if (!down){
 		// 	var dialogue = gamestate.currentDialogue();
 
 		// 	if (dialogue !== null){
@@ -90,20 +90,21 @@ sald.scene = {
 		// 		console.log(mainCharacter.transform);
 		// 	}
 
-		// 	if (key == "M"){
-		// 		if (sound.isMuted()){
-		// 			sound.unmute();
-		// 		} else {
-		// 			sound.mute();
-		// 		}
-		// 	} else if (key == "P") {
+			if (key == "M"){
+				if (sound.isMuted()){
+					sound.unmute();
+				} else {
+					sound.mute();
+				}
+			} 
+			// else if (key == "P") {
 		// 		if (sound.isPaused()){
 		// 			sound.resume();
 		// 		} else {
 		// 			sound.pause();
 		// 		}
 		// 	}
-		// }
+		}
 	},
 	mouse:function(pos, button, down) {
 		if (button === "LEFT"){
@@ -123,7 +124,7 @@ sald.scene = {
 				// if (!mainCharacter.movement.isInputPaused() && window.gamestate.currentRoom() !== utils.rooms.street){
 				// 	mainCharacter.path = new WrapperPath(targetPos);
 				// }
-				// console.log(pos, utils.screenWidth(), utils.screenHeight());
+				console.log(pos, utils.screenWidth(), utils.screenHeight());
 				// console.log(mainCharacter.path);
 			}
 		}

@@ -1,14 +1,14 @@
 var homeParents = [
-	"I got eggs for mom today, she is happy.\n" +
-"I didnt get to see my friends after school.\n" +
-"I wonder what they did without me.\n" +
+	"I got eggs for mom today, she is happy.\n\n" +
+"I didnt get to see my friends after school.\n\n" +
+"I wonder if they had fun without me.\n\n" +
 "Dad came back late at night, I was really happy to see him.",
 
 	"",
 
-	"I got water for mom today.\n" +
-"I hope I didn't miss out on too much with friends.\n" +
-"I wonder what happened to Andy.\n" +
+	"I got water for mom today.\n\n" +
+"I hope I didn't miss out on too much fun with my friends.\n\n" +
+"I wonder what happened to Andy.\n\n" +
 "Dad did not tuck me in before I went to sleep.",
 
 	"",
@@ -17,16 +17,16 @@ var homeParents = [
 ];
 
 var homeFriends = [
-	"I played hide and seek with friends today.\n" +
-"I stayed out too long.\n" +
-"Mom got angry that I didnt get her eggs.\n" +
+	"I played hide and seek with friends today.\n\n" +
+"I had a lot of fun! I stayed out too long.\n\n" +
+"Mom got angry that I didnt get her eggs.\n\n" +
 "Dad came back late at night, he was really tired.",
 
 	"",
 
-	"I played with my friends today.\n" +
-"Mom got angry that I didnt get her water.\n"+
-"I wonder what happened to Andy.\n" +
+	"I had a lot of fun playing with my friends today.\n\n" +
+"Mom got angry that I didnt get her water.\n\n"+
+"I wonder what happened to Andy.\n\n" +
 "Dad did not tuck me in before I went to sleep.",
 
 	"",
