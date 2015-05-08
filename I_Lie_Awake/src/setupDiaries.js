@@ -64,7 +64,11 @@ var school = [
 
 "I wonder where mom and dad went.",
 
-	"",
+	"There were nobody at school today.\n\n" + 
+
+"Not even Ms.Beth was here.\n\n" +
+
+"I wonder where everybody went.",
 ];
 
 module.exports = {

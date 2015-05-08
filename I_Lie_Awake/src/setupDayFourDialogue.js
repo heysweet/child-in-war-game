@@ -7,7 +7,7 @@ var Explosion = require("Explosion.js");
 // Dad Morning
 
 morningTexts = [
-	new Phrase("Dad", null, 800),
+	new Phrase("Dad", null, 5000),
 ];
 
 dialogueWithDad = new Dialogue(morningTexts);
@@ -15,17 +15,45 @@ dialogueWithDad = new Dialogue(morningTexts);
 // Walk to School
 
 var choices1 = [
-	new Choice("no", null)
+	new Choice("whats wrong?", null),
+	new Choice("help!!!!! I dont know where my parents are?!??!!?", null),
+];
+
+var choices2 = [
+	new Choice("what?", null),
+	new Choice("sarah, what are you saying????", null),
+];
+
+var choices3 = [
+	new Choice("uh huh...", null),
+	new Choice("sarah please help me!!!", null),
+];
+
+var choices4 = [
+	new Choice("...", null),
+	new Choice("sarah!!! please listen to me!", null),
+];
+
+var choices5 = [
+	new Choice("...", null),
+	new Choice("sarah!!", null),
+];
+
+var choices6 = [
+	new Choice("...", null),
+	new Choice("SARAH!!!!!!", null),
 ];
 
 walkToSchool = [
-	new Phrase("Mom", "Hey", 1600),
-	new Phrase("Mom", "Have you heard from Dad yet?", choices1),
-	new Phrase("Mom", "I'm heading out to find him. Stay out of trouble.", 5000),
-	new Phrase("Sarah", "I am not going to be at school today, sorry guys.", 2000),
-	new Phrase("Sarah", "My mom won't let me.", 4000),
-	new Phrase("Johnny", "aite but will you play with us after school?", 4000),
-	new Phrase("Sarah", "They won't even let me out of the house.", 5000)
+	new Phrase("Sarah", "I am not going to be at school today.", 3000),
+	new Phrase("Sarah", "Hope in reality is the worst of all evils ", 3000),
+	new Phrase("Sarah", "because it prolongs the torments of man.", 3000),
+	new Phrase("Sarah", "Existence really is an imperfect tense that never becomes a present.", 3000),
+	new Phrase("Sarah", "I still live, I still think: I still have to live, for I still have to think.", 3000),
+	new Phrase("Sarah", "One has to die several times while one is still alive", 3000),
+	new Phrase("Sarah", "Let us beware of saying that death is the opposite of life", 3000),
+	new Phrase("Sarah", "The living being is only a species of the dead,", 3000),
+	new Phrase("Sarah", "and a very rare species.", 3000),
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);
@@ -39,8 +67,7 @@ var choices2 = [
 
 
 walkFromSchool = [
-	new Phrase("Johnny", "heyyyyy you are coming to play right?", 2000),
-	new Phrase("Johnny", "dont ditch like all the other loserrrrs", choices2)
+	new Phrase("Sarah", null, 7000),
 ];
 
 dialogueFromSchool = new Dialogue(walkFromSchool);

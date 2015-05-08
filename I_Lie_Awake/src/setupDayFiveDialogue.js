@@ -6,7 +6,7 @@ var defaults = require("dialogueDefaults.js");
 // Dad Morning
 
 morningTexts = [
-	new Phrase("Dad", null, 800),
+	new Phrase("Dad", null, 7000),
 ];
 
 dialogueWithDad = new Dialogue(morningTexts);
@@ -14,7 +14,7 @@ dialogueWithDad = new Dialogue(morningTexts);
 // Walk to School
 
 walkToSchool = [
-	new Phrase("Dad", null, 800),
+	new Phrase("Dad", null, 7000),
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);
@@ -23,7 +23,7 @@ dialogueToSchool.onEnd = defaults.goToSchool;
 // Walk from School
 
 walkFromSchool = [
-	new Phrase("Dad", null, 800),
+	new Phrase("Dad", null, 7000),
 ];
 
 dialogueFromSchool = new Dialogue(walkFromSchool);
