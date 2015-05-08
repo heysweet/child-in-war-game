@@ -14,7 +14,6 @@ var schoolCoords = function(){
 	var dayNum = window.gamestate.dayNum();
 
 	if (dayNum == 0){
-		return {x : 10, y : 303};
 		return {x : 546, y : 303};
 	} else if (dayNum == 1){
 		return {x : 350, y : 303};
@@ -118,6 +117,76 @@ var desaturate = function(imgPixels, saturationAmount){
 			imgPixels.data[i + 2] = (avg * inv) + (imgPixels.data[i + 2] * sat);
 		}
 	}
+}
+
+var colorize = function(image, color){
+	var red = color[0];
+	var green = color[1];
+	var blue = color[2];
+
+	var canvas = document.createElement('canvas');
+	var canvasContext = canvas.getContext('2d');
+
+	var imgW = image.width;
+
+	var imgH = image.height;
+	canvas.width = imgW;
+	canvas.height = imgH;
+
+	canvasContext.drawImage(image, 0, 0);
+
+	var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
+
+	for (var y = 0; y < imgPixels.height; y++){
+		for (var x = 0; x < imgPixels.width; x++){
+			var i = (y * 4) * imgPixels.width + x * 4;
+
+			imgPixels.data[i] = red;
+			imgPixels.data[i + 1] = green;
+			imgPixels.data[i + 2] = blue;
+		}
+	}
+
+	canvasContext.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+
+	var result = new Image(imgPixels.width, imgPixels.height);
+
+	result.src = canvas.toDataURL();
+
+	return result;
+}
+
+var setOpacity = function(image, opacity){
+	opacity *= 255;
+
+	var canvas = document.createElement('canvas');
+	var canvasContext = canvas.getContext('2d');
+
+	var imgW = image.width;
+
+	var imgH = image.height;
+	canvas.width = imgW;
+	canvas.height = imgH;
+
+	canvasContext.drawImage(image, 0, 0);
+
+	var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
+
+	for (var y = 0; y < imgPixels.height; y++){
+		for (var x = 0; x < imgPixels.width; x++){
+			var i = (y * 4) * imgPixels.width + x * 4;
+
+			imgPixels.data[i + 3] = opacity;
+		}
+	}
+
+	canvasContext.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+
+	var result = new Image(imgPixels.width, imgPixels.height);
+
+	result.src = canvas.toDataURL();
+
+	return result;
 }
 
 // http://www.ajaxblender.com/howto-convert-image-to-grayscale-using-javascript.html
@@ -274,5 +343,7 @@ module.exports = {
 	sleepingCoords:sleepingCoords,
 	playgroundCoords:playgroundCoords,
 	schoolCoords:schoolCoords,
-	pausePlayerMovement:pausePlayerMovement
+	pausePlayerMovement:pausePlayerMovement,
+	colorize:colorize,
+	setOpacity:setOpacity
 };

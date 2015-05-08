@@ -37,7 +37,7 @@ var homeFriends = [
 var school = [
 	"Ms. Beth taught us about rocks today. It is really boring, but Andy really liked it.\n\n" +
 
-"Johnny and Brenda are really excited about the soldiers, it's all they talked about during lunch.\n\n" +
+"Johnny and Sam are really excited about the soldiers, it's all they talked about during lunch.\n\n" +
 
 "Sarah seems scared though.",
 
@@ -45,11 +45,11 @@ var school = [
 
 "She told us to be careful after school.\n\n" +
 
-"Sarah seems angry at Mike and Brenda. I did not see Rachel though.",
+"Sarah seems angry at Jonny and Sam. I did not see Rachel though.",
 
 	"Ms. Beth taught about dolphins today. Dolphins are very weird animals that see with sound.\n\n" +
 
-"Johnny didn't talk much today because Brenda was not here.\n\n" +
+"Johnny didn't talk much today because Sam was not here.\n\n" +
 
 "Sarah seemed very worried.",
 

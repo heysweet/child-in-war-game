@@ -1,10 +1,66 @@
 var utils = require("utils.js");
 
-var MY_TOP_BUBBLE_IMAGE = require("./data/phone/myBubble.png");
+var MY_TOP_BUBBLE_IMAGE = utils.colorize(require("./data/phone/myBubble.png"), [250, 250, 250]);
 
 var TOP_BUBBLE_IMAGE = require("./data/phone/friendsTop.png");
 var MIDDLE_BUBBLE_IMAGE = require("./data/phone/friendsMiddle.png");
 var BOTTOM_BUBBLE_IMAGE = require("./data/phone/friendsBottom.png");
+
+var topBubbles = [];
+var middleBubbles = [];
+var bottomBubbles = [];
+
+var colors = [
+	[255, 249, 213], // yellow, Sarah
+	[255, 229, 234], // pink, Sam
+	[238, 255, 234], // green, Andy
+	[229, 252, 255], // blue, Dad
+	[235, 232, 255], // purple, Johnny
+	[255, 233, 212], // orange, Mom
+	[245, 225, 255], // light purple, Rachel
+	[220, 255, 240] // turquoise, Mike
+]
+
+var getBubbleIndex = function(name){
+	switch (name) {
+		case "Sarah":
+			return 0;
+		case "Sam":
+			return 1;
+		case "Andy":
+			return 2;
+		case "Dad":
+			return 3;
+		case "Johnny":
+			return 4;
+		case "Mom":
+			return 5;
+		case "Rachel":
+			return 6;
+		// case "Mike":
+		// return 7;
+	}
+
+	return 7;
+}
+
+var bubbles = [];
+
+var setupBubbles = function(){
+	for (var i = 0; i < colors.length; i++){
+		var color = colors[i];
+
+		var top = utils.colorize(TOP_BUBBLE_IMAGE, color);
+		var middle = utils.colorize(MIDDLE_BUBBLE_IMAGE, color);
+		var bottom = utils.colorize(BOTTOM_BUBBLE_IMAGE, color);
+
+		topBubbles.push(top);
+		middleBubbles.push(middle);
+		bottomBubbles.push(bottom);
+	}
+}
+
+setupBubbles();
 
 var TextMessage = function(message_, name){
 	var message = "";
@@ -13,12 +69,28 @@ var TextMessage = function(message_, name){
 	var isMine = false;
 	var shouldWriteName = false;
 
+	var bubbleIndex;
+	var topBubble;
+	var midBubble;
+	var btmBubble;
+
 	var messageFont = "300 16px Gill Sans";
 
 	if (name === undefined){
 		isMine = true;
 	} else if (name !== "Mom" && name !== "Dad"){
 		shouldWriteName = true;
+		bubbleIndex = getBubbleIndex(name);
+
+		topBubble = topBubbles[bubbleIndex];
+		midBubble = middleBubbles[bubbleIndex];
+		btmBubble = bottomBubbles[bubbleIndex];
+	} else {
+		bubbleIndex = getBubbleIndex(name);
+
+		topBubble = topBubbles[bubbleIndex];
+		midBubble = middleBubbles[bubbleIndex];
+		btmBubble = bottomBubbles[bubbleIndex];
 	}
 
 	var heightPerLine = 10;
@@ -55,20 +127,21 @@ var TextMessage = function(message_, name){
 
 		var height = 0;
 
-		var middle = MIDDLE_BUBBLE_IMAGE;
+		var middle = midBubble;
 
 		if (isMine){
 			var bubble = MY_TOP_BUBBLE_IMAGE; 
 
-			drawY -= (middle.height);
+			drawY -= (MIDDLE_BUBBLE_IMAGE.height);
 
 			ctx.drawImage(bubble, x + xOffset, drawY - 13);
 
 			height = 53;
 		} else {
-			var top = TOP_BUBBLE_IMAGE; 
-			var bottom = BOTTOM_BUBBLE_IMAGE;
+			var top = topBubble; 
+			var bottom = btmBubble;
 
+			console.log(btmBubble, topBubble, midBubble);
 			ctx.drawImage(bottom, x, drawY);
 
 			height += bottom.height;
