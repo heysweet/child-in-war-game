@@ -36,7 +36,7 @@ var inTransition = false;
 var conversationAnimateOffset = 0;
 var conversationRequiredOffset = 255;
 var conversationElapsedTime = 0;
-var conversationAnimationTime = 0.85;
+var conversationAnimationTime = 0.45;
 
 var halfPi = Math.PI / 2;
 
