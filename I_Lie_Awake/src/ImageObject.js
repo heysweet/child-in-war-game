@@ -77,7 +77,7 @@ var ImageObject = function(x_, y_, image_, distance_){
 	this.showNextToRightOffset = function(){
 		if (showingNext) return null;
 
-		var offset = this.transform.x - utils.screenWidth();
+		var offset = this.transform.x + this.image.width - utils.screenWidth();
 
 		if (offset < this.distance){
 			showingNext = true;

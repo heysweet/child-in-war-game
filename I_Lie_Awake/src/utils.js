@@ -21,23 +21,23 @@ var glitch = require("glitch-canvas.js");
 
 var glitchedImages = [];
 var drawnGlitch = null;
-var chanceToChange = 0.2;
+var chanceToChange = 0.15;
 
 var queueGlitchCapture = function(){
 	window.gamestate.glitchCurrentCanvas = true;
 }
 
-var glitchImage = function(image){
-	window.gamestate.imageToGlitch = image;
+var glitchImages = function(images){
+	window.gamestate.imagesToGlitch = window.gamestate.imagesToGlitch.concat(images);
 }
 
 var glitchCanvas = function(){
 	var ctx = sald.ctx;
 
-	var amount = 10 + Math.floor(Math.random() * 90);
+	var amount = 30 + Math.floor(Math.random() * 69);
 	var seed = 1 + Math.floor(Math.random() * 97);
-	var iterations = 1 + Math.floor(Math.random() * 96);
-	var quality = 1 + Math.floor(Math.random() * 64);
+	var iterations = 14 + Math.floor(Math.random() * 11);
+	var quality = 3 + Math.floor(Math.random() * 60);
 
 	var my_image_data = ctx.getImageData(0, 0, screenWidth(), screenHeight());
 	var parameters = { amount: amount, seed: seed, iterations: iterations, quality: quality };
@@ -62,8 +62,22 @@ var glitchCanvas = function(){
 }
 
 var drawGlitches = function(){
+	var ctx = sald.ctx;
+
 	if (Math.random() < chanceToChange){
-		drawnGlitch = glitchedImages[Math.floor(Math.random() * glitchedImages.length)];
+		var random1 = Math.random();
+
+		var halfListLength = Math.floor(glitchedImages.length / 2);
+		var remainingItems = glitchedImages.length - halfListLength;
+
+		if (random1 > 0.2){
+			var baseIndex = halfListLength;
+
+			drawnGlitch = glitchedImages[baseIndex + Math.floor(Math.random() * remainingItems)];
+		} else {
+			drawnGlitch = glitchedImages[Math.floor(Math.random() * halfListLength)];
+		}
+
 	}
 
 	if (drawnGlitch){
@@ -456,5 +470,5 @@ module.exports = {
 	clearGlitchedImages:clearGlitchedImages,
 	drawGlitches:drawGlitches,
 	queueGlitchCapture:queueGlitchCapture,
-	glitchImage:glitchImage
+	glitchImages:glitchImages
 };

@@ -113,12 +113,21 @@ street.onExplode = function(){
 		dialogue.kill();
 	}
 
+	var soundLength = 7430;
+	var startGlitchTime = 1100;
+
 	setTimeout(
 		function() {
-			window.gamestate.phoneIsCracked = true;
-			window.gamestate.explosion.hide();
-			wakeUpInBed();
-	}, 7430);
+			window.gamestate.drawGlitches = true;
+
+			setTimeout(
+				function() {
+					window.gamestate.drawGlitches = false;
+					window.gamestate.phoneIsCracked = true;
+					window.gamestate.explosion.hide();
+					wakeUpInBed();
+			}, soundLength - startGlitchTime);
+	}, startGlitchTime);
 }
 
 street.setCarBomb = function(){

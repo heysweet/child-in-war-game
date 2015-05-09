@@ -170,6 +170,26 @@ window.gamestate.isInGame = false;
 window.gamestate.phoneIsCracked = false;
 window.gamestate.noKeyboardInput = false;
 window.gamestate.imageToGlitch = null;
+window.gamestate.imagesToGlitch = [
+	require("./data/photos/1.jpg"),
+	require("./data/photos/2.jpg"),
+	require("./data/photos/4.jpg"),
+	require("./data/photos/5.jpg"),
+	require("./data/photos/6.jpg"),
+	require("./data/photos/7.jpg"),
+	require("./data/photos/1.jpg"),
+	require("./data/photos/2.jpg"),
+	require("./data/photos/4.jpg"),
+	require("./data/photos/5.jpg"),
+	require("./data/photos/6.jpg"),
+	require("./data/photos/7.jpg"),
+	require("./data/photos/1.jpg"),
+	require("./data/photos/2.jpg"),
+	require("./data/photos/4.jpg"),
+	require("./data/photos/5.jpg"),
+	require("./data/photos/6.jpg"),
+	require("./data/photos/7.jpg")
+];
 
 function startGame(){
 	setTimeout(

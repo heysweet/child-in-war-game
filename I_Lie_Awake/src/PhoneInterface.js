@@ -337,6 +337,7 @@ var PhoneInterface = function(){
 
 				if (choice && choice.onChoice){
 					choice.onChoice();
+					utils.glitchCanvas();
 				}
 
 				dialogue.goToNext(0);
@@ -348,6 +349,7 @@ var PhoneInterface = function(){
 
 					if (choice && choice.onChoice){
 						choice.onChoice();
+						utils.glitchCanvas();
 					}
 
 					dialogue.goToNext(1);

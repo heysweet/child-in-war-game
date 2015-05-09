@@ -11,8 +11,8 @@ var desaturatedHouse = HOUSE_1_IMAGE;
 var CAR_1_IMAGE = require("./data/street/cars/car1.png");
 var CAR_2_IMAGE = require("./data/street/cars/car2.png");
 var CAR_3_IMAGE = require("./data/street/cars/car3.png");
-var CAR_4_IMAGE = require("./data/street/cars/car4.png");
-var CAR_5_IMAGE = require("./data/street/cars/car5.png");
+// var CAR_4_IMAGE = require("./data/street/cars/car4.png");
+// var CAR_5_IMAGE = require("./data/street/cars/car5.png");
 
 var DESTROYED_HOUSE_1_ANIMATED = require("./data/street/house1/house1_destroy_black.png");
 var DESTROYED_HOUSE_1 = require("./data/street/house1/house1_destroy.png");
@@ -69,8 +69,8 @@ var initializeLayers = function(){
 	cars = [
 		new ImageObject(100, 400, CAR_2_IMAGE, 900), 
 		new ImageObject(100, 400, CAR_3_IMAGE, 900), 
-		new ImageObject(100, 400, CAR_4_IMAGE, 900), 
-		new ImageObject(100, 400, CAR_5_IMAGE, 900), 
+		// new ImageObject(100, 400, CAR_4_IMAGE, 900), 
+		// new ImageObject(100, 400, CAR_5_IMAGE, 900), 
 	];
 
 	drawnGrass = [new ImageObject(0, 0, desaturatedGrass, 0)];
@@ -200,11 +200,11 @@ var Treadmill = function(speed_) {
 						// update needed to set which side to setOffscreen
 						nextObj.update(speed * elapsed);
 
-						if (i == 0){
-							nextObj.setOffscreenPerfect(offset);
-						} else {
-							nextObj.setOffscreen();
-						}
+						// if (i <= 1){
+						nextObj.setOffscreenPerfect(offset);
+						// } else {
+						// 	nextObj.setOffscreen();
+						// }
 
 						layer.push(nextObj);
 					}

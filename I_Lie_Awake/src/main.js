@@ -37,17 +37,26 @@ sald.scene = {
 		ctx.setTransform(scalar,0, 0,scalar, 0,0);
 
 		var imageToGlitch = window.gamestate.imageToGlitch;
+		var didGlitch = false;
 
-		if (imageToGlitch){
-			ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
-			ctx.drawImage(imageToGlitch, 0, 0);
-			utils.glitchCanvas();
-			imageToGlitch = null;
-			ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
+		if (!imageToGlitch && window.gamestate.imagesToGlitch.length > 0){
+			window.gamestate.imageToGlitch = window.gamestate.imagesToGlitch[0];
+			window.gamestate.imagesToGlitch.shift();
+			imageToGlitch = window.gamestate.imageToGlitch;
+
+			if (imageToGlitch){
+				ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
+				ctx.drawImage(imageToGlitch, 0, 0);
+				utils.glitchCanvas();
+				window.gamestate.imageToGlitch = null;
+				imageToGlitch = null;
+				didGlitch = true;
+				ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
+			}
 		}
 
-		if (!window.gamestate.drawNothing){
-			if (!imageToGlitch){
+		if (!window.gamestate.drawNothing && !window.gamestate.drawGlitches){
+			if (!didGlitch){
 				ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
 			}
 
@@ -80,6 +89,10 @@ sald.scene = {
 			}
 		} else {
 			ctx.clearRect( 0, 0, utils.screenHeight()*30, utils.screenWidth()*30);
+
+			if (window.gamestate.drawGlitches){
+				utils.drawGlitches();
+			}
 		}
 
 		if (window.gamestate.displayDayNum){
