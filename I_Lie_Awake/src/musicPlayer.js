@@ -1,19 +1,16 @@
 var songs = [
 	require("./data/music/day1-1-toSchool.ogg"),
-
 	require("./data/music/day1-3-toHome.ogg"),
 	require("./data/music/day1-4-sleep.ogg"),
+
 	require("./data/music/day2-1-toSchool.ogg"),
-
 	require("./data/music/day2-3-toHome.ogg"),
+
 	require("./data/music/day3-1-toSchool.ogg"),
-
 	require("./data/music/day3-3-toHome.ogg"),
-	require("./data/music/day4-1-toSchool.ogg"),
 
-	require("./data/music/day4-3-toHome.ogg"),
-	require("./data/music/day5-1-toSchool.ogg"),
-	require("./data/music/day5-2-toHome.ogg")
+	require("./data/music/day4-1-toSchool.ogg"),
+	require("./data/music/day4-2-toHome.ogg"),
 ];
 
 var nonLoop = new Set([2]);
