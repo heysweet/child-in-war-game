@@ -96,7 +96,7 @@ var Treadmill = function(speed_) {
 	var foregroundLayerNum = 3;
 
 	var carBomb = null;
-	var carBombX = 200;
+	var carBombX = 180;
 
 	var init = function(){
 		initializeLayers();

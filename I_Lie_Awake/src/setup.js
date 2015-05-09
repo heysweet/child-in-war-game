@@ -173,13 +173,16 @@ window.gamestate.noKeyboardInput = false;
 function startGame(){
 	setTimeout(
 			function() {
-		var delayedHidePhone = function(time){return function(){setTimeout(
-			function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
+				
+		utils.goToTheNextDay();
 
-		window.gamestate.shouldShowPhone = true;
-		window.gamestate.isTexting = true;
-		window.gamestate.startDialogue("morning", delayedHidePhone(1800));
-		window.gamestate.drawNothing = false;
+		// var delayedHidePhone = function(time){return function(){setTimeout(
+		// 	function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
+
+		// window.gamestate.shouldShowPhone = true;
+		// window.gamestate.isTexting = true;
+		// window.gamestate.startDialogue("morning", delayedHidePhone(1800));
+		// window.gamestate.drawNothing = false;
 	}, 1600);
 }
 

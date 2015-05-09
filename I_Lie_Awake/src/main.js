@@ -7,6 +7,7 @@ var utils = require("utils.js");
 var camera = require("camera.js");
 var sound = require("sald:soundController.js");
 var WrapperPath = require("movementPath.js").WrapperPath;
+var dayNumDisplay = require("dayNumDisplay.js");
 
 var mainCharacter = window.gamestate.mainCharacter;
 
@@ -67,6 +68,10 @@ sald.scene = {
 			}
 		} else {
 			ctx.clearRect( 0, 0, utils.screenHeight()*30, utils.screenWidth()*30);
+		}
+
+		if (window.gamestate.displayDayNum){
+			dayNumDisplay.draw();
 		}
 	},
 	key:function(key, down) {

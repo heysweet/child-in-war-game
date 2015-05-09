@@ -15,6 +15,8 @@ var kitchenCoords = {
 	y : 83.45958860959138
 };
 
+var displayDayNumTime = 2100;
+
 var loadFonts = function(){
 	var string = " ";
 
@@ -331,12 +333,25 @@ var imageScalarInverted = function(){
 var goToTheNextDay = function(){
 	window.gamestate.nextDay();
 
-	if (window.gamestate.dayNum() == 3){
-		window.gamestate.electricity = false;
-	}
+	if (!window.gamestate.gameover){
+		window.gamestate.drawNothing = true;
+		window.gamestate.displayDayNum = true;
 
-	for (var i = 0; i < onNewDayList.length; i++){
-		onNewDayList[i]();
+		setTimeout(
+			function(){
+				window.gamestate.drawNothing = false;
+				window.gamestate.displayDayNum = false;
+
+				var dayNum = window.gamestate.dayNum();
+
+				if (dayNum == 3){
+					window.gamestate.electricity = false;
+				}
+
+				for (var i = 0; i < onNewDayList.length; i++){
+					onNewDayList[i]();
+				}
+			}, displayDayNumTime);
 	}
 }
 
