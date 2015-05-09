@@ -98,10 +98,10 @@ var wakeUpInBed = function(){
 
 street.onExplode = function(){
 	window.gamestate.musicPlayer.stop();
+	window.gamestate.currentDialogue().end();
 
 	setTimeout(
 		function() {
-			window.gamestate.currentDialogue().end();
 			window.gamestate.explosion.hide();
 			wakeUpInBed();
 	}, 7430);

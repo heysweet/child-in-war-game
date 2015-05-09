@@ -32,7 +32,7 @@ var dialogueWithDad = new Dialogue(dadTalks);
 // Walk to School
 
 var johnnyBoring = [
-	new Phrase("Johnny", "borriinnngggggg", 4000),
+	new Phrase("Johnny", "borriiiiinnngggggg", 4000),
 ];
 
 var johnnyNoWay = [

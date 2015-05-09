@@ -46,7 +46,7 @@ var school = [
 
 "She told us to be careful after school.\n\n" +
 
-"Sarah didn’t talk much today because Rachel was not here.",
+"Sarah didn't talk much today because Rachel was not here.",
 
 
 
@@ -58,7 +58,7 @@ var school = [
 
 
 
-	"Ms.Beth talked a lot about the war today. I didn’t understand what she said.\n\n" + 
+	"Ms.Beth talked a lot about the war today. I didn't understand what she said.\n\n" + 
 
 "I had lunch by myself today. There was no one to talk to.\n\n" +
 
