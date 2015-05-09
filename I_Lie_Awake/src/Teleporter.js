@@ -59,6 +59,10 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 	this.setIsEnabled = function(bool){
 		isEnabled = bool;
 	}
+
+	this.performTeleport = function(){
+		zone.onEnterZone();
+	}
 }
 
 Teleporter.teleportTo = function(room, coords){

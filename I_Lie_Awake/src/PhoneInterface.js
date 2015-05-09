@@ -284,15 +284,16 @@ var PhoneInterface = function(){
 
 	this.draw = function(){
 		drawBackground();
-		var ctx = sald.ctx;
-
-		if (inTransition){
-			ctx.save();
-			ctx.rect(clipTransform.x, clipTransform.y, clipTransform.width, clipTransform.height);
-			ctx.clip();
-		}
-
+		
 		if (!isDead){
+			var ctx = sald.ctx;
+
+			if (inTransition){
+				ctx.save();
+				ctx.rect(clipTransform.x, clipTransform.y, clipTransform.width, clipTransform.height);
+				ctx.clip();
+			}
+
 			if (window.gamestate.isInGame){
 				window.gamestate.phoneGame.draw();
 
@@ -310,13 +311,14 @@ var PhoneInterface = function(){
 
 				drawChoices();
 			}
-		}
 
-		if (window.gamestate.phoneIsCracked){
-			drawCrack();
-		}
 
-		drawOverlay();
+			if (window.gamestate.phoneIsCracked){
+				drawCrack();
+			}
+
+			drawOverlay();
+		}
 	}
 
 	this.loadDialogue = function(dialogue_){

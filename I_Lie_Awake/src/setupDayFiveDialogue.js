@@ -10,6 +10,7 @@ morningTexts = [
 ];
 
 dialogueWithDad = new Dialogue(morningTexts);
+dialogueWithDad.onEnd = defaults.goToStreet;
 
 // Walk to School
 

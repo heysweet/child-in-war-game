@@ -217,17 +217,19 @@ var updateMovement = function(elapsed){
 			}
 		} else {
 			if (object == mainCharacter && !isPaused && !isInputPaused && window.gamestate.currentRoom() !== utils.rooms.street){
-				if (sald.keys.W || sald.keys.UP){
-					downness -= transform.yDelta;
-				}
-				if (sald.keys.S || sald.keys.DOWN){
-					downness += transform.yDelta;
-				}
-				if (sald.keys.A || sald.keys.LEFT){
-					rightness -= transform.xDelta;
-				}
-				if (sald.keys.D || sald.keys.RIGHT){
-					rightness += transform.xDelta;
+				if (!window.gamestate.noKeyboardInput){
+					if (sald.keys.W || sald.keys.UP){
+						downness -= transform.yDelta;
+					}
+					if (sald.keys.S || sald.keys.DOWN){
+						downness += transform.yDelta;
+					}
+					if (sald.keys.A || sald.keys.LEFT){
+						rightness -= transform.xDelta;
+					}
+					if (sald.keys.D || sald.keys.RIGHT){
+						rightness += transform.xDelta;
+					}
 				}
 
 				toTargetVector = {

@@ -18,17 +18,8 @@ var goToSchool = function(){
 		}, 2000);
 }
 
-var goToPlayground = function(){
-	setTimeout(
-		function() {
-
-			// Go to playground
-			var room = utils.rooms.playground;
-			var coords = utils.playgroundCoords;
-
-			Teleporter.teleportTo(room, coords);
-
-		}, 2000);
+var goToStreet = function(){
+	window.gamestate.streetDoor.performTeleport();
 }
 
 var goToHome = function(){
@@ -42,15 +33,29 @@ var goToHome = function(){
 			var room = utils.rooms.bedroom;
 			var coords = utils.sleepingCoords;
 
-			console.log("DAY NUM ", window.gamestate.dayNum());
-			if (window.gamestate.dayNum() == 0){
+			var dayNum = window.gamestate.dayNum();
+
+			if (dayNum == 0){
 				window.gamestate.musicPlayer.playNextSong(false);
 			} else {
 				window.gamestate.musicPlayer.stop();
+
+				if (dayNum == 2){
+					window.gamestate.noKeyboardInput = true;
+				} else if (window.gamestate.dayNum() > 3){
+					window.gamestate.setParentsDiary();
+				}
 			}
 
-			Teleporter.teleportTo(room, coords);
-			utils.pausePlayerMovement(true);
+			if (dayNum == 4){
+				Teleporter.teleportTo(utils.rooms.kitchen, utils.kitchenCoords);
+				utils.pausePlayerMovement(false);
+				window.gamestate.noKeyboardInput = false;
+			} else {
+				Teleporter.teleportTo(room, coords);
+				utils.pausePlayerMovement(true);
+			}
+
 
 			setTimeout(
 				function(){
@@ -69,6 +74,6 @@ var goToHome = function(){
 
 module.exports = {
 	goToSchool:goToSchool,
-	goToPlayground:goToPlayground,
-	goToHome:goToHome
+	goToHome:goToHome,
+	goToStreet:goToStreet
 };

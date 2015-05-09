@@ -20,7 +20,7 @@ var defaults = require("dialogueDefaults.js");
 // Dad Morning
 
 var choices1 = [
-	new Choice("morning dad", null),
+	new Choice("fine", null),
 	new Choice("am i dead?", null),
 ];
 
@@ -37,6 +37,7 @@ morningTexts = [
 ];
 
 dialogueWithDad = new Dialogue(morningTexts);
+dialogueWithDad.onEnd = defaults.goToStreet;
 
 // Walk to School
 
@@ -90,7 +91,7 @@ var choices6 = [
 ];	
 
 walkFromSchool = [
-	new Phrase("Andy", "Dad called", 2000),
+	new Phrase("Andy", "my dad called", 2000),
 	new Phrase("Andy", "Going to leave early today.", 4000),
 	new Phrase("Mom", "Can you fetch some water on your way home? We are running a bit low.", 4000),
 	new Phrase("Johnny", "andy you quitterrrrrrrrrr", 4000),

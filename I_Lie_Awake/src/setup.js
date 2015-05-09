@@ -79,6 +79,8 @@ var parentsDoor      = new Teleporter(parentsBedroom, toParentsBox, toParentsTar
 var leaveParentsDoor = new Teleporter(kitchen, fromParentsBox, fromParentsTarget);
 var streetDoor		 = new Teleporter(street, toStreetBox, toStreetTarget);
 
+window.gamestate.streetDoor = streetDoor;
+
 streetDoor.onTrigger = function() {
 	streetDoor.setIsEnabled(false);
 	street.dialogueName = "toSchool";
@@ -150,6 +152,7 @@ window.gamestate.camera = camera;
 window.gamestate.phoneGame = require("phoneGame.js");
 window.gamestate.isInGame = false;
 window.gamestate.phoneIsCracked = false;
+window.gamestate.noKeyboardInput = false;
 
 function startGame(){
 	setTimeout(

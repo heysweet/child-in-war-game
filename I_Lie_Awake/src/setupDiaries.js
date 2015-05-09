@@ -1,5 +1,5 @@
 var homeParents = [
-	"I got eggs for mom today, she is happy.\n\n" +
+	"I got eggs for mom today.\n\n" +
 	"I didnt get to see my friends after school.\n\n" +
 	"I wonder if they had fun without me.\n\n" +
 	"Dad came back late at night, I was really happy to see him.",
@@ -64,7 +64,7 @@ var school = [
 
 "I wonder where mom and dad went.",
 
-	"There were nobody at school today.\n\n" + 
+	"There was nobody at school today.\n\n" + 
 
 "Not even Ms.Beth was here.\n\n" +
 

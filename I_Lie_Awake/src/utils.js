@@ -10,6 +10,11 @@ var playgroundCoords = {
 	y : 83.45958860959138
 };
 
+var kitchenCoords = {
+	x : 149.41686328001853,
+	y : 83.45958860959138
+};
+
 var loadFonts = function(){
 	var string = " ";
 
@@ -325,6 +330,10 @@ var imageScalarInverted = function(){
 
 var goToTheNextDay = function(){
 	window.gamestate.nextDay();
+
+	if (window.gamestate.dayNum() == 3){
+		window.gamestate.electricity = false;
+	}
 
 	for (var i = 0; i < onNewDayList.length; i++){
 		onNewDayList[i]();
