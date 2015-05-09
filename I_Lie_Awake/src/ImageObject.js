@@ -14,7 +14,7 @@ var ImageObject = function(x_, y_, image_, distance_){
 		y : y_
 	}
 
-	this.setOffscreenRight = function(offset){
+	this.setOffscreenRightPerfect = function(offset){
 		if (offset == undefined){
 			this.transform.x = utils.screenWidth();
 		} else {
@@ -23,7 +23,7 @@ var ImageObject = function(x_, y_, image_, distance_){
 		}
 	}
 
-	this.setOffscreenLeft = function(offset){
+	this.setOffscreenLeftPerfect = function(offset){
 		if (offset == undefined){
 			this.transform.x = -this.image.width;
 		} else {
@@ -32,11 +32,27 @@ var ImageObject = function(x_, y_, image_, distance_){
 		}
 	}
 
-	this.setOffscreen = function(offset){
+	this.setOffscreenPerfect = function(offset){
 		if (speed > 0){
-			this.setOffscreenRight(offset);
+			this.setOffscreenRightPerfect(offset);
 		} else {
-			this.setOffscreenLeft(offset);
+			this.setOffscreenLeftPerfect(offset);
+		}
+	}
+
+	this.setOffscreenRight = function(){
+		this.transform.x = utils.screenWidth();
+	}
+
+	this.setOffscreenLeft = function(){
+		this.transform.x = -this.image.width;
+	}
+
+	this.setOffscreen = function(){
+		if (speed > 0){
+			this.setOffscreenRight();
+		} else {
+			this.setOffscreenLeft();
 		}
 	}
 

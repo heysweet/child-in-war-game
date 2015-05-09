@@ -454,7 +454,7 @@ module.exports = {
 	setOpacity:setOpacity,
 	glitchCanvas:glitchCanvas,
 	clearGlitchedImages:clearGlitchedImages,
-	drawGlitch:drawGlitch,
+	drawGlitches:drawGlitches,
 	queueGlitchCapture:queueGlitchCapture,
 	glitchImage:glitchImage
 };
