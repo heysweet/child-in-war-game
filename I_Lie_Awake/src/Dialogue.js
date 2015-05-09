@@ -64,7 +64,8 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 	clearTimeout(timeout);
 
 	if (this.isDead){
-		this.end();
+		this.phrases = [];
+		this.currentIndex = 0;
 		return null;
 	}
 	

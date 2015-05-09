@@ -94,14 +94,28 @@ var wakeUpInBed = function(){
 	utils.pausePlayerMovement(true);
 
 	utils.goToTheNextDay();
+
+	console.log(window.gamestate, window.gamestate.currentDialogue());
+
+	// var delayedHidePhone = function(time){return function(){setTimeout(
+	// 	function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
+
+	// window.gamestate.shouldShowPhone = true;
+	// window.gamestate.isTexting = true;
+	// window.gamestate.startDialogue("morning", delayedHidePhone(1800));
 }
 
 street.onExplode = function(){
 	window.gamestate.musicPlayer.stop();
-	window.gamestate.currentDialogue().kill();
+	var dialogue = window.gamestate.currentDialogue();
+
+	if (dialogue){
+		dialogue.kill();
+	}
 
 	setTimeout(
 		function() {
+			window.gamestate.phoneIsCracked = true;
 			window.gamestate.explosion.hide();
 			wakeUpInBed();
 	}, 7430);

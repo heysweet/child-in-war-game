@@ -22,6 +22,8 @@ window.gamestate.startDialogue = function(dialogueName, onEnd){
 	currentDialogue.start();
 	currentDialogue.goToNext();
 
+	console.log(currentDialogue, "starting " + dialogueName + dayNum);
+
 	if (onEnd !== undefined){
 		currentDialogue.onEnd = onEnd;
 	}

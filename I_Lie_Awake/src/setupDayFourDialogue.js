@@ -45,12 +45,13 @@ var choices6 = [
 ];
 
 walkToSchool = [
-	new Phrase("Sarah", "I am not going to be at school today.", 3000),
-	new Phrase("Sarah", "Hope in reality is the worst of all evils ", 3000),
-	new Phrase("Sarah", "because it prolongs the torments of man.", 3000),
-	new Phrase("Sarah", "Existence really is an imperfect tense that never becomes a present.", 3000),
-	new Phrase("Sarah", "I still live, I still think: I still have to live, for I still have to think.", 3000),
-	new Phrase("Sarah", "One has to die several times while one is still alive", 3000),
+	new Phrase("Sarah", "Hey.", 3000),
+	new Phrase("Sarah", "I am not going to be at school today.", choices1),
+	new Phrase("Sarah", "Hope in reality is the worst of all evils ", choices2),
+	new Phrase("Sarah", "because it prolongs the torments of man.", choices3),
+	new Phrase("Sarah", "Existence really is an imperfect tense that never becomes a present.", choices4),
+	new Phrase("Sarah", "I still live, I still think: I still have to live, for I still have to think.", choices5),
+	new Phrase("Sarah", "One has to die several times while one is still alive", choices6),
 	new Phrase("Sarah", "Let us beware of saying that death is the opposite of life", 3000),
 	new Phrase("Sarah", "The living being is only a species of the dead,", 3000),
 	new Phrase("Sarah", "and a very rare species.", 3000),

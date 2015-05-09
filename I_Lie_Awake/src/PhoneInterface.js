@@ -342,13 +342,15 @@ var PhoneInterface = function(){
 			} else if (pos.y >= choice2.min.y && pos.y <= choice2.max.y){
 				var choice = choices[1];
 
-				this.addMyText(choice.text);
+				if (choice){
+					this.addMyText(choice.text);
 
-				if (choice && choice.onChoice){
-					choice.onChoice();
+					if (choice && choice.onChoice){
+						choice.onChoice();
+					}
+
+					dialogue.goToNext(1);
 				}
-
-				dialogue.goToNext(1);
 			}
 		}
 	}

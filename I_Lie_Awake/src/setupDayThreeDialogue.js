@@ -3,11 +3,25 @@ var Phrase = require("Phrase.js");
 var Choice = require("Choice.js");
 var defaults = require("dialogueDefaults.js");
 
+
+// // Dad Morning
+// var choicesDad = [
+// 	new Choice("yeah ok", null),
+// 	new Choice("sure", null)
+// ];
+
+// var dadTalks = [
+// 	new Phrase("Dad", "Morning sweetie, Have a safe trip to school", 3000),
+// 	new Phrase("Dad", "Don't wake mom, she still needs her rest", choicesDad)
+// ];
+
+// var dialogueWithDad = new Dialogue(dadTalks);
+
 // Dad Morning
 
 var choices1 = [
 	new Choice("morning dad", null),
-	new Choice("how am i alive? is this a dream?", null),
+	new Choice("am i dead?", null),
 ];
 
 var choices2 = [
@@ -16,9 +30,10 @@ var choices2 = [
 ];
 
 morningTexts = [
-	new Phrase("Dad", "Morning sweetie", choices1),
-	new Phrase("Dad", "I’m taking mom to the hospital", 2000),
-	new Phrase("Dad", "Don’t worry about us", choices2)
+	new Phrase("Dad", "Morning sweetie", 2000),
+	new Phrase("Dad", "How'd you sleep?", choices1),
+	new Phrase("Dad", "I'm taking mom to the hospital", 2000),
+	new Phrase("Dad", "Don't worry about us", choices2)
 ];
 
 dialogueWithDad = new Dialogue(morningTexts);
@@ -37,6 +52,11 @@ var choices4 = [
 	new Choice("but i was!!!!", null),
 ];
 
+var choices4b = [
+	new Choice("woah", null),
+	new Choice("i think my phone's broken...", null),
+];
+
 var choices5 = [
 	new Choice("party pooper!", null),
 	new Choice("guys cut it out", null),
@@ -49,7 +69,7 @@ walkToSchool = [
 	new Phrase("Mom", "A bomb blew up yesterday afternoon on the path you take to school.", 2000),
 	new Phrase("Mom", "I was worried sick. What if you had been near that?", choices4),
 	new Phrase("Johnny", "hey hey did u guys hear? there was an explosionnnnn yesterday!", 2000),
-	new Phrase("Andy", "No way.", 2000),
+	new Phrase("Andy", "No way.", choices4b),
 	new Phrase("Sam", "yeah i heard it omw home!", 2000),
 	new Phrase("Sam", "didnt c anyting :(", 2000),
 	new Phrase("Sarah", "Why do you sound excited? People died.", 2000),
