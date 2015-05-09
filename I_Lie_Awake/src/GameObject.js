@@ -100,7 +100,6 @@ GameObject.prototype.setImage = function(image){
 GameObject.prototype.followPath = function(path, onFinish){
 	var movement = window.gamestate.movement;
 
-	console.log("THIS", this, path);
 	this.path = path;
 
 	if (onFinish === null || onFinish === undefined){
@@ -109,7 +108,6 @@ GameObject.prototype.followPath = function(path, onFinish){
 		this.finishPath = onFinish;
 	}
 
-	console.log(this.path, movement);
 	movement.addMovingObject(this);
 }
 

@@ -256,7 +256,6 @@ var mergeImages = function(images){
 	for (var i = 0; i < images.length; i++){
 		imgW = Math.max(imgW, images[i].width);
 		imgH = Math.max(imgH, images[i].height);
-		console.log(images[i].width, images[i].height);
 	}
 
 	canvas.width = imgW;

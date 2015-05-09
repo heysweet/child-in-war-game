@@ -214,7 +214,6 @@ var Treadmill = function(speed_) {
 	}
 
 	this.addCarBomb = function (func){
-		console.log("BOMB IS PRIMED");
 		carBomb = func;
 	};
 };

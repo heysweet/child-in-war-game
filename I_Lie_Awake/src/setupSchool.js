@@ -67,7 +67,6 @@ walkToSchoolPaths[0].setMovingObject(mainCharacter);
 school.path = walkToSchoolPaths[0];
 
 var leaveSchool = function(){
-	console.log("LEAVE school");
 	utils.rooms.street.dialogueName = "fromSchool";
 	Teleporter.teleportTo(utils.rooms.street, targetLeaveSchoolChoords);
 }

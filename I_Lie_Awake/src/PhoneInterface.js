@@ -166,10 +166,32 @@ var PhoneInterface = function(){
 
 		var runningHeight = bubbleAnimateOffset - bubbleRequiredOffset;
 		var xOffset = conversationAnimateOffset;
+		var xOffset2 = xOffset;
+		var runningHeight_ = 0;
+
+		var additionalOffset = inTransition * conversationRequiredOffset;
 
 		if (inTransition){
-			var runningHeight_ = 0;
+			xOffset2 = xOffset + additionalOffset;
+		}
 
+		for (var i = addedPhrases.length - 1; i >= 0; i--){
+			var json = addedPhrases[i];
+			var message = json.message;
+
+			if (json.conversationNum == conversationNum){
+				var height = message.draw(xOffset2, runningHeight);
+
+				runningHeight += height + messageSpacing;
+			} else {
+				var height = message.draw(xOffset, runningHeight_);
+
+				runningHeight_ += height + messageSpacing;
+			}
+
+		}
+
+		if (inTransition){
 			var oldMessages = conversations[oldConversationNum];
 
 			for (var i = oldMessages.length - 1; i >= 0; i--){
@@ -179,23 +201,12 @@ var PhoneInterface = function(){
 
 				runningHeight_ += height + messageSpacing;
 			}
-
-			xOffset += conversationRequiredOffset;
-		}
-
-		for (var i = addedPhrases.length - 1; i >= 0; i--){
-			var json = addedPhrases[i];
-			var message = json.message;
-
-			var height = message.draw(xOffset, runningHeight);
-
-			runningHeight += height + messageSpacing;
 		}
 
 		for (var i = currentMessages.length - 1; i >= 0; i--){
 			var message = currentMessages[i];
 
-			var height = message.draw(xOffset, runningHeight);
+			var height = message.draw(xOffset2, runningHeight);
 
 			runningHeight += height + messageSpacing;
 		}
@@ -251,7 +262,22 @@ var PhoneInterface = function(){
 
 		ctx.fillStyle = 'rgb(76, 193, 252)';
 		ctx.font = "300 18px Gill Sans";
-		ctx.fillText(conversationName, chatTitleTransform.x + conversationAnimateOffset, chatTitleTransform.y);
+
+		if (inTransition){
+			var additionalOffset = inTransition * conversationRequiredOffset;
+
+			ctx.fillText(oldConversationName, 
+				chatTitleTransform.x + conversationAnimateOffset, 
+				chatTitleTransform.y);
+
+			ctx.fillText(conversationName, 
+				chatTitleTransform.x + conversationAnimateOffset + additionalOffset, 
+				chatTitleTransform.y);
+		} else {
+			ctx.fillText(conversationName, 
+				chatTitleTransform.x, 
+				chatTitleTransform.y);
+		}
 
 		ctx.textAlign = textAlign;
 	}
