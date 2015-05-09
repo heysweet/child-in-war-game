@@ -35,8 +35,8 @@ var glitchCanvas = function(){
 	var ctx = sald.ctx;
 
 	var amount = 10 + Math.floor(Math.random() * 90);
-	var seed = 1 + Math.floor(Math.random() * 99);
-	var iterations = 1 + Math.floor(Math.random() * 99);
+	var seed = 1 + Math.floor(Math.random() * 97);
+	var iterations = 1 + Math.floor(Math.random() * 96);
 	var quality = 1 + Math.floor(Math.random() * 64);
 
 	var my_image_data = ctx.getImageData(0, 0, screenWidth(), screenHeight());
