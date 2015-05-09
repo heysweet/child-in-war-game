@@ -324,7 +324,6 @@ var pausePlayerMovement = function(bool){
 	window.gamestate.movement.pauseInput(bool);
 }
 
-
 module.exports = {
 	sign:sign,
 	screenWidth:screenWidth,

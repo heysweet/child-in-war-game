@@ -25,8 +25,6 @@ street.onEnter = function(){
 		direction = -1;
 	}
 
-	console.log("ON ENTER", direction, mainCharacter);
-
 	// Setup character movement animations
 	mainCharacter.forceWalking(true, direction);
 

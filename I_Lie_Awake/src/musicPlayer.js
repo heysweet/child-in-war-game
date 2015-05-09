@@ -52,7 +52,14 @@ var playNextSong = function (loops) {
 	}
 }
 
+var setVolume = function(vol){
+	if (playingSong){
+		playingSong.setVolume(vol);
+	}
+}
+
 module.exports = {
 	playNextSong:playNextSong,
-	stop:stopSong
+	stop:stopSong,
+	setVolume:setVolume
 }

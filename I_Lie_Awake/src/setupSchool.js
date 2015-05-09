@@ -29,7 +29,7 @@ var targetLeaveSchoolChoords = {
 
 var showSchoolText = function(){
 	// Stop Music
-	window.gamestate.musicPlayer.stop();
+	window.gamestate.musicPlayer.setVolume(0.1);
 
 	mainCharacter.setHidden(true);
 	mainCharacter.faceLeft();

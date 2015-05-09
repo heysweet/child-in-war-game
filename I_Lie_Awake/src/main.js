@@ -14,13 +14,20 @@ window.gamestate.phoneInterface = new PhoneInterface();
 window.gamestate.shouldShowPhone = false;
 window.gamestate.isTexting = false;
 
+window.gamestate.electricity = true;
+
+var test = true;
+
 var mainCharacter = window.gamestate.mainCharacter;
 window.gamestate.camera = camera;
+window.gamestate.phoneGame = require("phoneGame.js");
+window.gamestate.isInGame = false;
+window.gamestate.phoneIsCracked = false;
 
 function drawBackground() {
 	var ctx = sald.ctx;
 
-	ctx.clearRect(0, 0, utils.screenWidth(), utils.screenHeight());
+	// ctx.clearRect(0, 0, utils.screenWidth(), utils.screenHeight());
 
 	gamestate.currentRoom().draw();
 }
@@ -32,6 +39,7 @@ sald.scene = {
 	update:function(elapsed) {
 		mainCharacter.movement.update(elapsed);
 		gamestate.currentRoom().update(elapsed);
+		window.gamestate.phoneInterface.update(elapsed);
 	},
 	draw:function() {
 		// Clear the screen
@@ -51,6 +59,15 @@ sald.scene = {
 
 			if (window.gamestate.currentRoom() !== utils.rooms.street){
 				GameObject.draw();
+			}
+
+			if (!window.gamestate.electricity 
+				&& window.gamestate.currentRoom() !== utils.rooms.street 
+				&& window.gamestate.currentRoom() !== utils.rooms.school){
+				ctx.globalAlpha = 0.4;
+				ctx.fillStyle = "#000055";
+				ctx.fillRect(0,0,utils.screenWidth(),utils.screenHeight());
+				ctx.globalAlpha = 1.0;
 			}
 
 			if (window.gamestate.shouldShowPhone){
@@ -107,11 +124,26 @@ sald.scene = {
 		}
 	},
 	mouse:function(pos, button, down) {
-		if (button === "LEFT"){
-			camPos = camera.getTranslatedPoint(pos);
-			pos = utils.getScaledPoint(pos);
+		camPos = camera.getTranslatedPoint(pos);
+		pos = utils.getScaledPoint(pos);
 
-			if (window.gamestate.isTexting && !down){
+		if (window.gamestate.phoneIsCracked){
+			if (pos.y > 430){
+				if (window.gamestate.isInGame){
+					window.gamestate.phoneGame.updateMouse(-10000, -10000);
+				}
+				return;
+			}
+		}
+
+		window.gamestate.phoneGame.updateMouse(pos.x, pos.y);
+
+		if (button === "LEFT"){
+			if (window.gamestate.isInGame){
+				if (!down){
+					window.gamestate.phoneGame.mouseClicked();
+				}
+			} else if (window.gamestate.isTexting && !down){
 				window.gamestate.phoneInterface.mouse(pos);		
 			}
 

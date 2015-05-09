@@ -73,6 +73,7 @@ var TextMessage = function(message_, name){
 	var topBubble;
 	var midBubble;
 	var btmBubble;
+	var bubbleHeight_ = null;
 
 	var messageFont = "300 16px Gill Sans";
 
@@ -141,7 +142,6 @@ var TextMessage = function(message_, name){
 			var top = topBubble; 
 			var bottom = btmBubble;
 
-			console.log(btmBubble, topBubble, midBubble);
 			ctx.drawImage(bottom, x, drawY);
 
 			height += bottom.height;
@@ -157,6 +157,8 @@ var TextMessage = function(message_, name){
 			height += top.height - 1;
 			ctx.drawImage(top, x, drawY - (top.height - 1));
 		}
+
+		bubbleHeight_ = height;
 
 		return {height:height, drawY:drawY};
 	}
@@ -191,6 +193,31 @@ var TextMessage = function(message_, name){
 
 			ctx.fillText(name, drawX, yUpdate + json.height - 14);
 		}
+	}
+
+	this.getBubbleHeight = function(){
+		if (bubbleHeight_){
+			return bubbleHeight_;
+		}
+
+		var height = 0;
+		var middle = midBubble;
+
+		if (isMine){
+			height = 53;
+		} else {
+			var top = topBubble; 
+			var bottom = btmBubble;
+			height += bottom.height;
+
+			for (var i = 0; i < numLines; i++){
+				height += middle.height;
+			}
+
+			height += top.height - 1;
+		}
+
+		return height;
 	}
 
 	this.draw = function(yOffset){

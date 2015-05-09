@@ -10,6 +10,31 @@ var CHOICE_IMAGE = require("./data/phone/choiceBubble.png");
 var RECIEVED_SOUND = require("./data/sound/Recieve_Message.ogg");
 var SENT_SOUND = require("./data/sound/Send_Message.ogg");
 
+var crack = require("./data/phone/crack.png");
+
+var phoneEdge = require("./data/phone/phoneEdge.png");
+
+var addedPhrases = [];
+var addingPhrases = false;
+var animateOffset = 0;
+var requiredOffset = 0;
+var elapsedTime = 0;
+var animationTime = 0.12;
+
+function drawOverlay(){
+	var ctx = sald.ctx;
+	ctx.drawImage(phoneEdge, 0, 0);
+}
+
+function drawCrack(){
+	var ctx = sald.ctx;
+	ctx.drawImage(crack, 0, 0);
+}
+
+var getAnimateOffset = function(){
+	return requiredOffset * (elapsedTime/animationTime);
+}
+
 var PhoneInterface = function(){
 	var conversationNum = 0;
 	var isDead = false;
@@ -61,10 +86,37 @@ var PhoneInterface = function(){
 		y : 50
 	}
 
+	var animate = function(elapsed){
+		elapsedTime += elapsed;
+		animateOffset = getAnimateOffset();
+		
+		if (animateOffset >= requiredOffset){
+			elapsedTime = 0;
+			animateOffset = 0;
+			requiredOffset = 0;
+
+			currentMessages.push(addedPhrases[0]);
+			addedPhrases.shift();
+
+			if (addedPhrases.length == 0){
+				addingPhrases = false;
+			}
+		}
+	}
+
 	var drawMessages = function(){
 		var ctx = sald.ctx;
 
-		var runningHeight = 0;
+		var runningHeight = animateOffset - requiredOffset;
+
+
+		for (var i = 0; i < addedPhrases.length; i++){
+			var message = addedPhrases[i];
+
+			var height = message.draw(runningHeight);
+
+			runningHeight += height + messageSpacing;
+		}
 
 		for (var i = currentMessages.length - 1; i >= 0; i--){
 			var message = currentMessages[i];
@@ -73,6 +125,7 @@ var PhoneInterface = function(){
 
 			runningHeight += height + messageSpacing;
 		}
+
 	}
 
 	var drawChoices = function(){
@@ -125,11 +178,21 @@ var PhoneInterface = function(){
 		drawBackground();
 
 		if (!isDead){
-			drawMessages();
-			drawForeground();
+			if (window.gamestate.isInGame){
+				window.gamestate.phoneGame.draw();
+			} else {
+				drawMessages();
+				drawForeground();
 
-			drawChoices();
+				drawChoices();
+			}
 		}
+
+		if (window.gamestate.phoneIsCracked){
+			drawCrack();
+		}
+
+		drawOverlay();
 	}
 
 	this.loadDialogue = function(dialogue_){
@@ -190,7 +253,13 @@ var PhoneInterface = function(){
 		if (phrase.text !== null){
 			var message = new TextMessage(phrase.text, phrase.name);
 
-			currentMessages.push(message);
+			if (!addedPhrases){
+				elapsedTime = 0;
+			}
+
+			requiredOffset = message.getBubbleHeight();
+			addedPhrases.push(message);
+			addingPhrases = true;
 
 			if (currentMessages.length > 6){
 				currentMessages.splice(0, 1);
@@ -204,7 +273,13 @@ var PhoneInterface = function(){
 		choices = [];
 		var myMessage = new TextMessage(text);
 
-		currentMessages.push(myMessage);
+		if (!addedPhrases){
+			elapsedTime = 0;
+		}
+
+		requiredOffset = myMessage.getBubbleHeight();
+		addedPhrases.push(myMessage);
+		addingPhrases = true;
 
 		SENT_SOUND.play();
 	}
@@ -215,6 +290,12 @@ var PhoneInterface = function(){
 
 	this.killPhone = function(){
 		isDead = true;
+	}
+
+	this.update = function(elapsed){
+		if (addingPhrases){
+			animate(elapsed);
+		}
 	}
 };
 
