@@ -122,7 +122,7 @@ var TextMessage = function(message_, name){
 
 	this.setMessage(message_);
 
-	var drawBubble = function(yOffset){
+	var drawBubble = function(xOffset_, yOffset){
 		var drawY = y - yOffset;
 		var ctx = sald.ctx;
 
@@ -135,14 +135,14 @@ var TextMessage = function(message_, name){
 
 			drawY -= (MIDDLE_BUBBLE_IMAGE.height);
 
-			ctx.drawImage(bubble, x + xOffset, drawY - 13);
+			ctx.drawImage(bubble, x + xOffset + xOffset_, drawY - 13);
 
 			height = 53;
 		} else {
 			var top = topBubble; 
 			var bottom = btmBubble;
 
-			ctx.drawImage(bottom, x, drawY);
+			ctx.drawImage(bottom, x + xOffset_, drawY);
 
 			height += bottom.height;
 
@@ -150,12 +150,12 @@ var TextMessage = function(message_, name){
 
 			for (var i = 0; i < numLines; i++){
 				drawY -= (middle.height);
-				ctx.drawImage(middle, x, drawY);
+				ctx.drawImage(middle, x + xOffset_, drawY);
 				height += middle.height;
 			}
 
 			height += top.height - 1;
-			ctx.drawImage(top, x, drawY - (top.height - 1));
+			ctx.drawImage(top, x + xOffset_, drawY - (top.height - 1));
 		}
 
 		bubbleHeight_ = height;
@@ -163,11 +163,11 @@ var TextMessage = function(message_, name){
 		return {height:height, drawY:drawY};
 	}
 
-	var drawText = function(yOffset, json){
+	var drawText = function(xOffset_, yOffset, json){
 		var yUpdate = json.drawY;
 
 		var drawY = yUpdate + textOffset.y;
-		var drawX = x + textOffset.x;
+		var drawX = x + textOffset.x + xOffset_;
 
 		if (isMine){
 			var offset = 0;
@@ -220,9 +220,9 @@ var TextMessage = function(message_, name){
 		return height;
 	}
 
-	this.draw = function(yOffset){
-		var json = drawBubble(yOffset);
-		drawText(yOffset, json);
+	this.draw = function(xOffset, yOffset){
+		var json = drawBubble(xOffset, yOffset);
+		drawText(xOffset, yOffset, json);
 
 		return json.height;
 	}

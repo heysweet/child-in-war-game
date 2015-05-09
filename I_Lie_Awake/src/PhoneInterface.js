@@ -17,12 +17,38 @@ var phoneEdge = require("./data/phone/phoneEdge.png");
 
 var addedPhrases = [];
 var addingPhrases = false;
-var animateOffset = 0;
-var requiredOffset = 0;
-var elapsedTime = 0;
-var animationTime = 0.3;
+var bubbleAnimateOffset = 0;
+var bubbleRequiredOffset = 0;
+var bubbleElapsedTime = 0;
+var bubbleAnimationTime = 0.3;
+
+var oldConversationName = null;
+var oldConversationNum = null;
+
+var clipTransform = {
+	x : 8,
+	y : 17,
+	width : 256,
+	height : 481
+};
+
+var inTransition = false;
+var conversationAnimateOffset = 0;
+var conversationRequiredOffset = 255;
+var conversationElapsedTime = 0;
+var conversationAnimationTime = 0.85;
 
 var halfPi = Math.PI / 2;
+
+function getConversationNum(name){
+	if (name == "Dad"){
+		return 0;
+	} else if (name == "Mom"){
+		return 1;
+	} else {
+		return 2;
+	}
+}
 
 function drawOverlay(){
 	var ctx = sald.ctx;
@@ -34,10 +60,16 @@ function drawCrack(){
 	ctx.drawImage(crack, 0, 0);
 }
 
-var getAnimateOffset = function(){
-	var scalar = Math.sin(halfPi * elapsedTime/animationTime);
+var getBubbleAnimateOffset = function(){
+	var scalar = Math.sin(halfPi * bubbleElapsedTime/bubbleAnimationTime);
 
-	return requiredOffset * scalar;
+	return bubbleRequiredOffset * scalar;
+}
+
+var getConversationAnimateOffset = function(){
+	var scalar = Math.sin(halfPi * conversationElapsedTime/conversationAnimationTime);
+
+	return conversationRequiredOffset * scalar;
 }
 
 var PhoneInterface = function(){
@@ -50,7 +82,7 @@ var PhoneInterface = function(){
 		[], [], [],
 	];
 
-	var conversationName = "   Dad";
+	var conversationName = "Dad";
 
 	var choices = [];
 
@@ -88,20 +120,25 @@ var PhoneInterface = function(){
 	}
 
 	var chatTitleTransform = {
-		x : 102,
+		x : BACKGROUND_IMAGE.width/2,
 		y : 50
 	}
 
-	var animate = function(elapsed){
-		elapsedTime += elapsed;
-		animateOffset = getAnimateOffset();
+	var animateBubbles = function(elapsed){
+		bubbleElapsedTime += elapsed;
+		bubbleAnimateOffset = getBubbleAnimateOffset();
 		
-		if (elapsedTime >= animationTime){
-			elapsedTime = 0;
-			animateOffset = 0;
-			requiredOffset = 0;
+		if (bubbleElapsedTime >= bubbleAnimationTime){
+			bubbleElapsedTime = 0;
+			bubbleAnimateOffset = 0;
+			bubbleRequiredOffset = 0;
 
-			currentMessages.push(addedPhrases[0]);
+			var json = addedPhrases[0];
+			var num = json.conversationNum;
+
+			var messages = conversations[num];
+
+			messages.push(json.message);
 			addedPhrases.shift();
 
 			if (addedPhrases.length == 0){
@@ -110,15 +147,47 @@ var PhoneInterface = function(){
 		}
 	}
 
+	var animateTransition = function(elapsed){
+		conversationElapsedTime += elapsed;
+		conversationAnimateOffset = -inTransition * getConversationAnimateOffset();
+
+		if (conversationElapsedTime >= conversationAnimationTime){
+			inTransition = false;
+			conversationElapsedTime = 0;
+			conversationAnimateOffset = 0;
+
+			currentMessages = conversations[conversationNum];
+		}
+	}
+
+
 	var drawMessages = function(){
 		var ctx = sald.ctx;
 
-		var runningHeight = animateOffset - requiredOffset;
+		var runningHeight = bubbleAnimateOffset - bubbleRequiredOffset;
+		var xOffset = conversationAnimateOffset;
+
+		if (inTransition){
+			var runningHeight_ = 0;
+
+			var oldMessages = conversations[oldConversationNum];
+
+			for (var i = oldMessages.length - 1; i >= 0; i--){
+				var message = oldMessages[i];
+
+				var height = message.draw(xOffset, runningHeight_);
+
+				runningHeight_ += height + messageSpacing;
+			}
+
+			xOffset += conversationRequiredOffset;
+		}
 
 		for (var i = addedPhrases.length - 1; i >= 0; i--){
-			var message = addedPhrases[i];
+			var json = addedPhrases[i];
+			var message = json.message;
 
-			var height = message.draw(runningHeight);
+			var height = message.draw(xOffset, runningHeight);
 
 			runningHeight += height + messageSpacing;
 		}
@@ -126,7 +195,7 @@ var PhoneInterface = function(){
 		for (var i = currentMessages.length - 1; i >= 0; i--){
 			var message = currentMessages[i];
 
-			var height = message.draw(runningHeight);
+			var height = message.draw(xOffset, runningHeight);
 
 			runningHeight += height + messageSpacing;
 		}
@@ -177,20 +246,41 @@ var PhoneInterface = function(){
 		var ctx = sald.ctx;
 		ctx.drawImage(FOREGROUND_IMAGE, backgroundX, backgroundY);
 
+		var textAlign = ctx.textAlign;
+		ctx.textAlign = "center"; 
+
 		ctx.fillStyle = 'rgb(76, 193, 252)';
 		ctx.font = "300 18px Gill Sans";
-		ctx.fillText(conversationName, chatTitleTransform.x, chatTitleTransform.y);
+		ctx.fillText(conversationName, chatTitleTransform.x + conversationAnimateOffset, chatTitleTransform.y);
+
+		ctx.textAlign = textAlign;
 	}
 
 	this.draw = function(){
 		drawBackground();
+		var ctx = sald.ctx;
+
+		if (inTransition){
+			ctx.save();
+			ctx.rect(clipTransform.x, clipTransform.y, clipTransform.width, clipTransform.height);
+			ctx.clip();
+		}
 
 		if (!isDead){
 			if (window.gamestate.isInGame){
 				window.gamestate.phoneGame.draw();
+
+				if (inTransition){
+					ctx.restore();
+				}
 			} else {
 				drawMessages();
+
 				drawForeground();
+
+				if (inTransition){
+					ctx.restore();
+				}
 
 				drawChoices();
 			}
@@ -256,37 +346,62 @@ var PhoneInterface = function(){
 		}
 	}
 
+	var transitionTo = function(name, num){
+		oldConversationName = conversationName;
+		oldConversationNum = conversationNum;
+
+		conversationName = name;
+		conversationNum = num;
+		currentMessages = conversations[num];
+
+		 if (oldConversationNum > conversationNum){
+			inTransition = -1;
+		} else {
+			inTransition = 1;
+		}
+	}
+
+	var queueMessage = function(message){
+
+		var payload = {
+			message : message,
+			conversationNum : conversationNum
+		};
+
+		bubbleRequiredOffset = message.getBubbleHeight();
+		addedPhrases.push(payload);
+		addingPhrases = true;
+	}
+
 	this.addTextedPhrase = function(phrase){
 		choices = phrase.choices;
 
-		if (phrase.name == "Mom"){
+		if (phrase.name == "Dad"){
 			if (conversationNum !== 0){
-				conversationNum = 0;
-				currentMessages = conversations[0];
-				conversationName = "   Mom";
+				transitionTo("Dad", 0);
 			}
-		} else if (phrase.name == "Dad"){
+		} else if (phrase.name == "Mom"){
 			if (conversationNum !== 1){
-				conversationNum = 1;
-				currentMessages = conversations[1];
-				conversationName = "   Dad";
+				transitionTo("Mom", 1);
+				// conversationNum = 1;
+				// currentMessages = conversations[1];
+				// conversationName = "Dad";
 			}
 		} else if (conversationNum !== 2){
-			conversationNum = 2;
-			currentMessages = conversations[2];
-			conversationName = "Friends";
+			transitionTo("Friends", 2);
+			// conversationNum = 2;
+			// currentMessages = conversations[2];
+			// conversationName = "Friends";
 		}
 
 		if (phrase.text !== null){
 			var message = new TextMessage(phrase.text, phrase.name);
 
 			if (!addedPhrases){
-				elapsedTime = 0;
+				bubbleElapsedTime = 0;
 			}
 
-			requiredOffset = message.getBubbleHeight();
-			addedPhrases.push(message);
-			addingPhrases = true;
+			queueMessage(message);
 
 			if (currentMessages.length > 6){
 				currentMessages.splice(0, 1);
@@ -301,12 +416,10 @@ var PhoneInterface = function(){
 		var myMessage = new TextMessage(text);
 
 		if (!addedPhrases){
-			elapsedTime = 0;
+			bubbleElapsedTime = 0;
 		}
 
-		requiredOffset = myMessage.getBubbleHeight();
-		addedPhrases.push(myMessage);
-		addingPhrases = true;
+		queueMessage(myMessage);
 
 		SENT_SOUND.play();
 	}
@@ -321,7 +434,11 @@ var PhoneInterface = function(){
 
 	this.update = function(elapsed){
 		if (addingPhrases){
-			animate(elapsed);
+			animateBubbles(elapsed);
+		}
+
+		if (inTransition){
+			animateTransition(elapsed);
 		}
 	}
 };

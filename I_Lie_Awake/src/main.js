@@ -1,6 +1,6 @@
 var mainloop = require("sald:mainloop.js");
 
-require("setup.js");
+var setup = require("setup.js");
 
 var GameObject = require("GameObject.js");
 var utils = require("utils.js");
@@ -8,21 +8,7 @@ var camera = require("camera.js");
 var sound = require("sald:soundController.js");
 var WrapperPath = require("movementPath.js").WrapperPath;
 
-var PhoneInterface = require("PhoneInterface.js");
-window.gamestate.phoneInterface = new PhoneInterface();
-
-window.gamestate.shouldShowPhone = false;
-window.gamestate.isTexting = false;
-
-window.gamestate.electricity = true;
-
-var test = true;
-
 var mainCharacter = window.gamestate.mainCharacter;
-window.gamestate.camera = camera;
-window.gamestate.phoneGame = require("phoneGame.js");
-window.gamestate.isInGame = true;
-window.gamestate.phoneIsCracked = false;
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -175,3 +161,6 @@ sald.scene = {
 window.main = function main() {
 	mainloop.start(document.getElementById("canvas"));
 };
+
+
+setup.startGame();

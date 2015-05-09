@@ -132,14 +132,38 @@ parentsBedroom.addTeleporter(leaveParentsDoor);
 Teleporter.teleportTo(bedroom, mainCharacter.transform);
 
 window.gamestate.movement.pauseInput(true);
+window.gamestate.drawNothing = true;
 
-setTimeout(
-		function() {
+var camera = require("camera.js");
+var WrapperPath = require("movementPath.js").WrapperPath;
 
-	var delayedHidePhone = function(time){return function(){setTimeout(
-		function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
+var PhoneInterface = require("PhoneInterface.js");
+window.gamestate.phoneInterface = new PhoneInterface();
 
-	window.gamestate.shouldShowPhone = true;
-	window.gamestate.isTexting = true;
-	window.gamestate.startDialogue("morning", delayedHidePhone(1800));
-}, 1600);
+window.gamestate.shouldShowPhone = false;
+window.gamestate.isTexting = false;
+
+window.gamestate.electricity = true;
+
+var mainCharacter = window.gamestate.mainCharacter;
+window.gamestate.camera = camera;
+window.gamestate.phoneGame = require("phoneGame.js");
+window.gamestate.isInGame = false;
+window.gamestate.phoneIsCracked = false;
+
+function startGame(){
+	setTimeout(
+			function() {
+		var delayedHidePhone = function(time){return function(){setTimeout(
+			function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
+
+		window.gamestate.shouldShowPhone = true;
+		window.gamestate.isTexting = true;
+		window.gamestate.startDialogue("morning", delayedHidePhone(1800));
+		window.gamestate.drawNothing = false;
+	}, 1600);
+}
+
+module.exports = {
+	startGame:startGame
+}
