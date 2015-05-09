@@ -48,8 +48,7 @@ walkToSchool = [
 	new Phrase("Mom", "Don’t worry about it. it is not a big deal.", 2000),
 	new Phrase("Johnny", "i heard jet planes flyingggg last nightttttt", 2000),
 	new Phrase("Sam", "I heard them and explosions too!", choices2),
-	new Phrase("Sarah", "Mom said west side of town got bombed.
-", 2000),
+	new Phrase("Sarah", "Mom said west side of town got bombed.", 2000),
 	new Phrase("Andy", "That’s pretty scary...", choices3),
 	new Phrase("Mom", "How are your friends doing?", choices4),
 	new Phrase("Mom", "Well make sure to keep your guard up.", 2000),

@@ -19,9 +19,9 @@ var addingPhrases = false;
 var animateOffset = 0;
 var requiredOffset = 0;
 var elapsedTime = 0;
-var animationTime = 0.12;
+var animationTime = 1;
 
-var quarterPi = Math.PI / 4;
+var halfPi = Math.PI / 2;
 
 function drawOverlay(){
 	var ctx = sald.ctx;
@@ -34,7 +34,7 @@ function drawCrack(){
 }
 
 var getAnimateOffset = function(){
-	var scalar = Math.sin(quarterPi * elapsedTime/animationTime);
+	var scalar = Math.sin(halfPi * elapsedTime/animationTime);
 
 	return requiredOffset * scalar;
 }
@@ -113,8 +113,7 @@ var PhoneInterface = function(){
 
 		var runningHeight = animateOffset - requiredOffset;
 
-
-		for (var i = 0; i < addedPhrases.length; i++){
+		for (var i = addedPhrases.length - 1; i >= 0; i--){
 			var message = addedPhrases[i];
 
 			var height = message.draw(runningHeight);
@@ -129,7 +128,6 @@ var PhoneInterface = function(){
 
 			runningHeight += height + messageSpacing;
 		}
-
 	}
 
 	var drawChoices = function(){
