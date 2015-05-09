@@ -101,6 +101,7 @@ street.onExplode = function(){
 
 	setTimeout(
 		function() {
+			window.gamestate.currentDialogue().end();
 			window.gamestate.explosion.hide();
 			wakeUpInBed();
 	}, 7430);
