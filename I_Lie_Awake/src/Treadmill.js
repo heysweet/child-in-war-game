@@ -14,8 +14,9 @@ var CAR_3_IMAGE = require("./data/street/cars/car3.png");
 // var CAR_4_IMAGE = require("./data/street/cars/car4.png");
 // var CAR_5_IMAGE = require("./data/street/cars/car5.png");
 
-var DESTROYED_HOUSE_1_ANIMATED = require("./data/street/house1/house1_destroy_black.png");
-var DESTROYED_HOUSE_1 = require("./data/street/house1/house1_destroy.png");
+// BROKEN CONTENT
+var DESTROYED_HOUSE_1_ANIMATED = require("./data/street_day5/house1/house1_black.png");
+var DESTROYED_HOUSE_1 = require("./data/street_day5/house1/house1.png");
 
 var utils = require("utils.js");
 
@@ -36,8 +37,6 @@ var drawnCars;
 var layersPool;
 var drawnLayers;
 
-var newestObjects;
-
 var Explosion = require("Explosion.js");
 
 var initializeLayers = function(){
@@ -55,16 +54,33 @@ var initializeLayers = function(){
 		new ImageObject(0, 0, PATH_IMAGE, 0),
 	];
 
-	animatedDestroyedHouse = new AnimatedImageObject(100, 0, DESTROYED_HOUSE_1_ANIMATED, 4, 10, 140, 40);
-	animatedDestroyedHouse.image = DESTROYED_HOUSE_1;
-	animatedDestroyedHouse.isDestroyed = true;
+	if (window.gamestate.dayNum() == 4){
+		house = [];
 
-	house = [
-		new ImageObject(100, 0, desaturatedHouse, 40), 
-		new ImageObject(100, 0, desaturatedHouse, 40),
-		animatedDestroyedHouse,
-		// new ImageObject(100, 0, HOUSE_1_IMAGE, 40)
-	];
+		var animatedDestroyedHouse;
+		var numHouses = 4;
+		var lastHouseNum = numHouses - 1;
+
+		for (var i = 0; i < numHouses; i++){
+			animatedDestroyedHouse = new AnimatedImageObject(0, 0, DESTROYED_HOUSE_1_ANIMATED, 4, 10, 0, 40);
+			animatedDestroyedHouse.image = DESTROYED_HOUSE_1;
+			animatedDestroyedHouse.isDestroyed = true;
+
+			if (i !== lastHouseNum){
+				house.push(animatedDestroyedHouse);
+			}
+		}
+
+		drawnHouse = [animatedDestroyedHouse];
+	} else {
+		house = [
+			new ImageObject(100, 0, desaturatedHouse, 40), 
+			new ImageObject(100, 0, desaturatedHouse, 40),
+			new ImageObject(100, 0, desaturatedHouse, 40)
+		];
+
+		drawnHouse = [new ImageObject(100, 0, desaturatedHouse, 40)];
+	}
 
 	cars = [
 		new ImageObject(100, 400, CAR_2_IMAGE, 900), 
@@ -75,20 +91,13 @@ var initializeLayers = function(){
 
 	drawnGrass = [new ImageObject(0, 0, desaturatedGrass, 0)];
 	drawnRoad = [new ImageObject(0, 0, PATH_IMAGE, 0)];
-	drawnHouse = [new ImageObject(100, 0, desaturatedHouse, 40)];
-	drawnCars = [];
+	drawnCars = [new ImageObject(100, 400, CAR_1_IMAGE, 900),];
 
 	layersPool = [grass, road, house, cars];
-	drawnLayers = [drawnGrass, drawnRoad, drawnHouse, cars];
-
-	newestObjects = [new ImageObject(100, 400, CAR_1_IMAGE, 900)];
+	drawnLayers = [drawnGrass, drawnRoad, drawnHouse, drawnCars];
 }
 
 initializeLayers();
-
-for (var i = 0; i < drawnLayers.length; i++){
-	newestObjects.push(drawnLayers[i]);
-}
 
 var Treadmill = function(speed_) {
 	var speed = speed_;

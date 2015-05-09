@@ -194,17 +194,8 @@ window.gamestate.imagesToGlitch = [
 function startGame(){
 	setTimeout(
 			function() {
-
 		utils.goToTheNextDay();
-
-		// var delayedHidePhone = function(time){return function(){setTimeout(
-		// 	function() {window.gamestate.phoneInterface.hidePhone()}, time)}};
-
-		// window.gamestate.shouldShowPhone = true;
-		// window.gamestate.isTexting = true;
-		// window.gamestate.startDialogue("morning", delayedHidePhone(1800));
-		// window.gamestate.drawNothing = false;
-	}, 1600);
+	}, 800);
 }
 
 module.exports = {

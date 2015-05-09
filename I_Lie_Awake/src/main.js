@@ -196,6 +196,3 @@ sald.scene = {
 window.main = function main() {
 	mainloop.start(document.getElementById("canvas"));
 };
-
-
-setup.startGame();

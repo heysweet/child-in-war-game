@@ -9,6 +9,7 @@ var playerY;
 
 var isDying = false;
 var isInCombat = false;
+var hasGameEnded = false;
 
 var fontSize = 30;
 var halfFontHeight = fontSize / 2;
@@ -488,6 +489,10 @@ function setBoard()
 	numTurnsLeft = 3;
 }
 
+function onGameEnd(){
+	window.gamestate.gameEnd();
+}
+
 // depend on state of the game, make decision, draw appropriate things
 function victoryChecker()
 {
@@ -548,6 +553,12 @@ function victoryChecker()
 	else
 	{
 		drawMiddle();
+
+		if (!hasGameEnded){
+			hasGameEnded = true;
+			onGameEnd();
+		}
+
 		if(didPlayerWin)
 		{
 			var textAlign = ctx.textAlign;
@@ -736,35 +747,16 @@ function draw()
 	ctx.translate(-transform.x, -transform.y);
 }
 
-
-// for debugging purposes, fast level switching
-function keyPressed(key)
-{
-	if(key == '1')
-	{
-		dayNumber = 1;
-		setBoard();
-	}
-	else if(key == '2')
-	{
-		dayNumber = 2;
-		setBoard();
-	}
-	else if(key == '3')
-	{
-		dayNumber = 3;
-		setBoard();
-	}
-	else if(key == '4')
-	{
-		dayNumber = 4;
-		setBoard();
-	}
+function start(){
+	var dayNum = window.gamestate.dayNum();
+	dayNumber = dayNum + 1;
+	setBoard();
+	hasGameEnded = false;
 }
 
 module.exports = {
-	keyPressed:keyPressed, // string that is the key
 	draw:draw, // no parameters
 	mouseClicked:mouseClicked, // no parameters
-	updateMouse:updateMouse // x, y
+	updateMouse:updateMouse, // x, y
+	start:start
 }

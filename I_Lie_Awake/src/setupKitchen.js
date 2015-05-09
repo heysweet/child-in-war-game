@@ -13,8 +13,7 @@ var collisions = [
 	{min: {x:51, y:492}, max: {x:904, y:541}}, // South Wall
 	{min: {x:904, y:255}, max: {x:961, y:540}}, // SE Wall
 	{min: {x:904, y:84}, max: {x:961, y:136}}, // NE Wall
-	{min: {x:789, y:0}, max: {x:959, y:81}}, // North Wall 3
-	{min: {x:456, y:0}, max: {x:666, y:81}}, // North Wall 2
+	{min: {x:456, y:0}, max: {x:959, y:81}}, // North Wall
 ];
 
 var objects = [

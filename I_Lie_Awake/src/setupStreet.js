@@ -31,11 +31,26 @@ street.onEnter = function(){
 	// Setup scrolling background
 	street.treadmill.setSpeed(direction * mainCharacter.transform.xDelta);
 
-	// Setup Texting
 	window.gamestate.shouldShowPhone = true;
-	window.gamestate.isTexting = true;
 
-	window.gamestate.startDialogue(street.dialogueName);
+	// Setup Texting
+	if (window.gamestate.hasBeenToSchool || window.gamestate.dayNum() == 4){
+		window.gamestate.isTexting = true;
+		window.gamestate.startDialogue(street.dialogueName);
+	} else { // Setup Game
+		window.gamestate.isInGame = true;
+		window.gamestate.phoneGame.start();
+	}
+}
+
+window.gamestate.gameEnd = function(){
+	setTimeout(
+		function() {
+		window.gamestate.isTexting = true;
+		window.gamestate.isInGame = false;
+		window.gamestate.startDialogue(street.dialogueName);
+	}, 1700);
+
 }
 
 street.draw = function(){
@@ -94,8 +109,6 @@ var wakeUpInBed = function(){
 	utils.pausePlayerMovement(true);
 
 	utils.goToTheNextDay();
-
-	console.log(window.gamestate, window.gamestate.currentDialogue());
 
 	// var delayedHidePhone = function(time){return function(){setTimeout(
 	// 	function() {window.gamestate.phoneInterface.hidePhone()}, time)}};

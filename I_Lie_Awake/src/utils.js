@@ -107,6 +107,10 @@ var loadFonts = function(){
 
 			ctx.font = "20px Walter Turncoat";
 			ctx.fillText(string, -100, -100);
+
+			var setup = require("setup.js");
+
+			setup.startGame();
 		}
 	}, 1000);
 }

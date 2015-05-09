@@ -16,7 +16,16 @@ var draw = function () {
 
 	ctx.font = font;
 	ctx.fillStyle = 'rgb(255, 253, 253)';
-	ctx.fillText(daysRemaining + " Days Left", utils.halfScreenWidth(), utils.halfScreenHeight());
+
+	var text;
+
+	if (daysRemaining == 1){
+		text = "1 Day Left"
+	} else {
+		text = daysRemaining + " Days Left";
+	}
+
+	ctx.fillText(text, utils.halfScreenWidth(), utils.halfScreenHeight());
 
 	ctx.textAlign = textAlign;
 }
