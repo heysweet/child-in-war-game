@@ -1,4 +1,4 @@
-/** https://github.com/snorpey/glitch-canvas **/
+/** Modified from https://github.com/snorpey/glitch-canvas **/
 
 var canvas_1 = document.createElement("canvas");
 var canvas_2 = document.createElement("canvas");
