@@ -21,6 +21,8 @@ var requiredOffset = 0;
 var elapsedTime = 0;
 var animationTime = 0.12;
 
+var quarterPi = Math.PI / 4;
+
 function drawOverlay(){
 	var ctx = sald.ctx;
 	ctx.drawImage(phoneEdge, 0, 0);
@@ -32,7 +34,9 @@ function drawCrack(){
 }
 
 var getAnimateOffset = function(){
-	return requiredOffset * (elapsedTime/animationTime);
+	var scalar = Math.sin(quarterPi * elapsedTime/animationTime);
+
+	return requiredOffset * scalar;
 }
 
 var PhoneInterface = function(){
@@ -90,7 +94,7 @@ var PhoneInterface = function(){
 		elapsedTime += elapsed;
 		animateOffset = getAnimateOffset();
 		
-		if (animateOffset >= requiredOffset){
+		if (elapsedTime >= animationTime){
 			elapsedTime = 0;
 			animateOffset = 0;
 			requiredOffset = 0;
