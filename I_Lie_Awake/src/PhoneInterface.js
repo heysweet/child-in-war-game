@@ -6,6 +6,7 @@ var BACKGROUND_IMAGE = require("./data/phone/background.png");
 var FOREGROUND_IMAGE = require("./data/phone/foreground.png");
 
 var CHOICE_IMAGE = require("./data/phone/choiceBubble.png");
+var HOVERED_CHOICE_IMAGE = require("./data/phone/choiceBubbleSelect.png");
 
 var RECIEVED_SOUND = require("./data/sound/Recieve_Message.ogg");
 var SENT_SOUND = require("./data/sound/Send_Message.ogg");
@@ -19,7 +20,7 @@ var addingPhrases = false;
 var animateOffset = 0;
 var requiredOffset = 0;
 var elapsedTime = 0;
-var animationTime = 1;
+var animationTime = 0.3;
 
 var halfPi = Math.PI / 2;
 
@@ -42,6 +43,7 @@ var getAnimateOffset = function(){
 var PhoneInterface = function(){
 	var conversationNum = 0;
 	var isDead = false;
+	var choiceHover = -1;
 
 	// Mom, Dad, Friends
 	var conversations = [
@@ -138,7 +140,11 @@ var PhoneInterface = function(){
 			var x = choiceX + 36;
 
 			for (var i = 0; i < choices.length; i++){
-				ctx.drawImage(CHOICE_IMAGE, choiceX, y);
+				if (choiceHover == i){
+					ctx.drawImage(HOVERED_CHOICE_IMAGE, choiceX, y);
+				} else {
+					ctx.drawImage(CHOICE_IMAGE, choiceX, y);
+				}
 
 				y += CHOICE_IMAGE.height + 4;
 
@@ -201,7 +207,7 @@ var PhoneInterface = function(){
 		dialogue = dialogue_;
 	}
 
-	this.mouse = function(pos){
+	this.mouseClick = function(pos){
 		if (choices !== undefined && choices != null && choices.length > 0 &&
 			pos.x >= choice1.min.x && pos.x <= choice1.max.x){
 			var dialogue = gamestate.currentDialogue();
@@ -228,6 +234,25 @@ var PhoneInterface = function(){
 
 				dialogue.goToNext(1);
 			}
+		}
+	}
+
+	this.mouse = function(pos){
+		if (choices !== undefined && choices != null && choices.length > 0 &&
+			pos.x >= choice1.min.x && pos.x <= choice1.max.x){
+			var dialogue = gamestate.currentDialogue();
+
+			var phrase;
+
+			if (pos.y >= choice1.min.y && pos.y <= choice1.max.y){
+				choiceHover = 0;
+			} else if (pos.y >= choice2.min.y && pos.y <= choice2.max.y){
+				choiceHover = 1;
+			} else {
+				choiceHover = -1;
+			}
+		} else {
+			choiceHover = -1;
 		}
 	}
 

@@ -10,6 +10,31 @@ var playgroundCoords = {
 	y : 83.45958860959138
 };
 
+var loadFonts = function(){
+	var string = " ";
+
+	setTimeout(
+	function() {
+		var ctx = sald.ctx;
+
+		if (ctx == null){
+			loadFonts()
+		} else {
+			ctx.font = "20px Indie Flower";
+			ctx.fillText(string, -100, -100);
+
+			ctx.font = "20px Roboto";
+			ctx.fillText(string, -100, -100);
+
+			ctx.font = "20px Walter Turncoat";
+			ctx.fillText(string, -100, -100);
+		}
+	}, 1000);
+}
+
+loadFonts();
+
+
 var schoolCoords = function(){
 	var dayNum = window.gamestate.dayNum();
 

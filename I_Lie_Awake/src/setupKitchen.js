@@ -9,7 +9,7 @@ kitchen.setBackground(kitchenBackground);
 var collisions = [
 	{min: {x:287, y:0}, max: {x:348, y:81}}, // Fridge to Bedroom Wall
 	{min: {x:46, y:0}, max: {x:287, y:132}}, // Fridge
-	{min: {x:0, y:131}, max: {x:46, y:490}}, // West Wall
+	{min: {x:0, y:131}, max: {x:46, y:490}}, // Wex Wall
 	{min: {x:51, y:492}, max: {x:904, y:541}}, // South Wall
 	{min: {x:904, y:255}, max: {x:961, y:540}}, // SE Wall
 	{min: {x:904, y:84}, max: {x:961, y:136}}, // NE Wall

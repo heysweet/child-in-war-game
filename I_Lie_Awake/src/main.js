@@ -21,7 +21,7 @@ var test = true;
 var mainCharacter = window.gamestate.mainCharacter;
 window.gamestate.camera = camera;
 window.gamestate.phoneGame = require("phoneGame.js");
-window.gamestate.isInGame = false;
+window.gamestate.isInGame = true;
 window.gamestate.phoneIsCracked = false;
 
 function drawBackground() {
@@ -131,12 +131,18 @@ sald.scene = {
 			if (pos.y > 430){
 				if (window.gamestate.isInGame){
 					window.gamestate.phoneGame.updateMouse(-10000, -10000);
+				} else {
+					window.gamestate.phoneInterface.mouse(-10000, -10000);
 				}
 				return;
 			}
 		}
-
-		window.gamestate.phoneGame.updateMouse(pos.x, pos.y);
+		
+		if (window.gamestate.isInGame){
+			window.gamestate.phoneGame.updateMouse(pos.x, pos.y);
+		} else {
+			window.gamestate.phoneInterface.mouse(pos);
+		}
 
 		if (button === "LEFT"){
 			if (window.gamestate.isInGame){
@@ -144,7 +150,7 @@ sald.scene = {
 					window.gamestate.phoneGame.mouseClicked();
 				}
 			} else if (window.gamestate.isTexting && !down){
-				window.gamestate.phoneInterface.mouse(pos);		
+				window.gamestate.phoneInterface.mouseClick(pos);		
 			}
 
 			if (down){

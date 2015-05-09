@@ -10,6 +10,10 @@ var playerY;
 var isDying = false;
 var isInCombat = false;
 
+var fontSize = 30;
+var halfFontHeight = fontSize / 2;
+var font = fontSize + "px Roboto";
+
 var transform = {
 	x : 7,
 	y : 19,
@@ -525,10 +529,18 @@ function victoryChecker()
 		
 		// display the number of turns left
 		var textAlign = ctx.textAlign;
-		ctx.textAlign = "center"; 
+		ctx.textAlign = "center";
 
+		ctx.font = font;
 		ctx.fillStyle = 'rgb(255,255,255)';
-		ctx.fillText("Turns left: " + numTurnsLeft, transform.width/2, transform.height/2);
+
+		if (isAttackPhase){
+			ctx.fillText("Attack the enemy!", transform.width/2, transform.height/2 + halfFontHeight);
+		} else {
+			ctx.fillText("Defend your troops!", transform.width/2, transform.height/2 + halfFontHeight);
+		}
+
+		// ctx.fillText("Turns left: " + numTurnsLeft, transform.width/2, transform.height/2);
 
 		ctx.textAlign = textAlign;
 	}
@@ -541,8 +553,9 @@ function victoryChecker()
 			var textAlign = ctx.textAlign;
 			ctx.textAlign = "center"; 
 
-			ctx.fillStyle = 'rgb(0,0,255)';
-			ctx.fillText("WIN", transform.width/2, transform.height/2);
+			ctx.font = font;
+			ctx.fillStyle = 'rgb(53,110,190)';
+			ctx.fillText("WIN", transform.width/2, transform.height/2 + halfFontHeight);
 			
 			ctx.textAlign = textAlign;
 		}
@@ -551,8 +564,9 @@ function victoryChecker()
 			var textAlign = ctx.textAlign;
 			ctx.textAlign = "center"; 
 
-			ctx.fillStyle = 'rgb(255,0,0)';
-			ctx.fillText("LOSE", transform.width/2, transform.height/2);
+			ctx.font = font;
+			ctx.fillStyle = 'rgb(210,26,17)';
+			ctx.fillText("LOSE", transform.width/2, transform.height/2 + halfFontHeight);
 			
 			ctx.textAlign = textAlign;
 		}
@@ -569,7 +583,7 @@ function background(r, g, b){
 // draw background
 function drawBackground()
 {
-	background(104, 173, 84);
+	background(72, 84, 108);
 }
 
 function drawMiddle(){
@@ -577,11 +591,11 @@ function drawMiddle(){
 	// draw center
 	if(isGameDone)
 	{
-		ctx.fillStyle = 'rgb(183,167,111)';
+		ctx.fillStyle = 'rgb(130,132,136)';
 	}
 	else
 	{
-		ctx.fillStyle = 'rgb(122,91,39)';
+		ctx.fillStyle = 'rgb(130,132,136)';
 	}
 	ctx.fillRect(0, (transform.height/2) - 50, transform.width, 100);
 }
@@ -697,6 +711,15 @@ function draw()
 		drawTargetBoxes();
 		drawMiddle();
 		isInCombat = true;
+
+		var textAlign = ctx.textAlign;
+		ctx.textAlign = "center"; 
+
+		ctx.font = font;
+		ctx.fillStyle = 'rgb(255,255,255)';
+		ctx.fillText("Turns left: " + numTurnsLeft, transform.width/2, transform.height/2 + halfFontHeight);
+
+		ctx.textAlign = textAlign;
 	} else {
 		if (isInCombat){
 			isInCombat = false;
