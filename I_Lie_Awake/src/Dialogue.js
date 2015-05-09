@@ -161,7 +161,6 @@ Dialogue.prototype.end = function(){
 
 	// Callback hooks
 	if (this.onEnd !== undefined && this.onEnd !== null){
-		console.log("On End Conversation");
 		return this.onEnd();
 	} else {
 		return null;

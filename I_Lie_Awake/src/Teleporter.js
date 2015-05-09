@@ -61,7 +61,7 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 	}
 
 	this.performTeleport = function(){
-		zone.onEnterZone();
+		zone.trigger();
 	}
 }
 

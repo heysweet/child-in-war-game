@@ -81,16 +81,32 @@ var streetDoor		 = new Teleporter(street, toStreetBox, toStreetTarget);
 
 window.gamestate.streetDoor = streetDoor;
 
+var hasLeftTheHouseBefore = false;
+
 streetDoor.onTrigger = function() {
 	streetDoor.setIsEnabled(false);
 	street.dialogueName = "toSchool";
 	window.gamestate.musicPlayer.playNextSong();
+
+	if (!hasLeftTheHouseBefore){
+		hasLeftTheHouseBefore = true;
+		leaveBedroomDoor.setTargetRoom(street);
+		leaveBedroomDoor.setTargetCoords(toStreetTarget);
+	}
 };
 
 leaveBedroomDoor.onTrigger = function(){
 	window.gamestate.shouldShowPhone = false;
 	window.gamestate.isTexting = false;
+
+	window.gamestate.mainCharacter.faceRight();
+
+	if (hasLeftTheHouseBefore){
+		streetDoor.onTrigger();
+	}
 }
+
+window.gamestate.leaveBedroom = leaveBedroomDoor.performTeleport;
 
 var reenableStreetDoor = function(){
 	streetDoor.setIsEnabled(true);

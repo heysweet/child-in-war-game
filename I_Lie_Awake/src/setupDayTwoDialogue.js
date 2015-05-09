@@ -39,7 +39,7 @@ var choices4 = [
 ];
 
 var choices5 = [
-	new Choice("fine, but some seem scared", null),
+	new Choice("fine, but a few seem scared", null),
 ];
 
 walkToSchool = [

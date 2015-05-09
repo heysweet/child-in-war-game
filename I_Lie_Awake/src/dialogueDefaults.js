@@ -19,11 +19,13 @@ var goToSchool = function(){
 }
 
 var goToStreet = function(){
-	window.gamestate.streetDoor.performTeleport();
+	setTimeout(
+		function() {
+			window.gamestate.leaveBedroom();
+		}, 1800);
 }
 
 var goToHome = function(){
-
 	setTimeout(
 		function() {
 
@@ -73,7 +75,7 @@ var goToHome = function(){
 }
 
 module.exports = {
+	goToStreet:goToStreet,
 	goToSchool:goToSchool,
 	goToHome:goToHome,
-	goToStreet:goToStreet
 };
