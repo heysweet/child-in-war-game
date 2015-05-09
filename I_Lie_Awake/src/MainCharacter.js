@@ -116,7 +116,11 @@ function MainCharacter(){
 		forceWalking = bool;
 
 		if (forceWalking){
-			this.moveVector.rightness = Math.abs(this.moveVector.rightness) * direction;
+			if (this.moveVector == null){
+				this.moveVector = { downness : 0 };
+			}
+			
+			this.moveVector.rightness = Math.abs(this.transform.xDelta) * direction;
 		}
 	}
 

@@ -56,21 +56,19 @@ var goToHome = function(){
 			} else {
 				Teleporter.teleportTo(room, coords);
 				utils.pausePlayerMovement(true);
+
+				setTimeout(
+					function(){
+						window.gamestate.diaryText.setIsHidden(false);
+
+						setTimeout(
+							function(){
+								window.gamestate.diaryText.setIsHidden(true);
+								utils.goToTheNextDay();
+							}, 12500);
+
+					}, 1600);
 			}
-
-
-			setTimeout(
-				function(){
-					window.gamestate.diaryText.setIsHidden(false);
-
-					setTimeout(
-						function(){
-							window.gamestate.diaryText.setIsHidden(true);
-							utils.goToTheNextDay();
-						}, 12500);
-
-				}, 1600);
-
 		}, 2000);
 }
 

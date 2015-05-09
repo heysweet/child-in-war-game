@@ -311,14 +311,13 @@ var PhoneInterface = function(){
 
 				drawChoices();
 			}
-
-
-			if (window.gamestate.phoneIsCracked){
-				drawCrack();
-			}
-
-			drawOverlay();
 		}
+
+		if (window.gamestate.phoneIsCracked){
+			drawCrack();
+		}
+
+		drawOverlay();
 	}
 
 	this.loadDialogue = function(dialogue_){

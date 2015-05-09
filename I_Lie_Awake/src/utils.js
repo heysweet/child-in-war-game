@@ -374,6 +374,7 @@ module.exports = {
 	mergeImages:mergeImages,
 	sleepingCoords:sleepingCoords,
 	playgroundCoords:playgroundCoords,
+	kitchenCoords:kitchenCoords,
 	schoolCoords:schoolCoords,
 	pausePlayerMovement:pausePlayerMovement,
 	colorize:colorize,
