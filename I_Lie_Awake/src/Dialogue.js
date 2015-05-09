@@ -15,6 +15,7 @@ var Dialogue = function(listOfPhrases){
 
 	this.currentIndex = 0;
 	this.phrases = listOfPhrases;
+	this.isDead = false;
 
 	this.shouldStart = function(){
 		return firstPhrase === currentPhrase;
@@ -54,9 +55,18 @@ function getPhraseAfterXSeconds(dialogue, duration) {
 	}, duration);
 }
 
+Dialogue.prototype.kill = function(){
+	this.isDead = true;
+}
+
 Dialogue.prototype.goToNext = function(choiceNum) {
 
 	clearTimeout(timeout);
+
+	if (this.isDead){
+		this.end();
+		return null;
+	}
 	
 	var phrase = this.getPhrase();
 
@@ -64,7 +74,6 @@ Dialogue.prototype.goToNext = function(choiceNum) {
 		phrase.onText();
 	}
 
-	console.log("BOMB", this.currentIndex, this.carBomb);
 	if (this.currentIndex == this.carBomb){
 		utils.rooms.street.setCarBomb();
 	}

@@ -98,7 +98,7 @@ var wakeUpInBed = function(){
 
 street.onExplode = function(){
 	window.gamestate.musicPlayer.stop();
-	window.gamestate.currentDialogue().end();
+	window.gamestate.currentDialogue().kill();
 
 	setTimeout(
 		function() {
