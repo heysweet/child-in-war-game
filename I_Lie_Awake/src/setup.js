@@ -169,11 +169,12 @@ window.gamestate.phoneGame = require("phoneGame.js");
 window.gamestate.isInGame = false;
 window.gamestate.phoneIsCracked = false;
 window.gamestate.noKeyboardInput = false;
+window.gamestate.imageToGlitch = null;
 
 function startGame(){
 	setTimeout(
 			function() {
-				
+
 		utils.goToTheNextDay();
 
 		// var delayedHidePhone = function(time){return function(){setTimeout(

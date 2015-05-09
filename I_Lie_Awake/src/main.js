@@ -36,8 +36,20 @@ sald.scene = {
 
 		ctx.setTransform(scalar,0, 0,scalar, 0,0);
 
-		if (!window.gamestate.drawNothing){
+		var imageToGlitch = window.gamestate.imageToGlitch;
+
+		if (imageToGlitch){
 			ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
+			ctx.drawImage(imageToGlitch, 0, 0);
+			utils.glitchCanvas();
+			imageToGlitch = null;
+			ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
+		}
+
+		if (!window.gamestate.drawNothing){
+			if (!imageToGlitch){
+				ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
+			}
 
 			var cameraCorner = camera.topLeftCorner();
 
@@ -72,6 +84,11 @@ sald.scene = {
 
 		if (window.gamestate.displayDayNum){
 			dayNumDisplay.draw();
+		}
+
+		if (window.gamestate.glitchCurrentCanvas){
+			utils.glitchCanvas();
+			window.gamestate.glitchCurrentCanvas = false;
 		}
 	},
 	key:function(key, down) {
