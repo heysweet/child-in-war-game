@@ -1,8 +1,8 @@
 var homeParents = [
-	"I got eggs for mom today.\n\n" +
-	"I didnt get to see my friends after school.\n\n" +
-	"I wonder if they had fun without me.\n\n" +
-	"Dad came back late at night, I was really happy to see him.",
+	"I went to the store to get eggs for mom today, but they were out\n\n" +
+	"I didnt get to play xbox with my friends after school\n\n" +
+	"I wonder if they had fun without me\n\n" +
+	"Dad came back late at night, I was really happy to see him",
 
 	"",
 
@@ -17,10 +17,10 @@ var homeParents = [
 ];
 
 var homeFriends = [
-	"I played hide and seek with friends today.\n\n" +
-	"I had a lot of fun! I stayed out too long.\n\n" +
-	"Mom got angry that I didnt get her eggs.\n\n" +
-	"Dad came back late at night, he was really tired.",
+	"I played xbox with friends today\n\n" +
+	"I had a lot of fun but stayed out too long\n\n" +
+	"Mom got angry that I didnt get her eggs\n\n" +
+	"Dad came back late at night, he was really tired",
 
 	"",
 
