@@ -409,7 +409,6 @@ var PhoneInterface = function(){
 			function() {
 				choices = phrase.choices;
 			}, 0.8);
-		}
 
 		if (phrase.name == "Dad"){
 			if (conversationNum !== 0){
