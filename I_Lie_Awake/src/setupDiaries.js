@@ -58,17 +58,17 @@ var school = [
 
 
 
-	"Ms.Beth talked a lot about the war today. I didn't understand what she said.\n\n" + 
+	"Ms. Beth was a platypus. I didn’t understand what she said.\n\n" + 
 
 "I had lunch by myself today. There was no one to talk to.\n\n" +
 
-"I wonder where mom and dad went.",
+"I’m sure glad I’m not a platypus.",
 
 	"There was nobody at school today.\n\n" + 
 
 "Not even Ms.Beth was here.\n\n" +
 
-"I wonder where everybody went.",
+"I miss my aquatic friend.",
 ];
 
 module.exports = {
