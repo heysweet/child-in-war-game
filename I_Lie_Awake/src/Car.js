@@ -7,7 +7,7 @@ var lastCarNum = 0;
 var CAR_DISTANCE = 880;
 
 var destroyedCarsPercentages = [
-	0, 0, 0.2, 0.4, 1.0
+	0, 0, 0.2, 0.42, 1.0
 ];
 
 var shouldCarBeDestroyed = function(){
@@ -195,9 +195,6 @@ var Car = function(x_, y_){
 
 			if (destroyed){
 				carAnimatedImage.draw();
-				if (carImage){
-					ctx.drawImage(carImage, x, y);
-				}
 			} else {
 				ctx.drawImage(carImage, x, y);
 			}

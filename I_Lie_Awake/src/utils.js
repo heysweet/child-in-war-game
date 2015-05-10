@@ -20,6 +20,7 @@ var displayDayNumTime = 2100;
 var glitch = require("glitch-canvas.js");
 
 var glitchedImages = [];
+var glitchedScreenShots = [];
 var drawnGlitch = null;
 var chanceToChange = 0.15;
 
@@ -34,6 +35,36 @@ var queueGlitchCapture = function(){
 
 var glitchImages = function(images){
 	window.gamestate.imagesToGlitch = window.gamestate.imagesToGlitch.concat(images);
+}
+
+var takeGlitchedScreenshot = function(){
+	var ctx = sald.ctx;
+
+	var amount = 2 + Math.floor(Math.random() * 39);
+	var seed = 1 + Math.floor(Math.random() * 20);
+	var iterations = 1 + Math.floor(Math.random() * 4);
+	var quality = 50 + Math.floor(Math.random() * 49);
+
+	var my_image_data = ctx.getImageData(0, 0, screenWidth(), screenHeight());
+	var parameters = { amount: amount, seed: seed, iterations: iterations, quality: quality };
+
+	function drawGlitchedImageData(image_data) {
+		var canvas = document.createElement('canvas');
+		var canvasContext = canvas.getContext('2d');
+
+		canvas.width = image_data.width;
+		canvas.height = image_data.height;
+
+		canvasContext.putImageData(image_data, 0, 0, 0, 0, image_data.width, image_data.height);
+
+		var result = new Image(image_data.width, image_data.height);
+
+		result.src = canvas.toDataURL();
+
+		glitchedScreenShots.push(result);
+	}
+
+	glitch.glitchImageData(my_image_data, parameters, drawGlitchedImageData);
 }
 
 var glitchCanvas = function(){
@@ -87,6 +118,15 @@ var drawGlitches = function(){
 
 	if (drawnGlitch){
 		ctx.drawImage(drawnGlitch, 0, 0);
+	}
+}
+
+var drawGlitchesScreenshots = function(){
+	var r = Math.random();
+	var chanceToGlitch = 0.01;
+
+	if (r < chanceToGlitch){
+
 	}
 }
 
