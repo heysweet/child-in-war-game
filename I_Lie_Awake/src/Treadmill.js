@@ -3,10 +3,10 @@ var AnimatedImageObject = require("AnimatedImageObject.js");
 
 var GRASS_IMAGE = require("./data/street/grass.jpg");
 var PATH_IMAGE = require("./data/street/path.png");
-var HOUSE_1_IMAGE = require("./data/street/house1/house1.png");
+
+var House = require("House.js");
 
 var desaturatedGrass = GRASS_IMAGE;
-var desaturatedHouse = HOUSE_1_IMAGE;
 
 var CAR_1_IMAGE = require("./data/street/cars/car1.png");
 var CAR_2_IMAGE = require("./data/street/cars/car2.png");
@@ -23,11 +23,10 @@ var utils = require("utils.js");
 var elapsed;
 var grass;
 var road;
+var house;
 var cars;
 
 var animatedDestroyedHouse;
-
-var house;
 
 var drawnGrass;
 var drawnRoad;
@@ -74,12 +73,12 @@ var initializeLayers = function(){
 		drawnHouse = [animatedDestroyedHouse];
 	} else {
 		house = [
-			new ImageObject(100, 0, desaturatedHouse, 40), 
-			new ImageObject(100, 0, desaturatedHouse, 40),
-			new ImageObject(100, 0, desaturatedHouse, 40)
+			new House(100, 0),
+			new House(100, 0),
+			new House(100, 0) 
 		];
 
-		drawnHouse = [new ImageObject(100, 0, desaturatedHouse, 40)];
+		drawnHouse = [new House(100, 0)];
 	}
 
 	cars = [
@@ -116,7 +115,7 @@ var Treadmill = function(speed_) {
 
 	this.setSaturation = function(saturationAmount){
 		desaturatedGrass = utils.desaturateImage(GRASS_IMAGE, saturationAmount);
-		desaturatedHouse = utils.desaturateImage(HOUSE_1_IMAGE, saturationAmount);
+		House.desaturate(saturationAmount);
 
 		for (var i = 0; i < grass.length; i++){
 			grass[i].image = desaturatedGrass;
@@ -124,18 +123,6 @@ var Treadmill = function(speed_) {
 
 		for (var i = 0; i < drawnGrass.length; i++){
 			drawnGrass[i].image = desaturatedGrass;
-		}
-
-		for (var i = 0; i < house.length; i++){
-			if (!house[i].isDestroyed){
-				house[i].image = desaturatedHouse;
-			}
-		}
-
-		for (var i = 0; i < drawnHouse.length; i++){
-			if (!drawnHouse[i].isDestroyed){
-				drawnHouse[i].image = desaturatedHouse;
-			}
 		}
 	}
 

@@ -23,6 +23,11 @@ var glitchedImages = [];
 var drawnGlitch = null;
 var chanceToChange = 0.15;
 
+// Never returns negative results
+function mod(n, m) {
+	return ((n % m) + m) % m;
+}
+
 var queueGlitchCapture = function(){
 	window.gamestate.glitchCurrentCanvas = true;
 }
@@ -450,6 +455,7 @@ var pausePlayerMovement = function(bool){
 
 module.exports = {
 	sign:sign,
+	mod:mod,
 	screenWidth:screenWidth,
 	screenHeight:screenHeight,
 	halfScreenWidth:halfScreenWidth,

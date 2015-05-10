@@ -127,6 +127,10 @@ var ImageObject = function(x_, y_, image_, distance_){
 	this.setHidden = function(bool){
 		isHidden = bool;
 	}
+
+	this.isHidden = function(){
+		return isHidden;
+	}
 }
 
 module.exports = ImageObject;

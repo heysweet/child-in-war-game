@@ -3,6 +3,7 @@ var GameObject = require("GameObject.js");
 
 var kitchen = new Room(960, 540);
 var kitchenBackground = require("./data/home/kitchen/mainRoom.png");
+var Sprite = require("sald:Sprite.js");
 
 kitchen.setBackground(kitchenBackground);
 
@@ -16,7 +17,39 @@ var collisions = [
 	{min: {x:456, y:0}, max: {x:959, y:81}}, // North Wall
 ];
 
+var animatedTVScreen = new GameObject(608, 218, 
+	{
+		zOffset : 120,
+		collisionShape : { rect : {min: {x:5, y:131}, max: {x:150, y:162}} }
+	});
+
+
+var movingTVImage = require("./data/home/kitchen/tvContent.png");
+
+var numFrames = 5;
+var tvWidth = movingTVImage.width / numFrames;
+
+var sprite = new Sprite(movingTVImage, { 
+	'idle' : {
+		x:0,
+		y:0,
+		width:tvWidth,
+		height:movingTVImage.height,
+		size:numFrames
+	}
+});
+
+sprite.animators['idle'].speed(1.1);
+sprite.animators['idle'].loop(true);
+
+animatedTVScreen.sprite = sprite;
+animatedTVScreen.width = tvWidth;
+animatedTVScreen.height = movingTVImage.height;
+
+
 var objects = [
+	animatedTVScreen,
+
 	new GameObject(608, 218, {	image : require("./data/home/kitchen/TV.png"), 
 								zOffset : 121,
 								collisionShape : { rect : {min: {x:5, y:131}, max: {x:150, y:162}} }

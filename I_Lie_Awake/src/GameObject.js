@@ -140,9 +140,9 @@ GameObject.prototype.draw = function(){
 	if (this.image !== null){
 		ctx.drawImage(this.image, this.transform.x - cameraCorner.x, this.transform.y - cameraCorner.y);
 	} else {
-		var sprite = this.getSprite();
+		var sprite = this.sprite;
 
-		sprite.draw();
+		sprite.draw('idle', this.transform.x, this.transform.y, 0, this.width, this.height, 0, 0);
 	}
 }
 
