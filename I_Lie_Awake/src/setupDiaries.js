@@ -44,7 +44,9 @@ var school = [
 
 	"Ms. Beth taught us about mollusks in class. Mollusks is such a weird word.\n\n" +
 
-"She told us to be careful after school.\n\n" +
+"I wasn’t listening, I was just playing the game on my phone.\n\n" +
+
+"I beat johnny’s high score. I feel really achieved.\n\n" +
 
 "Sarah didn't talk much today because Rachel was not here.",
 
