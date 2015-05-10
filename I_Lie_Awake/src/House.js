@@ -146,7 +146,7 @@ var House = function(x_, y_){
 
 			var ctx = sald.ctx;
 
-			for (var i = 0; i < destruction; i++){
+			for (var i = 0; i <= destruction; i++){
 				ctx.drawImage(house[i], x, y);
 			}
 		}

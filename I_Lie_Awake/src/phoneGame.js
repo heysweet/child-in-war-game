@@ -184,7 +184,7 @@ function drawRedBox(x, y, width, height){
 function drawMouseRectangle(){
 	isRectOnScreen = false;
 
-	if (mouseX > 0 && mouseX < targetTransform.x){
+	if (mouseX > 0 && mouseX < transform.width){
 		if (isAttackPhase && mouseY < transform.height/2 - 50){
 			drawRedBox(mouseX - halfPlayerMouseRectWidth, 
 				mouseY - halfPlayerMouseRectWidth,

@@ -3,20 +3,12 @@ var AnimatedImageObject = require("AnimatedImageObject.js");
 
 var GRASS_IMAGE = require("./data/street/grass.jpg");
 var PATH_IMAGE = require("./data/street/path.png");
+var DAY_5_PATH_IMAGE = require("./data/street_day5/path.png");
 
 var House = require("House.js");
+var Car = require("Car.js");
 
 var desaturatedGrass = GRASS_IMAGE;
-
-var CAR_1_IMAGE = require("./data/street/cars/car1.png");
-var CAR_2_IMAGE = require("./data/street/cars/car2.png");
-var CAR_3_IMAGE = require("./data/street/cars/car3.png");
-// var CAR_4_IMAGE = require("./data/street/cars/car4.png");
-// var CAR_5_IMAGE = require("./data/street/cars/car5.png");
-
-// BROKEN CONTENT
-var DESTROYED_HOUSE_1_ANIMATED = require("./data/street_day5/house1/house1_black.png");
-var DESTROYED_HOUSE_1 = require("./data/street_day5/house1/house1.png");
 
 var utils = require("utils.js");
 
@@ -38,6 +30,10 @@ var drawnLayers;
 
 var Explosion = require("Explosion.js");
 
+var DESTROYED_HOUSE_1_ANIMATED = require("./data/street_day5/house1/house1_black.png");
+var DESTROYED_HOUSE_1 = require("./data/street_day5/house1/house1.png");
+
+
 var initializeLayers = function(){
 	window.gamestate.explosion = new Explosion();
 
@@ -47,13 +43,9 @@ var initializeLayers = function(){
 		new ImageObject(0, 0, desaturatedGrass, 0),
 	];
 
-	road = [
-		new ImageObject(0, 0, PATH_IMAGE, 0),
-		new ImageObject(0, 0, PATH_IMAGE, 0),
-		new ImageObject(0, 0, PATH_IMAGE, 0),
-	];
+	var dayNum = window.gamestate.dayNum();
 
-	if (window.gamestate.dayNum() == 4){
+	if (dayNum == 4){
 		house = [];
 
 		var animatedDestroyedHouse;
@@ -71,6 +63,14 @@ var initializeLayers = function(){
 		}
 
 		drawnHouse = [animatedDestroyedHouse];
+
+		road = [
+			new ImageObject(0, 0, DAY_5_PATH_IMAGE, 0),
+			new ImageObject(0, 0, DAY_5_PATH_IMAGE, 0),
+			new ImageObject(0, 0, DAY_5_PATH_IMAGE, 0),
+		];
+
+		drawnRoad = [new ImageObject(0, 0, DAY_5_PATH_IMAGE, 0)];
 	} else {
 		house = [
 			new House(100, 0),
@@ -79,18 +79,26 @@ var initializeLayers = function(){
 		];
 
 		drawnHouse = [new House(100, 0)];
+
+		road = [
+			new ImageObject(0, 0, PATH_IMAGE, 0),
+			new ImageObject(0, 0, PATH_IMAGE, 0),
+			new ImageObject(0, 0, PATH_IMAGE, 0),
+		];
+
+		drawnRoad = [new ImageObject(0, 0, PATH_IMAGE, 0)];
 	}
 
 	cars = [
-		new ImageObject(100, 400, CAR_2_IMAGE, 900), 
-		new ImageObject(100, 400, CAR_3_IMAGE, 900), 
-		// new ImageObject(100, 400, CAR_4_IMAGE, 900), 
-		// new ImageObject(100, 400, CAR_5_IMAGE, 900), 
+		new Car(100, 400),
+		new Car(100, 400),
+		new Car(100, 400),
+		new Car(100, 400)
 	];
 
 	drawnGrass = [new ImageObject(0, 0, desaturatedGrass, 0)];
-	drawnRoad = [new ImageObject(0, 0, PATH_IMAGE, 0)];
-	drawnCars = [new ImageObject(100, 400, CAR_1_IMAGE, 900),];
+	
+	drawnCars = [new Car(100, 400)];
 
 	layersPool = [grass, road, house, cars];
 	drawnLayers = [drawnGrass, drawnRoad, drawnHouse, drawnCars];
