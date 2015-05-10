@@ -184,20 +184,22 @@ function drawRedBox(x, y, width, height){
 function drawMouseRectangle(){
 	isRectOnScreen = false;
 
-	if (isAttackPhase && mouseY < transform.height/2 - 50){
-		drawRedBox(mouseX - halfPlayerMouseRectWidth, 
-			mouseY - halfPlayerMouseRectWidth,
-			playerMouseRectWidth,
-			playerMouseRectWidth);
+	if (mouseX > 0 && mouseX < targetTransform.x){
+		if (isAttackPhase && mouseY < transform.height/2 - 50){
+			drawRedBox(mouseX - halfPlayerMouseRectWidth, 
+				mouseY - halfPlayerMouseRectWidth,
+				playerMouseRectWidth,
+				playerMouseRectWidth);
 
-		isRectOnScreen = true;
-	} else if (!isAttackPhase && mouseY > transform.height/2 + 50) {
-		drawBlueBox(mouseX - halfPlayerMouseRectWidth, 
-			mouseY - halfPlayerMouseRectWidth,
-			playerMouseRectWidth,
-			playerMouseRectWidth);
-		
-		isRectOnScreen = true;
+			isRectOnScreen = true;
+		} else if (!isAttackPhase && mouseY > transform.height/2 + 50) {
+			drawBlueBox(mouseX - halfPlayerMouseRectWidth, 
+				mouseY - halfPlayerMouseRectWidth,
+				playerMouseRectWidth,
+				playerMouseRectWidth);
+			
+			isRectOnScreen = true;
+		}
 	}
 }
 
@@ -255,7 +257,7 @@ function mouseClicked(){
 	playerX = mouseX - halfPlayerMouseRectWidth;
 	playerY = mouseY - halfPlayerMouseRectWidth;
 	
-	if (!isGameDone && isRectOnScreen && mouseX){
+	if (!isGameDone && isRectOnScreen){
 		playerMakesTurn();
 	}
 }

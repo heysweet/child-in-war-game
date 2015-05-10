@@ -123,7 +123,7 @@ leaveSchoolRelativePath.setMovingObject(mainCharacter);
 school.onEnter = function(){
 	window.gamestate.movement.pauseInput(true);
 	// walkToSchoolRelativePath.start();
-	walkToSchoolPaths[window.gamestate.dayNum()].start();
+	walkToSchoolPaths[0].start();
 }
 
 // school.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);

@@ -75,7 +75,7 @@ var TextMessage = function(message_, name){
 	var btmBubble;
 	var bubbleHeight_ = null;
 
-	var messageFont = "300 16px Gill Sans";
+	var messageFont = "16px Roboto";
 
 	if (name === undefined){
 		isMine = true;
@@ -189,7 +189,7 @@ var TextMessage = function(message_, name){
 
 		if (shouldWriteName){
 			ctx.fillStyle = 'rgb(100, 100, 100)';
-			ctx.font = "300 12px Gill Sans";
+			ctx.font = "12px Roboto";
 
 			ctx.fillText(name, drawX, yUpdate + json.height - 14);
 		}

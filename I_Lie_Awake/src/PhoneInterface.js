@@ -229,7 +229,7 @@ var PhoneInterface = function(){
 				y += CHOICE_IMAGE.height + 4;
 
 				ctx.fillStyle = 'rgb(0, 0, 0)';
-				ctx.font = "300 16px Gill Sans";
+				ctx.font = "300 16px Roboto";
 
 				var numLines = ctx.measureWrapText(choices[i].text, x, y - 20, 195, 18);
 
@@ -261,7 +261,7 @@ var PhoneInterface = function(){
 		ctx.textAlign = "center"; 
 
 		ctx.fillStyle = 'rgb(76, 193, 252)';
-		ctx.font = "300 18px Gill Sans";
+		ctx.font = "18px Roboto";
 
 		if (inTransition){
 			var additionalOffset = inTransition * conversationRequiredOffset;
