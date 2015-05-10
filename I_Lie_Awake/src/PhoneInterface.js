@@ -408,7 +408,7 @@ var PhoneInterface = function(){
 		setTimeout(
 			function() {
 				choices = phrase.choices;
-			}, 0.8);
+			}, 800);
 
 		if (phrase.name == "Dad"){
 			if (conversationNum !== 0){
