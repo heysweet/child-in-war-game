@@ -68,8 +68,13 @@ var SOURCE_HOUSE_2 = [
 	require("./data/street/house2/house2_deterioration3.png"),
 ];
 
-// var SOURCE_HOUSE_3 = [
-// ];
+var SOURCE_HOUSE_3 = [
+	require("./data/street/house3/house3.png"),
+	require("./data/street/house3/house3_grass.png"),
+	require("./data/street/house3/house3_deterioration1.png"),
+	require("./data/street/house3/house3_deterioration2.png"),
+	require("./data/street/house3/house3_deterioration3.png"),
+];
 
 var HOUSE_1 = [
 	require("./data/street/house1/house1.png"),
@@ -88,13 +93,17 @@ var HOUSE_2 = [
 ];
 
 var HOUSE_3 = [
-
+	require("./data/street/house3/house3.png"),
+	require("./data/street/house3/house3_grass.png"),
+	require("./data/street/house3/house3_deterioration1.png"),
+	require("./data/street/house3/house3_deterioration2.png"),
+	require("./data/street/house3/house3_deterioration3.png"),
 ];
 
 var SOURCES = [
 	SOURCE_HOUSE_1, 
 	SOURCE_HOUSE_2, 
-	//SOURCE_HOUSE_3
+	SOURCE_HOUSE_3
 ];
 
 var houses = [
@@ -120,11 +129,6 @@ var House = function(x_, y_){
 	}
 
 	this.setHouseNum = function(num){
-		if (num == 3){
-			console.log("TODO: REMOVE THIS CODE ONCE HOUSE 3 IS ADDED");
-			num = 2;
-		}
-
 		house = houses[num-1];
 	}
 
