@@ -87,13 +87,14 @@ var choices5 = [
 ];
 
 
-
-
-
-
 var choices8 = [
-	new Choice("yes", null),
 	new Choice("no", null),
+	new Choice("yes", null),
+];
+
+var choices8_2 = [
+	new Choice("uh....", null),
+	new Choice("ART", null),
 ];
 
 var choices9 = [
@@ -118,6 +119,7 @@ walkToSchool = [
 	new Phrase("Johnny", "Aren’t you supposed to have choice?", choices4),
 	new Phrase("Sam", "Is this better?", choices5),
 	new Phrase("Johnny", "are you having funnnnnnnn yetttttttt?", choices8),
+	new Phrase("Andy", "why not?", choices8_2);
 	new Phrase("Sarah", "Are you having fun yet?", choices9),
 	new Phrase("Sam", "r u havin fun yet????", choices10),
 	new Phrase("Dad", "are", 2000),
@@ -155,8 +157,8 @@ var choices13 = [
 ];
 
 var choices14 = [
-	new Choice("yes", null),
-	new Choice("no", null),
+	new Choice("yes", null, "Friends"),
+	new Choice("no", null, "Friends"),
 ];
 
 walkFromSchool = [
