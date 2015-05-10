@@ -6,10 +6,10 @@ var homeParents = [
 
 	"",
 
-	"I got water for mom today.\n\n" +
-	"I hope I didn't miss out on too much fun with my friends.\n\n" +
-	"I wonder what happened to Andy.\n\n" +
-	"Dad did not tuck me in before I went to sleep.",
+	"Day 3:\n\n" +
+	"Water running low.\n\n" +
+	"I am all out of choices.\n\n" +
+	"What happened to Rachel?",
 
 	"",
 
@@ -24,10 +24,10 @@ var homeFriends = [
 
 	"",
 
-	"I had a lot of fun playing with my friends today.\n\n" +
-	"I wonder what happened to Andy\n\n"+
-	"I came home thirsty but there was no water to drink\n\n" +
-	"Mom and Dad did not tuck me in before I went to sleep",
+	"Day 3:\n\n" +
+	"Water running low.\n\n" +
+	"I am all out of choices.\n\n" +
+	"What happened to Rachel?",
 
 	"",
 
@@ -52,11 +52,9 @@ var school = [
 
 
 
-	"Ms. Beth taught about dolphins today. Dolphins are very weird animals that see with sound.\n\n" +
+	"Ms. Beth taught about games today. We learned how important interactivity was\n\n" +
 
-"She warned us about what kind of things we should watch out for to avoid danger.\n\n" +
-
-"Sarah was really angry at Sam, Johnny and me for bullying her.",
+"I didn’t pay attention to her though. I was having too much fun playing my own game",
 
 
 
