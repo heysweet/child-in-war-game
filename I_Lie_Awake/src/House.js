@@ -124,11 +124,6 @@ var House = function(x_, y_){
 	}
 
 	this.setHouseNum = function(num){
-		if (num == 3){
-			console.log("TODO: REMOVE THIS CODE ONCE HOUSE 3 IS ADDED");
-			num = 2;
-		}
-
 		house = houses[num-1];
 	}
 
