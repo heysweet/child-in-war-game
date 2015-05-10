@@ -68,8 +68,13 @@ var SOURCE_HOUSE_2 = [
 	require("./data/street/house2/house2_deterioration3.png"),
 ];
 
-// var SOURCE_HOUSE_3 = [
-// ];
+var SOURCE_HOUSE_3 = [
+	require("./data/street/house3/house3.png"),
+	require("./data/street/house3/house3_grass.png"),
+	require("./data/street/house3/house3_deterioration1.png"),
+	require("./data/street/house3/house3_deterioration2.png"),
+	require("./data/street/house3/house3_deterioration3.png"),
+];
 
 var HOUSE_1 = [
 	require("./data/street/house1/house1.png"),
