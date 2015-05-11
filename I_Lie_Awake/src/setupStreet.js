@@ -3,6 +3,7 @@ var GameObject = require("GameObject.js");
 var utils = require("utils.js");
 var Treadmill = require("Treadmill.js");
 var Teleporter = require("Teleporter.js");
+var achievement = require("Achievement.js");
 
 var mainCharacter = window.gamestate.mainCharacter;
 var speed = mainCharacter.transform.xDelta;
@@ -137,6 +138,9 @@ street.onExplode = function(){
 				function() {
 					window.gamestate.drawGlitches = false;
 					window.gamestate.phoneIsCracked = true;
+
+					achievement.achieve("You Exploded (Oops!)");
+
 					window.gamestate.explosion.hide();
 					wakeUpInBed();
 			}, soundLength - startGlitchTime);

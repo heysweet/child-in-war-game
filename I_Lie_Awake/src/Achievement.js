@@ -3,7 +3,7 @@ var utils = require("utils.js");
 var achievementSet = new Set();
 
 var text;
-var achievementSound;
+var achievementSound = require("./data/sound/achievement.ogg");
 var achievementImage = require("./data/achievement.png");
 
 var achievementDuration = 3.2;
@@ -45,7 +45,7 @@ function achieve(text_){
 		elapsedTime = 0;
 		isShowing = true;
 
-		// achievementSound.play();
+		achievementSound.play();
 	}
 }
 

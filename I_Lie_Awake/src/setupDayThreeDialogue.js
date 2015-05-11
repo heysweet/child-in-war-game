@@ -65,6 +65,10 @@ var choices7 = [
 	new Choice("NOOOOOOOOO!!!!!!!!!", null),
 ];
 
+choices7[0].onChoice = function (argument) {
+	achievement.achieve("Carving Your Destiny!");
+};
+
 var choices6Both = [
 	new Phrase("Andy", "You don't really have a choice.", 5000),
 	new Phrase("Andy", "Happy?", choices7),
