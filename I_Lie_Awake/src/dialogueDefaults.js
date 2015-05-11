@@ -53,6 +53,7 @@ var goToHome = function(){
 				Teleporter.teleportTo(utils.rooms.kitchenDay5, utils.kitchenCoords);
 				utils.pausePlayerMovement(false);
 				window.gamestate.noKeyboardInput = false;
+				window.gamestate.electricity = true;
 			} else {
 				Teleporter.teleportTo(room, coords);
 				utils.pausePlayerMovement(true);
@@ -65,7 +66,7 @@ var goToHome = function(){
 							function(){
 								window.gamestate.diaryText.setIsHidden(true);
 								utils.goToTheNextDay();
-							}, 12500);
+							}, 7500);
 
 					}, 1600);
 			}

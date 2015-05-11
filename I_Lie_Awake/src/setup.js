@@ -92,8 +92,6 @@ streetDoor.onTrigger = function() {
 endingDoor.onTrigger = function(){
 	window.gamestate.mainCharacter.faceRight();
 	window.gamestate.movement.pauseInput(true);
-
-	// End the game
 }
 
 leaveBedroomDoor.onTrigger = function(){

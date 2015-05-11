@@ -4,13 +4,28 @@ var utils = require("utils.js");
 
 var bedroom = new Room(430, 430);
 
-// bedroom.setStaticCamera(utils.halfScreenWidth()-(430/2), utils.halfScreenHeight()-100);
+var x = 104;
+var y = 90;
+
+var creditsSong = require("./data/music/credits.ogg");
+
+bedroom.setStaticCamera(utils.sleepingCoords.x + window.gamestate.mainCharacter.halfWidth(),
+						utils.sleepingCoords.y + window.gamestate.mainCharacter.halfHeight());
+
+bedroom.onEnter = function(){
+	setTimeout(
+		function() {
+			window.gamestate.gameOver = true;
+			creditsSong.play();
+			window.gamestate.nextDay();
+		}, 3500);
+}
 
 var objects = [
-	new GameObject(100, 145, {	image : require("./data/home/bedroom/bed.png"), 
+	new GameObject(x, y, {	image : require("./data/home/bedroom/bed.png"), 
 								zOffset : 0
 							}),
-	new GameObject(100, 145, {	image : require("./data/home/bedroom/blanket.png"), 
+	new GameObject(x - 4, y + 55, {	image : require("./data/home/bedroom/blanket.png"), 
 								zOffset : 72
 							})
 ];

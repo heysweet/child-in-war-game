@@ -10,6 +10,12 @@ var kitchenCoords = {
 	y : 85
 };
 
+var sleepingCoordsEnd = {
+	x : 427,
+	y : 83.45958860959138
+};
+
+
 var displayDayNumTime = 2100;
 
 var glitch = require("glitch-canvas.js");
@@ -505,6 +511,7 @@ module.exports = {
 	getScaledPoint:getScaledPoint,
 	mergeImages:mergeImages,
 	sleepingCoords:sleepingCoords,
+	sleepingCoordsEnd:sleepingCoordsEnd,
 	kitchenCoords:kitchenCoords,
 	schoolCoords:schoolCoords,
 	pausePlayerMovement:pausePlayerMovement,

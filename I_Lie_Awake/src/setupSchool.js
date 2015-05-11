@@ -91,7 +91,7 @@ var showSchoolText = function(){
 			window.gamestate.diaryText.setIsHidden(true);
 			mainCharacter.setHidden(false);
 			leaveSchoolRelativePath.start();
-		}, 12500);
+		}, 7500);
 }
 
 var walkToSchoolPaths = [

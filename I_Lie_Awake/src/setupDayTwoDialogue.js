@@ -62,6 +62,10 @@ var choices5 = [
 	new Choice("guys cut it out", null),
 ];
 
+choices5[0].onChoice = function (argument) {
+	achievement.achieve("Party Pooper!");
+};
+
 var choices6 = [
 	new Choice("fine, but a few seem scared", null),
 ];

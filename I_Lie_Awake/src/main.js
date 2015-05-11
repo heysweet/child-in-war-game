@@ -11,7 +11,11 @@ var dayNumDisplay = require("dayNumDisplay.js");
 
 var achievement = require("Achievement.js");
 
+var Teleporter = require("Teleporter.js");
+
 var mainCharacter = window.gamestate.mainCharacter;
+
+var credits = require("credits.js");
 
 function drawBackground() {
 	var ctx = sald.ctx;
@@ -28,6 +32,10 @@ sald.scene = {
 		gamestate.currentRoom().update(elapsed);
 		window.gamestate.phoneInterface.update(elapsed);
 		achievement.update(elapsed);
+
+		if (window.gamestate.gameOver){
+			credits.update(elapsed);
+		}
 	},
 	draw:function() {
 		// Clear the screen
@@ -56,7 +64,10 @@ sald.scene = {
 			}
 		}
 
-		if (!window.gamestate.drawNothing && !window.gamestate.drawGlitches){
+		if (window.gamestate.gameOver){
+			ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
+			credits.draw();
+		} else if (!window.gamestate.drawNothing && !window.gamestate.drawGlitches){
 			if (!didGlitch){
 				ctx.clearRect( 0, 0, utils.screenHeight()*2, utils.screenWidth()*2);
 			}
@@ -117,6 +128,8 @@ sald.scene = {
 				}
 			} else if (key == "G" && window.gamestate.dayNum() > 0){
 				achievement.achieve("YOU HIT G!");
+			} else if (key == "Y"){
+				Teleporter.teleportTo(utils.rooms.kitchenDay5, utils.kitchenCoords);
 			}
 		}
 	},
