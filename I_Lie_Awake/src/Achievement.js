@@ -13,7 +13,7 @@ var isShowing = false;
 var animationOffset = 0;
 var animationDelta  = 600;
 
-var MAX_NUM_ACHIEVEMENTS = 2;
+var MAX_NUM_ACHIEVEMENTS = 12;
 
 var bottomSpacing = 10;
 var maxAnimationOffset = achievementImage.height + bottomSpacing;
