@@ -102,7 +102,7 @@ var choices7 = [
 	new Choice("sorry but i got to buy eggs for mom today", null, "Parents")
 ];
 
-var gamerChoice = choices7[0].onChoice;
+var gamerChoice = choices7[1].onChoice;
 
 choices7[0].onChoice = function () {
 	gamerChoice();

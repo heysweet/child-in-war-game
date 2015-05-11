@@ -48,7 +48,6 @@ var setFriendsDiary = function(){
 var setParentsDiary = function(){
 	var dayNum = window.gamestate.dayNum();
 
-
 	window.gamestate.diaryText.setText(parentsDiaries[dayNum]);
 }
 
