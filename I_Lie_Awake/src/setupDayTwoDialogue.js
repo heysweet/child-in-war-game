@@ -36,7 +36,7 @@ var choice1Yes = [
 ];
 
 var choice1No = [
-	new Phrase("Mom", "Don't lie to me!", 2000),
+	new Phrase("Mom", "Don't lie to me!", 1000),
 	new Phrase("Mom", "Are you at least having fun?", choices2),
 ];
 
@@ -67,7 +67,7 @@ var choices6 = [
 ];
 
 walkToSchool = [
-	new Phrase("Mom", "Good morning honey.", 2000),
+	new Phrase("Mom", "Good morning honey.", 1500),
 	new Phrase("Mom", "Are you playing that game again?", choices1b),
 	new Phrase("Mom", "What did Dad tell you this morning?", choices3),
 	new Phrase("Mom", "Don't worry about it. it is not a big deal.", choices4),
@@ -78,11 +78,11 @@ walkToSchool = [
 	new Phrase("Sarah", "What is this, a game to you?", 2000),
 	new Phrase("Johnny", "what a downer, ruining the convo", 2000),
 	new Phrase("Sam", "party pooper!", 2000),
-	new Phrase("Johnny", "party pooper!", 2000),
-	new Phrase("Sam", "party pooper!", choices5),
+	new Phrase("Johnny", "party pooper!", 800),
+	new Phrase("Andy", "party pooper!", choices5),
 	new Phrase("Mom", "How are your friends doing?", choices6),
 	new Phrase("Mom", "Well make sure to keep your guard up.", 2000),
-	new Phrase("Mom", "Stay safe. Have fun.", 4000),
+	new Phrase("Mom", "Stay safe. Have fun.", 2000),
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);

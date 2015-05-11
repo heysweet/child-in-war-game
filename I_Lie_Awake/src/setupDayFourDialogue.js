@@ -49,9 +49,9 @@ walkToSchool = [
 	new Phrase("Rachel", "Existence really is an imperfect tense that never becomes a present.", choices3),
 	new Phrase("Rachel", "I still live, I still think: I still have to live, for I still have to think.", choices4),
 	new Phrase("Rachel", "One has to die several times while one is still alive", choices5),
-	new Phrase("Rachel", "Let us beware of saying that death is the opposite of life", 3000),
-	new Phrase("Rachel", "The living being is only a species of the dead,", 3000),
-	new Phrase("Rachel", "and a very rare species.", 3000),
+	new Phrase("Rachel", "Let us beware of saying that death is the opposite of life", 2600),
+	new Phrase("Rachel", "The living being is only a species of the dead,", 2600),
+	new Phrase("Rachel", "and a very rare species.", 4000),
 	new Phrase("Rachel", "Are you having fun?", 6000),
 ];
 

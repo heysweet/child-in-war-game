@@ -31,7 +31,7 @@ var choices2 = [
 
 
 morningTexts = [
-	new Phrase("Dad", "Morning sweetie", 2000),
+	new Phrase("Dad", "Morning sweetie", 1600),
 	new Phrase("Dad", "Are you having fun?", choices1),
 	new Phrase("Dad", "You should go make breakfast before you leave.", 2000),
 	new Phrase("Dad", "Eggs are in the refrigerator.", choices2)
@@ -110,7 +110,7 @@ var choices10 = [
 
 
 walkToSchool = [
-	new Phrase("Mom", "Hey.", 2000),
+	new Phrase("Mom", "Hey.", 800),
 	new Phrase("Mom", "See that girl walking to school?", 2000),
 	new Phrase("Mom", "What's her name anyways?", choices2),
 	new Phrase("Mom", "Why is she going to school in a warzone?", 2000),
@@ -123,11 +123,11 @@ walkToSchool = [
 	new Phrase("Sarah", "Are you having fun yet?", choices9),
 	new Phrase("Sam", "r u havin fun yet????", choices10),
 	new Phrase("Dad", "are", 1600),
-	new Phrase("Mom", "you", 1600),
-	new Phrase("Sarah", "having", 1000),
-	new Phrase("Sam", "fun", 1000),
-	new Phrase("Andy", "yet", 1000),
-	new Phrase("Johnny", "?", 1000),
+	new Phrase("Mom", "you", 1200),
+	new Phrase("Sarah", "having", 800),
+	new Phrase("Sam", "fun", 800),
+	new Phrase("Andy", "yet", 800),
+	new Phrase("Johnny", "?", 800),
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);

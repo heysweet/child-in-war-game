@@ -32,11 +32,11 @@ var dialogueWithDad = new Dialogue(dadTalks);
 // Walk to School
 
 var johnnyBoring = [
-	new Phrase("Johnny", "borriiiiinnngggggg", 4000),
+	new Phrase("Johnny", "borriiiiinnngggggg", 2000),
 ];
 
 var johnnyNoWay = [
-	new Phrase("Johnny", "dude no wayyyyyyyyy", 4000)
+	new Phrase("Johnny", "dude no wayyyyyyyyy", 2000)
 ];
 
 
@@ -71,7 +71,7 @@ var choices6 = [
 ];
 
 var walkToSchool = [
-	new Phrase("Johnny", "yooo", 2000),
+	new Phrase("Johnny", "yooo", 1000),
 	new Phrase("Johnny", "hows that game ur playing?", choices1),
 	new Phrase("Johnny", "oh me tooooo!", 2000),
 	new Phrase("Johnny", "are u having fun?", choices2),
@@ -80,9 +80,9 @@ var walkToSchool = [
 	new Phrase("Sarah", "oh me too. i just lost :(", choices3),
 	new Phrase("Mom", "Did you leave already?", 2000),
 	new Phrase("Mom", "Stay safe, don't go looking for trouble.", choices4),
-	new Phrase("Rachel", "omw there are soldiers everywhere! :O", 2000),
+	new Phrase("Rachel", "omw there are soldiers everywhere! :O", 1500),
 	new Phrase("Johnny", "sam just told me she saw a jeep with a big gun on it!", choices5),
-	new Phrase("Andy", "No way Sam is such a liar.", 2000),
+	new Phrase("Andy", "No way Sam is such a liar.", 1500),
 	new Phrase("Johnny", "have you seen anything cool yet?", choices6),
 ];
 
