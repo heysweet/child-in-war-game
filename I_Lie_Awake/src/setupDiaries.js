@@ -1,3 +1,5 @@
+var achievement = require("Achievement.js");
+
 var homeParents = [
 	"I went to the store to get eggs for mom today, but they were out\n\n" +
 	"I didnt get to play xbox with my friends after school\n\n" +

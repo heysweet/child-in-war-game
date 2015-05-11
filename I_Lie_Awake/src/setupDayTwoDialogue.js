@@ -2,6 +2,7 @@ var Dialogue = require("Dialogue.js");
 var Phrase = require("Phrase.js");
 var Choice = require("Choice.js");
 var defaults = require("dialogueDefaults.js");
+var achievement = require("Achievement.js");
 
 // Dad Morning
 
@@ -12,7 +13,7 @@ var choices1 = [
 
 
 var choice2Yes = [
-	new Phrase("Mom", "Oh that's good.", 4000),
+	new Phrase("Mom", "Oh that's good.", 2000),
 ];
 
 var choice2No = [
@@ -46,6 +47,10 @@ var choices1b = [
 	new Choice("yes", choice1Yes),
 	new Choice("no", choice1No),
 ];
+
+choices1b[1].onChoice = function (argument) {
+	achievement.achieve("You Lied to your Mom!");
+};
 
 var choices3 = [
 	new Choice("nothing much", null),

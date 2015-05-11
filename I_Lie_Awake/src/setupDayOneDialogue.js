@@ -2,6 +2,7 @@ var Dialogue = require("Dialogue.js");
 var Phrase = require("Phrase.js");
 var Choice = require("Choice.js");
 var defaults = require("dialogueDefaults.js");
+var achievement = require("Achievement.js");
 
 /**
 
@@ -70,6 +71,10 @@ var choices6 = [
 	new Choice("oh yeah? i saw a tank", johnnyNoWay)
 ];
 
+choices6[1].onChoice = function (argument) {
+	achievement.achieve("Liar (You Didnt)");
+};
+
 var walkToSchool = [
 	new Phrase("Johnny", "yooo", 1000),
 	new Phrase("Johnny", "hows that game ur playing?", choices1),
@@ -96,6 +101,13 @@ var choices7 = [
 	new Choice("kk i'll be right there", null, "Friends"),
 	new Choice("sorry but i got to buy eggs for mom today", null, "Parents")
 ];
+
+choices7[0].onChoice = function (argument) {
+	achievement.achieve("Devout Gamer");
+};
+choices7[1].onChoice = function (argument) {
+	achievement.achieve("Team Player");
+};
 
 var walkFromSchool = [
 	new Phrase("Mom", "I just remembered", 1000),

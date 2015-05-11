@@ -1,5 +1,6 @@
 var soldier1 = require("./data/phone/soldier1.png");
 var soldier2 = require("./data/phone/soldier2.png");
+var achievement = require("Achievement.js");
 
 var gameStartSound = require("./data/sound/gameStart.ogg");
 var gameExplosionSound = require("./data/sound/gameExplosion.ogg");
@@ -536,10 +537,12 @@ function victoryChecker()
 		{
 			if(didPlayerWin)
 			{
+				achievement.achieve("Win the Phone Game");
 				gameWinSound.play();
 			}
 			else
 			{
+				achievement.achieve("Lose the Phone Game");
 				gameLoseSound.play();
 			}
 		}
