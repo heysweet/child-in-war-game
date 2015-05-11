@@ -44,9 +44,9 @@ var school = [
 
 	"Ms. Beth taught us about mollusks in class. Mollusks is such a weird word.\n\n" +
 
-"I wasn’t listening, I was just playing the game on my phone.\n\n" +
+"I wasn't listening, I was just playing the game on my phone.\n\n" +
 
-"I beat johnny’s high score. I feel really achieved.\n\n" +
+"I beat johnny's high score. I feel really achieved.\n\n" +
 
 "Sarah didn't talk much today because Rachel was not here.",
 
@@ -54,15 +54,15 @@ var school = [
 
 	"Ms. Beth taught about games today. We learned how important interactivity was\n\n" +
 
-"I didn’t pay attention to her though. I was having too much fun playing my own game",
+"I didn't pay attention to her though. I was having too much fun playing my own game",
 
 
 
-	"Ms. Beth was a platypus. I didn’t understand what she said.\n\n" + 
+	"Ms. Beth was a platypus. I didn't understand what she said.\n\n" + 
 
 "I had lunch by myself today. There was no one to talk to.\n\n" +
 
-"I’m sure glad I’m not a platypus.",
+"I'm sure glad I'm not a platypus.",
 
 	"There was nobody at school today.\n\n" + 
 

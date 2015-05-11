@@ -1,7 +1,7 @@
 var GameState = function(){
 	var currentDialogue = null;
 	var currentRoom = null;
-	var dayNum = 2;
+	var dayNum = 0;
 
 	this.hasBeenToSchool = false;
 	this.gameOver = false;

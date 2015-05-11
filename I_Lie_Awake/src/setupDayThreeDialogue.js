@@ -26,15 +26,15 @@ var choices1 = [
 
 var choices2 = [
 	new Choice("alright", null),
-	new Choice("i didn’t get eggs", null),
+	new Choice("i didn't get eggs", null),
 ];
 
 
 morningTexts = [
 	new Phrase("Dad", "Morning sweetie", 2000),
-	new Phrase("Dad", "How'd you sleep?", choices1),
-	new Phrase("Dad", "I'm taking mom to the hospital", 2000),
-	new Phrase("Dad", "Don't worry about us", choices2)
+	new Phrase("Dad", "Are you having fun?", choices1),
+	new Phrase("Dad", "You should go make breakfast before you leave.", 2000),
+	new Phrase("Dad", "Eggs are in the refrigerator.", choices2)
 ];
 
 dialogueWithDad = new Dialogue(morningTexts);
@@ -48,13 +48,13 @@ var choices2 = [
 ];
 
 var choices3 = [
-	new Choice("uhhh…...", null),
+	new Choice("uhhh......", null),
 	new Choice("she did die, right?", null),
 ];
 
 var choices4 = [
-	new Choice("uhhhhhhhhhh……….", null),
-	new Choice("i couldn’t click it", null),
+	new Choice("uhhhhhhhhhh..........", null),
+	new Choice("i couldn't click it", null),
 ];
 
 var choices7 = [
@@ -68,7 +68,7 @@ var choices6Both = [
 ]
 
 var choices6 = [
-	new Choice("Where’s the gameplay?", choices6Both),
+	new Choice("Where's the gameplay?", choices6Both),
 	new Choice("Its nice to have my phone fixed.", choices6Both),
 ];
 
@@ -112,22 +112,22 @@ var choices10 = [
 walkToSchool = [
 	new Phrase("Mom", "Hey.", 2000),
 	new Phrase("Mom", "See that girl walking to school?", 2000),
-	new Phrase("Mom", "What’s her name anyways?", choices2),
+	new Phrase("Mom", "What's her name anyways?", choices2),
 	new Phrase("Mom", "Why is she going to school in a warzone?", 2000),
-	new Phrase("Mom", "Shouldn’t she be dead?", choices3),
-	new Phrase("Johnny", "Why didn’t you choose the other option?", 2000),
-	new Phrase("Johnny", "Aren’t you supposed to have choice?", choices4),
+	new Phrase("Mom", "Shouldn't she be dead?", choices3),
+	new Phrase("Johnny", "Why didn't you choose the other option?", 2000),
+	new Phrase("Johnny", "Aren't you supposed to have choice?", choices4),
 	new Phrase("Sam", "Is this better?", choices5),
 	new Phrase("Johnny", "are you having funnnnnnnn yetttttttt?", choices8),
-	new Phrase("Andy", "why not?", choices8_2);
+	new Phrase("Andy", "why not?", choices8_2),
 	new Phrase("Sarah", "Are you having fun yet?", choices9),
 	new Phrase("Sam", "r u havin fun yet????", choices10),
-	new Phrase("Dad", "are", 2000),
-	new Phrase("Mom", "you", 2000),
-	new Phrase("Sarah", "having", 2000),
-	new Phrase("Sam", "fun", 2000),
-	new Phrase("Andy", "yet", 2000),
-	new Phrase("Johnny", "?", 2000),
+	new Phrase("Dad", "are", 1600),
+	new Phrase("Mom", "you", 1600),
+	new Phrase("Sarah", "having", 1000),
+	new Phrase("Sam", "fun", 1000),
+	new Phrase("Andy", "yet", 1000),
+	new Phrase("Johnny", "?", 1000),
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);
@@ -162,6 +162,7 @@ var choices14 = [
 ];
 
 walkFromSchool = [
+	new Phrase("Andy", "So...", 1000),
 	new Phrase("Andy", "Are games about making choices?", choices11),
 	new Phrase("Sam", "Are games about rules?", choices12),
 	new Phrase("Johnny", "Are games about winning?", choices13),

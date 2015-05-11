@@ -17,7 +17,7 @@ dialogueWithDad.onEnd = defaults.goToStreet;
 
 var choices1 = [
 	new Choice("whats wrong?", null),
-	new Choice("wait, didn’t you die?", null),
+	new Choice("wait, didn't you die?", null),
 ];
 
 var choices2 = [

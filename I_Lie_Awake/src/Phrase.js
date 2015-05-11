@@ -5,8 +5,13 @@ var processPhrases = function(phrases){
 		for (var i = 1; i < phrases.length; i++){
 			var phrase = phrases[i];
 
+			// if (phrase.text == "Don't lie to me!"){
+				console.log("WOOT", phrases, lastPhrase, phrase);
+			// }
+
 			if (phrase.duration !== undefined){
-				lastPhrase.setNextPhrase(phrase);
+				lastPhrase.next = phrase;
+				console.log(lastPhrase);
 			}
 
 			lastPhrase = phrase;
@@ -26,34 +31,29 @@ var Phrase = function(name, text, duration){
 
 			if (choice.phrases !== null){
 				self.addOption(choice.text, choice.phrases[0], choice.onChoice);
+				processPhrases(choice.phrases);
 			} else {
 				self.addOption(choice.text, null, choice.onChoice);
 			}
-
-			var phrases = choice.phrases;
-
-			if (phrases !== null){
-				processPhrases(phrases);
-			}
 		}
 	}
+
+	this.next = null;
+
 
 	if (isNaN(duration)){
 		// what was passed was actually a list of choices
 		var choices = duration;
 		processChoices(this, choices);
+		this.duration = 200;
 	} else {
 		if (duration !== null){
 			this.duration = duration;
 		}
 	}
-	
-	this.next = null;
-}
 
-Phrase.prototype.setNextPhrase = function(phrase){
-	this.next = phrase;
-};
+	console.log("PHRASE: ", text, duration, this.duration);
+}
 
 Phrase.prototype.addOption = function(text_, nextPhrase_, onChoice_){
 	var option = {
@@ -66,6 +66,8 @@ Phrase.prototype.addOption = function(text_, nextPhrase_, onChoice_){
 };
 
 Phrase.prototype.getNext = function(choiceNum){
+	console.log(this.text, "->", this.next);
+
 	if (choiceNum === undefined){
 		if (this.choices.length == 0){
 			return this.next;

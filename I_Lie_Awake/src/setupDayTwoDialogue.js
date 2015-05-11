@@ -10,6 +10,20 @@ var choices1 = [
 	new Choice("of course", null),
 ];
 
+
+var choice2Yes = [
+	new Phrase("Mom", "Oh that's good.", 4000),
+];
+
+var choice2No = [
+	new Phrase("Mom", "What a shame, games are supposed to be fun.", 4000),
+];
+
+var choices2 = [
+	new Choice("yes", choice2Yes),
+	new Choice("no", choice2No),
+];
+
 morningTexts = [
 	new Phrase("Dad", "Morning honey, mom is not feeling well", 3000),
 	new Phrase("Dad", "Be quiet when you leave the house", choices1)
@@ -22,28 +36,15 @@ var choice1Yes = [
 ];
 
 var choice1No = [
-	new Phrase("Mom", "Don’t lie to me!", 2000),
+	new Phrase("Mom", "Don't lie to me!", 2000),
 	new Phrase("Mom", "Are you at least having fun?", choices2),
-];
-
-var choice2Yes = [
-	new Phrase("Mom", "Oh that’s good.", 4000),
-];
-
-var choice2No = [
-	new Phrase("Mom", "What a shame, games are supposed to be fun.", 4000),
 ];
 
 // Walk to School
 
-var choices1 = [
+var choices1b = [
 	new Choice("yes", choice1Yes),
 	new Choice("no", choice1No),
-];
-
-var choices2 = [
-	new Choice("yes", choice2Yes),
-	new Choice("no", choice2No),
 ];
 
 var choices3 = [
@@ -67,7 +68,7 @@ var choices6 = [
 
 walkToSchool = [
 	new Phrase("Mom", "Good morning honey.", 2000),
-	new Phrase("Mom", "Are you playing that game again?", choices1),
+	new Phrase("Mom", "Are you playing that game again?", choices1b),
 	new Phrase("Mom", "What did Dad tell you this morning?", choices3),
 	new Phrase("Mom", "Don't worry about it. it is not a big deal.", choices4),
 	new Phrase("Johnny", "i heard an explooooosion last night!", 2000),

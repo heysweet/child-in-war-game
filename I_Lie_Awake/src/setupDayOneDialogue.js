@@ -79,7 +79,7 @@ var walkToSchool = [
 	new Phrase("Johnny", "im heading to school nowww", 2000),
 	new Phrase("Sarah", "oh me too. i just lost :(", choices3),
 	new Phrase("Mom", "Did you leave already?", 2000),
-	new Phrase("Mom", "Stay safe, don’t go looking for trouble.", choices4),
+	new Phrase("Mom", "Stay safe, don't go looking for trouble.", choices4),
 	new Phrase("Rachel", "omw there are soldiers everywhere! :O", 2000),
 	new Phrase("Johnny", "sam just told me she saw a jeep with a big gun on it!", choices5),
 	new Phrase("Andy", "No way Sam is such a liar.", 2000),
@@ -100,7 +100,7 @@ var choices7 = [
 var walkFromSchool = [
 	new Phrase("Mom", "I just remembered", 1000),
 	new Phrase("Mom", "Can you pick up a dozen eggs from the grocery store today?", 5000),
-	new Phrase("Rachel", "hey you coming to the johnny’s? :)", 2000),
+	new Phrase("Rachel", "hey you coming to the johnny's? :)", 2000),
 	new Phrase("Rachel", "we are all going to play xbox today! :D", choices7)
 ];
 
