@@ -22,14 +22,25 @@ var initAnimatedSquiggles = function(){
 
 	var animatedDestroyedCar;
 
+	var lastSquiggleNum;
+
 	for (var i = 0; i < numSquiggles; i++){
-		var squiggleNum = Math.floor(Math.random() * SQUIGGLES.length);
+		var r = lastSquiggleNum;
+
+		while (r == lastSquiggleNum){
+			r = Math.floor(Math.random() * SQUIGGLES.length);
+		}
+
+		var squiggleNum = r;
+
+		lastSquiggleNum = squiggleNum;
+
 		var data = SQUIGGLES[squiggleNum];
 
 		var frames = data.frames;
 		var width = data.image.width / frames;
 		var height = data.image.height;
-		var framerate = data.framerate;
+		var framerate = data.framerate + Math.floor(Math.random() * 8);
 
 		var sprite = new Sprite(data.image, { 
 			'idle' : {
@@ -51,15 +62,16 @@ var initAnimatedSquiggles = function(){
 		var transform = {
 			x : x,
 			y : y,
-			width : width,
-			height : height
+			width : width/2,
+			height : height/2
 		}
 
 		var result = {
 			sprite : sprite,
 			timeUntilMove : timeUntilMove,
 			timeSinceMove : 0,
-			transform : transform
+			transform : transform,
+			isHidden : true,
 		};
 
 		animatedSquiggles.push(result);
@@ -74,7 +86,11 @@ function update(elapsed){
 		if (squiggle.timeSinceMove > squiggle.timeUntilMove){
 			squiggle.timeSinceMove = 0;
 
-			if (Math.random() < 0.3333333){
+			if (Math.random() < 0.1){
+				squiggle.isHidden = !squiggle.isHidden;
+			}
+
+			if (!squiggle.isHidden && Math.random() < 0.3333333){
 				var x = Math.random() * (utils.screenWidth() - squiggle.transform.width);
 				var y = Math.random() * (utils.screenHeight() - squiggle.transform.height);
 
@@ -89,13 +105,16 @@ function draw(){
 	for (var i = 0; i < animatedSquiggles.length; i++){
 		var squiggle = animatedSquiggles[i];
 		
-		var x = squiggle.transform.x;
-		var y = squiggle.transform.y; 
+		if (!squiggle.isHidden){
+			var x = squiggle.transform.x;
+			var y = squiggle.transform.y; 
 
-		var width = squiggle.transform.width;
-		var height = squiggle.transform.height;
+			var width = squiggle.transform.width;
+			var height = squiggle.transform.height;
 
-		squiggle.sprite.draw('idle', x, y, 0, width, height, 0, 0);
+			squiggle.sprite.draw('idle', x, y, 0, width, height, 0, 0);
+			squiggle.isHidden = true;
+		}
 	}
 }
 
