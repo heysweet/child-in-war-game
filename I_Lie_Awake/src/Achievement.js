@@ -1,5 +1,7 @@
 var utils = require("utils.js");
 
+var achievementSet = new Set();
+
 var text;
 var achievementSound;
 var achievementImage = require("./data/achievement.png");
@@ -10,6 +12,8 @@ var timeUntilDisappear = (achievementDuration * 2) / 3;
 var isShowing = false;
 var animationOffset = 0;
 var animationDelta  = 600;
+
+var MAX_NUM_ACHIEVEMENTS = 2;
 
 var bottomSpacing = 10;
 var maxAnimationOffset = achievementImage.height + bottomSpacing;
@@ -33,12 +37,25 @@ function time(){
 }
 
 function achieve(text_){
-	text = text_;
-	animationOffset = 0;
-	elapsedTime = 0;
-	isShowing = true;
+	if (!achievementSet.has(text_)){
+		achievementSet.add(text_)
 
-	// achievementSound.play();
+		text = text_;
+		animationOffset = 0;
+		elapsedTime = 0;
+		isShowing = true;
+
+		// achievementSound.play();
+	}
+}
+
+function numAchievementsUnlocked(){
+	return achievementSet.size;
+}
+
+function numTotalAchievements(){
+	// Make it look like there's one more achievement than there really is
+	return MAX_NUM_ACHIEVEMENTS + 1;
 }
 
 var update = function(elapsed){
@@ -79,7 +96,7 @@ var draw = function(){
 		ctx.drawImage(achievementImage, x, y);
 
 		ctx.font = font;
-		ctx.fillStyle = 'rgb(255, 255, 255)';
+		ctx.fillStyle = 'rgb(210, 210, 210)';
 
 		ctx.fillText(text, textX, textY);
 	}
@@ -89,5 +106,7 @@ var draw = function(){
 module.exports = {
 	update:update,
 	draw:draw,
-	achieve:achieve
+	achieve:achieve,
+	numTotalAchievements:numTotalAchievements,
+	numAchievementsUnlocked:numAchievementsUnlocked,
 };

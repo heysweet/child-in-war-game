@@ -50,7 +50,7 @@ var goToHome = function(){
 			}
 
 			if (dayNum == 4){
-				Teleporter.teleportTo(utils.rooms.kitchen, utils.kitchenCoords);
+				Teleporter.teleportTo(utils.rooms.kitchenDay5, utils.kitchenCoords);
 				utils.pausePlayerMovement(false);
 				window.gamestate.noKeyboardInput = false;
 			} else {

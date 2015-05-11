@@ -36,10 +36,11 @@ var gamestate = window.gamestate;
 // Set the initial rooms
 var kitchen = require("setupKitchen.js");
 var bedroom = require("setupBedroom.js");
-var parentsBedroom = new Room(utils.screenWidth()/2, utils.screenHeight()/2);
 
 var street = require("setupStreet.js");
 var school = require("setupSchool.js");
+var kitchenDay5 = require("setupKitchenDay5.js");
+var bedroomDay5 = require("setupBedroomDay5.js");
 school.leaveTo = street;
 
 
@@ -48,36 +49,29 @@ window.gamestate.musicPlayer = require("musicPlayer.js");
 var rooms = {
 	kitchen:kitchen,
 	bedroom:bedroom,
-	parentsBedroom:parentsBedroom,
 	street:street,
-	school:school
+	school:school,
+	kitchenDay5:kitchenDay5,
+	bedroomDay5:bedroomDay5
 }
 
 utils.rooms = rooms;
 
-parentsBedroom.setStaticCamera(utils.halfScreenWidth() - parentsBedroom.width, 
-								parentsBedroom.height/2);
-
 // Connect the rooms
 var toBedroomTarget		= { x: 183, y: 251};
 var fromBedroomTarget	= { x: 373, y: 14};
-var toParentsTarget		= { x: parentsBedroom.width - 71, 
-							y: (parentsBedroom.height/2) - 70};
-var fromParentsTarget	= { x: 699, y: 58};
 var toStreetTarget		= { x: 340, y: 298};
 
 var toBedroomBox = { x : 346, y : 0, width : 117, height : 60 };
 var fromBedroomBox = { x : 154, y : 403, width : 118, height : 42 };
-var toParentsBox = { x : 668, y : 0, width : 117, height : 60 };
-var fromParentsBox = { x : 144, y : 42, width : 20, height : 42 };
 
 var toStreetBox = { x : 928, y : 137, width : 40, height : 117 };
 
 var bedroomDoor      = new Teleporter(bedroom, toBedroomBox, toBedroomTarget);
 var leaveBedroomDoor = new Teleporter(kitchen, fromBedroomBox,fromBedroomTarget);
-var parentsDoor      = new Teleporter(parentsBedroom, toParentsBox, toParentsTarget);
-var leaveParentsDoor = new Teleporter(kitchen, fromParentsBox, fromParentsTarget);
 var streetDoor		 = new Teleporter(street, toStreetBox, toStreetTarget);
+
+var endingDoor = new Teleporter(bedroomDay5, toBedroomBox, utils.sleepingCoords);
 
 window.gamestate.streetDoor = streetDoor;
 
@@ -94,6 +88,13 @@ streetDoor.onTrigger = function() {
 		leaveBedroomDoor.setTargetCoords(toStreetTarget);
 	}
 };
+
+endingDoor.onTrigger = function(){
+	window.gamestate.mainCharacter.faceRight();
+	window.gamestate.movement.pauseInput(true);
+
+	// End the game
+}
 
 leaveBedroomDoor.onTrigger = function(){
 	window.gamestate.shouldShowPhone = false;
@@ -140,12 +141,11 @@ utils.addToOnNewDay(reenableStreetDoor);
 utils.addToOnNewDay(hitBlack);
 
 kitchen.addTeleporter(bedroomDoor);
-kitchen.addTeleporter(parentsDoor);
 kitchen.addTeleporter(streetDoor);
-parentsDoor.setIsEnabled(false);
+
+kitchenDay5.addTeleporter(endingDoor)
 
 bedroom.addTeleporter(leaveBedroomDoor);
-parentsBedroom.addTeleporter(leaveParentsDoor);
 
 Teleporter.teleportTo(bedroom, mainCharacter.transform);
 

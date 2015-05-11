@@ -5,14 +5,9 @@ var sleepingCoords = {
 	y : 83.45958860959138
 };
 
-var playgroundCoords = {
-	x : 149.41686328001853,
-	y : 83.45958860959138
-};
-
 var kitchenCoords = {
-	x : 149.41686328001853,
-	y : 83.45958860959138
+	x : 659,
+	y : 85
 };
 
 var displayDayNumTime = 2100;
@@ -510,7 +505,6 @@ module.exports = {
 	getScaledPoint:getScaledPoint,
 	mergeImages:mergeImages,
 	sleepingCoords:sleepingCoords,
-	playgroundCoords:playgroundCoords,
 	kitchenCoords:kitchenCoords,
 	schoolCoords:schoolCoords,
 	pausePlayerMovement:pausePlayerMovement,

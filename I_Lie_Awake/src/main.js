@@ -115,7 +115,7 @@ sald.scene = {
 				} else {
 					sound.mute();
 				}
-			} else if (key == "G"){
+			} else if (key == "G" && window.gamestate.dayNum() > 0){
 				achievement.achieve("YOU HIT G!");
 			}
 		}
