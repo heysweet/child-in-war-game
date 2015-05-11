@@ -1,6 +1,11 @@
 var soldier1 = require("./data/phone/soldier1.png");
 var soldier2 = require("./data/phone/soldier2.png");
 
+var gameStartSound = require("./data/sound/gameStart.ogg");
+var gameExplosionSound = require("./data/sound/gameExplosion.ogg");
+var gameLoseSound = require("./data/sound/gameLose.ogg");
+var gameWinSound = require("./data/sound/gameWin.ogg");
+
 var computerX;
 var computerY;
 
@@ -300,6 +305,7 @@ function playerMakesTurn(){
 	}
 
 	prevTurnEndTime = millis();
+	gameExplosionSound.play();
 }
 
 
@@ -484,7 +490,6 @@ function setBoard()
 			break;
 	}
 
-
 	isAttackPhase = true;
 	isGameDone = false;
 	didPlayerWin = false;
@@ -526,6 +531,18 @@ function victoryChecker()
 		// is someone has 0 soldiers, game is over
 		isGameDone = numTurnsLeft == 0 || playerSoldierLeft == 0 || computerSoldierLeft == 0;
 		didPlayerWin = playerSoldierLeft >= computerSoldierLeft;
+
+		if(isGameDone)
+		{
+			if(didPlayerWin)
+			{
+				gameWinSound.play();
+			}
+			else
+			{
+				gameLoseSound.play();
+			}
+		}
 	}
 
 	// draw the player's mouse rectangle, and tell player how much time is left
@@ -754,6 +771,7 @@ function start(){
 	dayNumber = dayNum + 1;
 	setBoard();
 	hasGameEnded = false;
+	gameStartSound.play();
 }
 
 module.exports = {
