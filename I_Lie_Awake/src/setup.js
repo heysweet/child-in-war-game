@@ -43,7 +43,6 @@ var kitchenDay5 = require("setupKitchenDay5.js");
 var bedroomDay5 = require("setupBedroomDay5.js");
 school.leaveTo = street;
 
-
 window.gamestate.musicPlayer = require("musicPlayer.js");
 
 var rooms = {

@@ -4,6 +4,9 @@ var Choice = require("Choice.js");
 var defaults = require("dialogueDefaults.js");
 var achievement = require("Achievement.js");
 
+var glassBreak = require("./data/sound/glassBreak.ogg");
+var glassBreakReverse = require("./data/sound/glassBreakReverse.ogg");
+
 // // Dad Morning
 // var choicesDad = [
 // 	new Choice("yeah ok", null),
@@ -67,6 +70,14 @@ var choices6Both = [
 	new Phrase("Andy", "Happy?", choices7),
 ]
 
+choices6Both[0].onText = function(){
+	setTimeout(
+			function() {
+		glassBreak.play();
+		window.gamestate.phoneIsCracked = true;
+	}, 3000);
+}
+
 var choices6 = [
 	new Choice("Where's the gameplay?", choices6Both),
 	new Choice("Its nice to have my phone fixed.", choices6Both),
@@ -76,6 +87,11 @@ var choices6 = [
 var choices5No = [
 	new Phrase("Sarah", "Fine. It's broken again. Happy?", choices7),
 ]
+
+choices5No[0].onText = function(){
+	glassBreak.play();
+	window.gamestate.phoneIsCracked = true;
+}
 
 var choices5Yes = [
 	new Phrase("Sarah", "So how does this make you feel?", choices6),
@@ -129,6 +145,11 @@ walkToSchool = [
 	new Phrase("Andy", "yet", 800),
 	new Phrase("Johnny", "?", 800),
 ];
+
+walkToSchool[7].onText = function () {
+	glassBreakReverse.play();
+	window.gamestate.phoneIsCracked = false;
+};
 
 dialogueToSchool = new Dialogue(walkToSchool);
 dialogueToSchool.onEnd = defaults.goToSchool;
