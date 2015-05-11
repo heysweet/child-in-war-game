@@ -67,7 +67,7 @@ var choices5 = [
 ];
 
 var choices6 = [
-	new Choice("just some soldiers, nothing exciting", johnnyBoring),
+	new Choice("nah, nothing exciting", johnnyBoring),
 	new Choice("oh yeah? i saw a tank", johnnyNoWay)
 ];
 
