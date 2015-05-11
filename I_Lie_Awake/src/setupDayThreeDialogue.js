@@ -70,7 +70,7 @@ choices7[0].onChoice = function (argument) {
 };
 
 var choices6Both = [
-	new Phrase("Andy", "Well now that that's clear...", null),
+	new Phrase("Andy", "Well now that that's clear...", 1400),
 ]
 
 choices6Both[0].onText = function(){
@@ -137,13 +137,14 @@ walkToSchool = [
 	new Phrase("Sam", "Is this better?", choices5),
 	new Phrase("Johnny", "are you having funnnnnnnn yetttttttt?", choices8),
 	new Phrase("Andy", "why not?", choices8_2),
+	new Phrase("Johnny", "let me ask again...", choices9),
 	new Phrase("Sarah", "Are you having fun yet?", choices9),
 	new Phrase("Sam", "r u havin fun yet????", choices10),
 	new Phrase("Dad", "are", 1600),
 	new Phrase("Mom", "you", 1200),
 	new Phrase("Sarah", "having", 800),
 	new Phrase("Sam", "fun", 800),
-	new Phrase("Andy", "yet", 800),
+	new Phrase("Andy", "yet", 500),
 	new Phrase("Johnny", "?", 800),
 ];
 
