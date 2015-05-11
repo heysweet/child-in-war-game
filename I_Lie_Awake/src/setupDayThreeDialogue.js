@@ -75,11 +75,8 @@ var choices6Both = [
 ]
 
 choices6Both[0].onText = function(){
-	setTimeout(
-			function() {
-		glassBreak.play();
-		window.gamestate.phoneIsCracked = true;
-	}, 3000);
+	glassBreak.play();
+	window.gamestate.phoneIsCracked = true;
 }
 
 var choices6 = [

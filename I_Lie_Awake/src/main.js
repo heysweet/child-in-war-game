@@ -130,6 +130,8 @@ sald.scene = {
 				achievement.achieve("You Hit G!");
 			} else if (key == "Y"){
 				Teleporter.teleportTo(utils.rooms.kitchenDay5, utils.kitchenCoords);
+			} else if (key == "T"){
+				window.gamestate.phoneIsCracked = !window.gamestate.phoneIsCracked;
 			}
 		}
 	},
