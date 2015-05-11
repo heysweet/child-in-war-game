@@ -17,7 +17,7 @@ var achievement = require("Achievement.js");
 
 // Dad Morning
 var choicesDad = [
-	new Choice("yeah uh huh", null),
+	new Choice("uh huh", null),
 	new Choice("sure", null)
 ];
 
