@@ -119,7 +119,7 @@ sald.scene = {
 		}
 
 		if (utils.rooms.street == window.gamestate.currentRoom()){
-			drawGlitchedScreenshots();
+			utils.drawGlitchedScreenshots();
 		}
 	},
 	key:function(key, down) {

@@ -528,5 +528,6 @@ module.exports = {
 	clearGlitchedImages:clearGlitchedImages,
 	drawGlitches:drawGlitches,
 	queueGlitchCapture:queueGlitchCapture,
-	glitchImages:glitchImages
+	glitchImages:glitchImages,
+	drawGlitchedScreenshots:drawGlitchedScreenshots
 };
