@@ -80,7 +80,6 @@ var hasLeftTheHouseBefore = false;
 streetDoor.onTrigger = function() {
 	streetDoor.setIsEnabled(false);
 	street.dialogueName = "toSchool";
-	window.gamestate.musicPlayer.playNextSong();
 
 	if (!hasLeftTheHouseBefore){
 		hasLeftTheHouseBefore = true;
