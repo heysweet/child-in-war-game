@@ -499,6 +499,7 @@ function setBoard()
 
 function onGameEnd(){
 	window.gamestate.gameEnd();
+	window.gamestate.musicPlayer.playNextSong();
 }
 
 // depend on state of the game, make decision, draw appropriate things
