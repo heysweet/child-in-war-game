@@ -130,7 +130,7 @@ sald.scene = {
 				} else {
 					sound.mute();
 				}
-			} else if (key == "G" && window.gamestate.dayNum() > 0){
+			} else if (key == "G"){
 				achievement.achieve("You Hit G!");
 			} else if (key == "Y"){
 				Teleporter.teleportTo(utils.rooms.kitchenDay5, utils.kitchenCoords);

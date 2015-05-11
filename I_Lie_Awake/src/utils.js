@@ -16,6 +16,12 @@ var sleepingCoordsEnd = {
 };
 
 
+var glitchSounds = [
+	require("./data/sound/glitch1.ogg"),
+	require("./data/sound/glitch2.ogg"),
+	require("./data/sound/glitch3.ogg"),
+];
+
 var displayDayNumTime = 2100;
 
 var glitch = require("glitch-canvas.js");
@@ -125,16 +131,21 @@ var drawGlitches = function(){
 var drawGlitchedScreenshots = function(){
 	var r = Math.random();
 	var dayNum = window.gamestate.dayNum();
-	var chanceToGlitch = 0.01 * dayNum;
 
-	if (r < chanceToGlitch){
-		var ctx = sald.ctx;
-		var image = glitchedScreenShot;
+	if (dayNum !== 4){
+		var chanceToGlitch = 0.0004 * dayNum;
 
-		takeGlitchedScreenshot();
+		if (r < chanceToGlitch){
+			var ctx = sald.ctx;
+			var image = glitchedScreenShot;
 
-		if (image !== null){
-			ctx.drawImage(image, 0, 0);
+			takeGlitchedScreenshot();
+
+			if (image !== null){
+				var soundNum = Math.floor(Math.random() * glitchSounds.length);
+				glitchSounds[soundNum].play();
+				ctx.drawImage(image, 0, 0);
+			}
 		}
 	}
 }

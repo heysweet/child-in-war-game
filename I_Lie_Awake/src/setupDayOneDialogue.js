@@ -102,14 +102,14 @@ var choices7 = [
 	new Choice("sorry but i got to buy eggs for mom today", null, "Parents")
 ];
 
-var gamerChoice = choices7[1].onChoice;
+var gamerChoice = choices7[0].onChoice;
 
 choices7[0].onChoice = function () {
 	gamerChoice();
 	achievement.achieve("Devout Gamer");
 };
 
-var parentChoice = choices7[0].onChoice;
+var parentChoice = choices7[1].onChoice;
 
 choices7[1].onChoice = function () {
 	parentChoice();

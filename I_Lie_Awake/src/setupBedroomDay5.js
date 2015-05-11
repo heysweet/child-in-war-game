@@ -18,7 +18,7 @@ bedroom.onEnter = function(){
 		function() {
 			window.gamestate.gameOver = true;
 			creditsSong.play();
-			achievement.achieve("Had Fun (You beat the game!)");
+			achievement.achieve("Had Fun (You Beat the Game!)");
 			window.gamestate.nextDay();
 		}, 3500);
 }
