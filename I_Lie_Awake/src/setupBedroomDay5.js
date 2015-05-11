@@ -1,6 +1,7 @@
 var Room = require("Room.js");
 var GameObject = require("GameObject.js");
 var utils = require("utils.js");
+var achievement = require("Achievement.js");
 
 var bedroom = new Room(430, 430);
 
@@ -17,6 +18,7 @@ bedroom.onEnter = function(){
 		function() {
 			window.gamestate.gameOver = true;
 			creditsSong.play();
+			achievement.achieve("Had Fun (You beat the game!)");
 			window.gamestate.nextDay();
 		}, 3500);
 }
