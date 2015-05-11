@@ -21,7 +21,7 @@ var displayDayNumTime = 2100;
 var glitch = require("glitch-canvas.js");
 
 var glitchedImages = [];
-var glitchedScreenShots = [];
+var glitchedScreenShot = null;
 var drawnGlitch = null;
 var chanceToChange = 0.15;
 
@@ -62,7 +62,7 @@ var takeGlitchedScreenshot = function(){
 
 		result.src = canvas.toDataURL();
 
-		glitchedScreenShots.push(result);
+		glitchedScreenShot = result;
 	}
 
 	glitch.glitchImageData(my_image_data, parameters, drawGlitchedImageData);
@@ -122,12 +122,19 @@ var drawGlitches = function(){
 	}
 }
 
-var drawGlitchesScreenshots = function(){
+var drawGlitchedScreenshots = function(){
 	var r = Math.random();
-	var chanceToGlitch = 0.01;
+	var dayNum = window.gamestate.dayNum();
+	var chanceToGlitch = 0.01 * dayNum;
 
 	if (r < chanceToGlitch){
+		var image = glitchedScreenShot;
 
+		takeGlitchedScreenshot();
+
+		if (image !== null){
+			ctx.drawImage(image, 0, 0);
+		}
 	}
 }
 

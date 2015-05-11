@@ -63,7 +63,7 @@ var linkLines = [
 "Podington Bear",
 "Eric Skiff",
 "Dominic Bisignano",
-"I'll never be the same by The Christian Astronauts"
+"I'll never be the same by The Christian Astronauts",
 "",
 "--Images--",
 "http://kirkdunne.com/blog/wp-content/uploads/2011/02/tex_pavped_004.jpg",

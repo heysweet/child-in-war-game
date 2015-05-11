@@ -88,6 +88,14 @@ var showSchoolText = function(){
 		achievement.achieve("Beat Johnny's High Score!");
 	}
 
+	var readSchoolTextTime;
+
+	if (dayNum < 2){
+		readSchoolTextTime = 9000;
+	} else {
+		readSchoolTextTime = 7500;
+	}
+
 	setTimeout(
 		function() {
 	utils.rooms.street.treadmill.initializeLayers()
@@ -99,7 +107,7 @@ var showSchoolText = function(){
 			window.gamestate.diaryText.setIsHidden(true);
 			mainCharacter.setHidden(false);
 			leaveSchoolRelativePath.start();
-		}, 7500);
+		}, readSchoolTextTime);
 }
 
 var walkToSchoolPaths = [

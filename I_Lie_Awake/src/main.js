@@ -117,6 +117,10 @@ sald.scene = {
 			utils.glitchCanvas();
 			window.gamestate.glitchCurrentCanvas = false;
 		}
+
+		if (utils.rooms.street == window.gamestate.currentRoom()){
+			drawGlitchedScreenshots();
+		}
 	},
 	key:function(key, down) {
 		if (!down){
