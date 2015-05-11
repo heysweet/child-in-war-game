@@ -170,11 +170,7 @@ sald.scene = {
 					x: camPos.x - 35,
 					y: camPos.y - 135 
 				};
-
-				// if (!mainCharacter.movement.isInputPaused() && window.gamestate.currentRoom() !== utils.rooms.street){
-				// 	mainCharacter.path = new WrapperPath(targetPos);
-				// }
-				console.log(pos, utils.screenWidth(), utils.screenHeight());
+				// console.log(pos, utils.screenWidth(), utils.screenHeight());
 			}
 		}
 	},

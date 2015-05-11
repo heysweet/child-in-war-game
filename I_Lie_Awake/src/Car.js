@@ -161,13 +161,6 @@ var Car = function(x_, y_){
 		} else {
 			carImage = CARS[carNum];
 		}
-
-		if (destroyed){
-			console.log("destroyed", carNum);
-		} else {
-			console.log("not destroyed", carNum);
-		}
-		
 	}
 
 	// amt can be between 0 and 3

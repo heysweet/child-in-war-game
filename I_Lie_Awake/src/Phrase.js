@@ -5,13 +5,8 @@ var processPhrases = function(phrases){
 		for (var i = 1; i < phrases.length; i++){
 			var phrase = phrases[i];
 
-			// if (phrase.text == "Don't lie to me!"){
-				console.log("WOOT", phrases, lastPhrase, phrase);
-			// }
-
 			if (phrase.duration !== undefined){
 				lastPhrase.next = phrase;
-				console.log(lastPhrase);
 			}
 
 			lastPhrase = phrase;
@@ -51,8 +46,6 @@ var Phrase = function(name, text, duration){
 			this.duration = duration;
 		}
 	}
-
-	console.log("PHRASE: ", text, duration, this.duration);
 }
 
 Phrase.prototype.addOption = function(text_, nextPhrase_, onChoice_){
@@ -66,8 +59,6 @@ Phrase.prototype.addOption = function(text_, nextPhrase_, onChoice_){
 };
 
 Phrase.prototype.getNext = function(choiceNum){
-	console.log(this.text, "->", this.next);
-
 	if (choiceNum === undefined){
 		if (this.choices.length == 0){
 			return this.next;

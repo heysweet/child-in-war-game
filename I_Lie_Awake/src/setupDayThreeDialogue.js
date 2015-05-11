@@ -70,8 +70,7 @@ choices7[0].onChoice = function (argument) {
 };
 
 var choices6Both = [
-	new Phrase("Andy", "You don't really have a choice.", 5000),
-	new Phrase("Andy", "Happy?", choices7),
+	new Phrase("Andy", "Well now that that's clear...", null),
 ]
 
 choices6Both[0].onText = function(){
@@ -80,13 +79,13 @@ choices6Both[0].onText = function(){
 }
 
 var choices6 = [
-	new Choice("Where's the gameplay?", choices6Both),
-	new Choice("Its nice to have my phone fixed.", choices6Both),
+	new Choice("My choice is just an illusion.", choices6Both),
+	new Choice("My choice IS just an illusion.", choices6Both),
 ];
 
 
 var choices5No = [
-	new Phrase("Sarah", "Fine. It's broken again. Happy?", choices7),
+	new Phrase("Sarah", "Well fine then. I've broken it again. Happy?", choices7),
 ]
 
 choices5No[0].onText = function(){
@@ -95,7 +94,7 @@ choices5No[0].onText = function(){
 }
 
 var choices5Yes = [
-	new Phrase("Sarah", "So how does this make you feel?", choices6),
+	new Phrase("Sarah", "So how much does your choice really matter then?", choices6),
 ]
 
 var choices5 = [
@@ -134,6 +133,7 @@ walkToSchool = [
 	new Phrase("Mom", "Shouldn't she be dead?", choices3),
 	new Phrase("Johnny", "Why didn't you choose the other option?", 2000),
 	new Phrase("Johnny", "Aren't you supposed to have choice?", choices4),
+	new Phrase("Sam", "It must be that broken phone of yours.", 2000),
 	new Phrase("Sam", "Is this better?", choices5),
 	new Phrase("Johnny", "are you having funnnnnnnn yetttttttt?", choices8),
 	new Phrase("Andy", "why not?", choices8_2),
@@ -147,16 +147,19 @@ walkToSchool = [
 	new Phrase("Johnny", "?", 800),
 ];
 
+var hasRepaired = false;
+
 walkToSchool[7].onText = function () {
-	glassBreakReverse.play();
-	window.gamestate.phoneIsCracked = false;
+	if (!hasRepaired){
+		hasRepaired = true;
+
+		glassBreakReverse.play();
+		window.gamestate.phoneIsCracked = false;
+	}
 };
 
 dialogueToSchool = new Dialogue(walkToSchool);
 dialogueToSchool.onEnd = defaults.goToSchool;
-
-
-
 
 
 

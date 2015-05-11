@@ -28,7 +28,6 @@ var Teleporter = function(targetRoom, fromBox, targetCoords){
 
 	this.teleport = function(){
 		if (this_.isEnabled()){
-			console.log("TELEPORT!", room, coords);
 			Teleporter.teleportTo(room, coords);
 		}
 	}

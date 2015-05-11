@@ -20,7 +20,6 @@ var playingSong = null;
 
 var stopSong = function (){
 	if (playingSong !== null){
-		console.log("STOPPING TRACK", currentIndex);
 		playingSong.stop();
 	}
 }
@@ -30,12 +29,8 @@ var playNextSong = function (loops) {
 
 	currentIndex++;
 
-	console.log("Playing Track", currentIndex);
-
 	if (currentIndex < songs.length){
 		playingSong = songs[currentIndex];
-
-		console.log(playingSong);
 
 		if (loops === undefined || loops == true){
 			playingSong.setShouldLoop(true);

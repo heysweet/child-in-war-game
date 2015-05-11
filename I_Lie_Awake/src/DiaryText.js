@@ -24,23 +24,6 @@ var DiaryText = function (string_) {
 		}
 	}
 
-	// var loadFont = function(){
-	// 	setTimeout(
-	// 	function() {
-	// 		var ctx = sald.ctx;
-
-	// 		if (ctx == null){
-	// 			loadFont()
-	// 		} else {
-	// 			ctx.font = font;
-	// 			ctx.wrapText(string, x, y, maxWidth, lineheight);
-	// 		}
-	// 	}, 10000);
-	// }
-
-	// loadFont();
-
-
 	this.setText = function(text){
 		string = text;
 	}

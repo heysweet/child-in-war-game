@@ -102,7 +102,6 @@ var RelativeMovementPath = function(deltasPath, onFinish) {
 
 		var object = this.getMovingObject();
 
-		console.log("THIS OBJECT IN ABSTRACT", object);
 		var startCoord = object.transform;
 
 		for (var i = 0; i < deltasPath.length; i++){
@@ -159,8 +158,6 @@ var RelativeMovementPath = function(deltasPath, onFinish) {
 
 			return new RelativeMovementPath(temp, this.onFinish);
 		}
-
-		console.log("PATH< reversedPath", path, reversedPath);
 
 		return new RelativeMovementPath(reversedPath, this.onFinish);
 	}
