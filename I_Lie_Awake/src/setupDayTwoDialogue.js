@@ -49,7 +49,7 @@ var choices1b = [
 ];
 
 choices1b[1].onChoice = function (argument) {
-	achievement.achieve("You Lied to your Mom!");
+	achievement.achieve("You Lied to Your Mom!");
 };
 
 var choices3 = [
