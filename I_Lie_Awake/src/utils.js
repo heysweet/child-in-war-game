@@ -128,6 +128,7 @@ var drawGlitchedScreenshots = function(){
 	var chanceToGlitch = 0.01 * dayNum;
 
 	if (r < chanceToGlitch){
+		var ctx = sald.ctx;
 		var image = glitchedScreenShot;
 
 		takeGlitchedScreenshot();
