@@ -46,7 +46,7 @@ dialogueWithDad.onEnd = defaults.goToStreet;
 // Walk to School
 
 var choices2 = [
-	new Choice("uh...", null),
+	new Choice("what?", null),
 	new Choice("um...", null),
 ];
 
@@ -137,7 +137,7 @@ walkToSchool = [
 	new Phrase("Sam", "Is this better?", choices5),
 	new Phrase("Johnny", "are you having funnnnnnnn yetttttttt?", choices8),
 	new Phrase("Andy", "why not?", choices8_2),
-	new Phrase("Johnny", "let me ask again...", choices9),
+	new Phrase("Johnny", "let me ask again...", 2000),
 	new Phrase("Sarah", "Are you having fun yet?", choices9),
 	new Phrase("Sam", "r u havin fun yet????", choices10),
 	new Phrase("Dad", "are", 1600),
