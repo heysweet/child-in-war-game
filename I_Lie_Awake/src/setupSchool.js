@@ -6,6 +6,8 @@ var RelativeMovementPath = movementPath.RelativeMovementPath;
 var AbsoluteMovementPath = movementPath.AbsoluteMovementPath;
 var Teleporter = require("Teleporter.js");
 
+var achievement = require("Achievement.js");
+
 var school = new Room(960, 540);
 
 var mainCharacter = window.gamestate.mainCharacter;
@@ -79,6 +81,12 @@ var showSchoolText = function(){
 	mainCharacter.setHidden(true);
 	mainCharacter.faceLeft();
 	window.gamestate.diaryText.setIsHidden(false);
+
+	var dayNum = window.gamestate.dayNum();
+
+	if (dayNum == 1){
+		achievement.achieve("Beat Johnny's High Score!");
+	}
 
 	setTimeout(
 		function() {

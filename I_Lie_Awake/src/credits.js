@@ -55,7 +55,7 @@ function drawNames(){
 
 var linkFont = 12;
 var linkLines = [
-	"Audio",
+"--Audio--",
 "freesound.org",
 "https://www.youtube.com/watch?v=8PbD3I9eumM",
 "https://www.youtube.com/watch?v=_Sur-KDNcDA",
@@ -64,7 +64,7 @@ var linkLines = [
 "Eric Skiff",
 "Dominic Bisignano",
 "",
-"Images",
+"--Images--",
 "http://kirkdunne.com/blog/wp-content/uploads/2011/02/tex_pavped_004.jpg",
 "http://fc04.deviantart.net/images/i/2003/11/6/5/Dirt_02.jpg",
 "http://wallope.com/wp-content/uploads/textures-wallpapers-462-wood-board-brown-texture-backgrounds-images.jpg",
@@ -75,7 +75,7 @@ var linkLines = [
 "http://i.huffpost.com/gen/1635818/images/o-SYRIA-facebook.jpg",
 "http://files.sharenator.com/418357.jpg",
 "http://www.worldtribune.com/wp-content/uploads/2013/12/israel-war-games-4-2.jpg",
-"http://twt-thumbs.washtimes.com/media/image/2015/01/28/1_282015_mideast-israel-lebanon-38201_c0-155-3692-2307_s561x327.jpg?a7e2306fe4f11dde9565d0e5a23fa32878f329a7",
+"http://matchbin-assets.s3.amazonaws.com/public/sites/624/assets/2X64_APTOPIX_Mideast_Israe_Poir.jpg",
 "https://img.washingtonpost.com/rw/2010-2019/WashingtonPost/2012/11/14/National-Economy/Advance/Images/IMG_10741352931010.jpg",
 "http://www.mb3d.co.uk/mb3d/Brick_Seamless_and_Tileable_High_Res_Textures_files/Brick_14_UV_H_CM_1.jpg",
 "https://pressstart2begin.files.wordpress.com/2013/08/nes_super_mario_bros-1.png",
