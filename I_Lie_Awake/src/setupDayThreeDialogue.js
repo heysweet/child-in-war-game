@@ -20,14 +20,15 @@ var defaults = require("dialogueDefaults.js");
 // Dad Morning
 
 var choices1 = [
-	new Choice("fine", null),
-	new Choice("am i dead?", null),
+	new Choice("yes", null),
+	new Choice("how am i alive? is this a dream?", null),
 ];
 
 var choices2 = [
 	new Choice("alright", null),
-	new Choice("is everything alright?", null),
+	new Choice("i didn’t get eggs", null),
 ];
+
 
 morningTexts = [
 	new Phrase("Dad", "Morning sweetie", 2000),
@@ -41,63 +42,130 @@ dialogueWithDad.onEnd = defaults.goToStreet;
 
 // Walk to School
 
-
+var choices2 = [
+	new Choice("uh...", null),
+	new Choice("um...", null),
+];
 
 var choices3 = [
-	new Choice("ok i guess", null),
-	new Choice("are you alright?", null),
+	new Choice("uhhh…...", null),
+	new Choice("she did die, right?", null),
 ];
 
 var choices4 = [
-	new Choice("dont worry mom", null),
-	new Choice("but i was!!!!", null),
+	new Choice("uhhhhhhhhhh……….", null),
+	new Choice("i couldn’t click it", null),
 ];
 
-var choices4b = [
-	new Choice("woah", null),
-	new Choice("i think my phone's broken...", null),
+var choices7 = [
+	new Choice("Yes.", null),
+	new Choice("NOOOOOOOOO!!!!!!!!!", null),
 ];
+
+var choices6Both = [
+	new Phrase("Andy", "You don't really have a choice.", 5000),
+	new Phrase("Andy", "Happy?", choices7),
+]
+
+var choices6 = [
+	new Choice("Where’s the gameplay?", choices6Both),
+	new Choice("Its nice to have my phone fixed.", choices6Both),
+];
+
+
+var choices5No = [
+	new Phrase("Sarah", "Fine. It's broken again. Happy?", choices7),
+]
+
+var choices5Yes = [
+	new Phrase("Sarah", "So how does this make you feel?", choices6),
+]
 
 var choices5 = [
-	new Choice("party pooper!", null),
-	new Choice("guys cut it out", null),
+	new Choice("No", choices5No),
+	new Choice("YES!", choices5Yes),
 ];
 
+
+var choices8 = [
+	new Choice("no", null),
+	new Choice("yes", null),
+];
+
+var choices8_2 = [
+	new Choice("uh....", null),
+	new Choice("ART", null),
+];
+
+var choices9 = [
+	new Choice("yes", null),
+	new Choice("no", null),
+];
+
+var choices10 = [
+	new Choice("yes", null),
+	new Choice("no", null),
+];
+
+
+
 walkToSchool = [
-	new Phrase("Mom", "Good morning.", 2000),
-	new Phrase("Mom", "How are you doing?",  choices3),
-	new Phrase("Mom", "Well you should be more careful.", 2000),
-	new Phrase("Mom", "A bomb blew up yesterday afternoon on the path you take to school.", 2000),
-	new Phrase("Mom", "I was worried sick. What if you had been near that?", choices4),
-	new Phrase("Johnny", "hey hey did u guys hear? there was an explosionnnnn yesterday!", 2000),
-	new Phrase("Andy", "No way.", choices4b),
-	new Phrase("Sam", "yeah i heard it omw home!", 2000),
-	new Phrase("Sam", "didnt c anyting :(", 2000),
-	new Phrase("Sarah", "Why do you sound excited? People died.", 2000),
-	new Phrase("Johnny", "what a downer, ruining the convo", 2000),
-	new Phrase("Sam", "party pooper!", 2000),
-	new Phrase("Johnny", "party pooper!", 2000),
-	new Phrase("Sam", "party pooper!", choices5),
+	new Phrase("Mom", "Hey.", 2000),
+	new Phrase("Mom", "See that girl walking to school?", 2000),
+	new Phrase("Mom", "What’s her name anyways?", choices2),
+	new Phrase("Mom", "Why is she going to school in a warzone?", 2000),
+	new Phrase("Mom", "Shouldn’t she be dead?", choices3),
+	new Phrase("Johnny", "Why didn’t you choose the other option?", 2000),
+	new Phrase("Johnny", "Aren’t you supposed to have choice?", choices4),
+	new Phrase("Sam", "Is this better?", choices5),
+	new Phrase("Johnny", "are you having funnnnnnnn yetttttttt?", choices8),
+	new Phrase("Andy", "why not?", choices8_2);
+	new Phrase("Sarah", "Are you having fun yet?", choices9),
+	new Phrase("Sam", "r u havin fun yet????", choices10),
+	new Phrase("Dad", "are", 2000),
+	new Phrase("Mom", "you", 2000),
+	new Phrase("Sarah", "having", 2000),
+	new Phrase("Sam", "fun", 2000),
+	new Phrase("Andy", "yet", 2000),
+	new Phrase("Johnny", "?", 2000),
 ];
 
 dialogueToSchool = new Dialogue(walkToSchool);
 dialogueToSchool.onEnd = defaults.goToSchool;
 
+
+
+
+
+
 // Walk from School
 
-var choices6 = [
-	new Choice("sure", null, "Friends"),
-	new Choice("sorry have to get water for mom", null),
-];	
+var choices11 = [
+	new Choice("yes", null),
+	new Choice("no", null),
+];
+
+var choices12 = [
+	new Choice("yes", null),
+	new Choice("no", null),
+];
+
+
+var choices13 = [
+	new Choice("yes", null),
+	new Choice("no", null),
+];
+
+var choices14 = [
+	new Choice("yes", null, "Friends"),
+	new Choice("no", null, "Friends"),
+];
 
 walkFromSchool = [
-	new Phrase("Andy", "My dad called", 2000),
-	new Phrase("Andy", "Going to leave early today.", 4000),
-	new Phrase("Mom", "Can you fetch some water on your way home? We are running a bit low.", 4000),
-	new Phrase("Johnny", "andy you quitterrrrrrrrrr", 4000),
-	new Phrase("Sarah", "Johnny, stop being a bully...", 2000),
-	new Phrase("Johnny", "im nottt", 2000),
-	new Phrase("Johnny", "but you will come right?", choices6)
+	new Phrase("Andy", "Are games about making choices?", choices11),
+	new Phrase("Sam", "Are games about rules?", choices12),
+	new Phrase("Johnny", "Are games about winning?", choices13),
+	new Phrase("Sarah", "Are games about narratives?", choices14),
 ];
 
 dialogueFromSchool = new Dialogue(walkFromSchool);
@@ -107,10 +175,6 @@ dialogueFromSchool.onEnd = defaults.goToHome;
 // Walk to home
 
 var walkToHome = [
-	new Phrase("Johnny", "hey andy ", 2000),
-	new Phrase("Johnny", "you will be able to play tomorrow righhhtt?", 3000),
-	new Phrase("Johnny", "you are always the best at hide and seek", 3000),
-	new Phrase("Johnny", "without you sarah destroyeeeedddd us", 2000)
 ];
 
 var dialogueToHome = new Dialogue(walkToHome);

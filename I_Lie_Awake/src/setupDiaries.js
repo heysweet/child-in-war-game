@@ -1,15 +1,15 @@
 var homeParents = [
-	"I got eggs for mom today.\n\n" +
-	"I didnt get to see my friends after school.\n\n" +
-	"I wonder if they had fun without me.\n\n" +
-	"Dad came back late at night, I was really happy to see him.",
+	"I went to the store to get eggs for mom today, but they were out\n\n" +
+	"I didnt get to play xbox with my friends after school\n\n" +
+	"I wonder if they had fun without me\n\n" +
+	"Dad came back late at night, I was really happy to see him",
 
 	"",
 
-	"I got water for mom today.\n\n" +
-	"I hope I didn't miss out on too much fun with my friends.\n\n" +
-	"I wonder what happened to Andy.\n\n" +
-	"Dad did not tuck me in before I went to sleep.",
+	"Day 3:\n\n" +
+	"Water running low.\n\n" +
+	"I am all out of choices.\n\n" +
+	"What happened to Rachel?",
 
 	"",
 
@@ -17,17 +17,17 @@ var homeParents = [
 ];
 
 var homeFriends = [
-	"I played hide and seek with friends today.\n\n" +
-	"I had a lot of fun! I stayed out too long.\n\n" +
-	"Mom got angry that I didnt get her eggs.\n\n" +
-	"Dad came back late at night, he was really tired.",
+	"I played xbox with friends today\n\n" +
+	"I had a lot of fun but stayed out too long\n\n" +
+	"Mom got angry that I didnt get her eggs\n\n" +
+	"Dad came back late at night, he was really tired",
 
 	"",
 
-	"I had a lot of fun playing with my friends today.\n\n" +
-	"I wonder what happened to Andy\n\n"+
-	"I came home thirsty but there was no water to drink\n\n" +
-	"Mom and Dad did not tuck me in before I went to sleep",
+	"Day 3:\n\n" +
+	"Water running low.\n\n" +
+	"I am all out of choices.\n\n" +
+	"What happened to Rachel?",
 
 	"",
 
@@ -44,31 +44,31 @@ var school = [
 
 	"Ms. Beth taught us about mollusks in class. Mollusks is such a weird word.\n\n" +
 
-"She told us to be careful after school.\n\n" +
+"I wasn’t listening, I was just playing the game on my phone.\n\n" +
+
+"I beat johnny’s high score. I feel really achieved.\n\n" +
 
 "Sarah didn't talk much today because Rachel was not here.",
 
 
 
-	"Ms. Beth taught about dolphins today. Dolphins are very weird animals that see with sound.\n\n" +
+	"Ms. Beth taught about games today. We learned how important interactivity was\n\n" +
 
-"She warned us about what kind of things we should watch out for to avoid danger.\n\n" +
-
-"Sarah was really angry at Sam, Johnny and me for bullying her.",
+"I didn’t pay attention to her though. I was having too much fun playing my own game",
 
 
 
-	"Ms.Beth talked a lot about the war today. I didn't understand what she said.\n\n" + 
+	"Ms. Beth was a platypus. I didn’t understand what she said.\n\n" + 
 
 "I had lunch by myself today. There was no one to talk to.\n\n" +
 
-"I wonder where mom and dad went.",
+"I’m sure glad I’m not a platypus.",
 
 	"There was nobody at school today.\n\n" + 
 
 "Not even Ms.Beth was here.\n\n" +
 
-"I wonder where everybody went.",
+"I miss my aquatic friend.",
 ];
 
 module.exports = {
