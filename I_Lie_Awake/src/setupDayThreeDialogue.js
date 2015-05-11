@@ -178,21 +178,22 @@ var choices12 = [
 
 
 var choices13 = [
-	new Choice("yes", null),
-	new Choice("no", null),
-];
-
-var choices14 = [
 	new Choice("yes", null, "Friends"),
 	new Choice("no", null, "Friends"),
 ];
 
+var choices14 = [
+	new Choice("yes", null),
+	new Choice("no", null),
+];
+
 walkFromSchool = [
 	new Phrase("Andy", "So...", 1000),
-	new Phrase("Andy", "Are games about making choices?", choices11),
-	new Phrase("Sam", "Are games about rules?", choices12),
-	new Phrase("Johnny", "Are games about winning?", choices13),
-	new Phrase("Sarah", "Are games about narratives?", choices14),
+	new Phrase("Andy", "What is a game?", 1000),
+	new Phrase("Sarah", "Should a game tell a story?", choices14),
+	new Phrase("Andy", "Do games need to be built around choices?", choices11),
+	new Phrase("Sam", "Do all games require the structure of rules?", choices12),
+	new Phrase("Johnny", "Is it absolutely neccesary that you have to be able to beat it?", choices13),
 ];
 
 dialogueFromSchool = new Dialogue(walkFromSchool);
