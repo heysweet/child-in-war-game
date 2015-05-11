@@ -1,6 +1,7 @@
 var ImageObject = require("ImageObject.js");
 var AnimatedImageObject = require("AnimatedImageObject.js");
 
+var DIRT_IMAGE = require("./data/street_day5/grass.jpg");
 var GRASS_IMAGE = require("./data/street/grass.jpg");
 var PATH_IMAGE = require("./data/street/path.png");
 var DAY_5_PATH_IMAGE = require("./data/street_day5/path.png");
@@ -11,6 +12,8 @@ var Car = require("Car.js");
 var desaturatedGrass = GRASS_IMAGE;
 
 var utils = require("utils.js");
+
+var squiggle = require("Squiggle.js");
 
 var elapsed;
 var grass;
@@ -102,6 +105,8 @@ var initializeLayers = function(){
 
 	layersPool = [grass, road, house, cars];
 	drawnLayers = [drawnGrass, drawnRoad, drawnHouse, drawnCars];
+
+	squiggle.init();
 }
 
 initializeLayers();
@@ -122,7 +127,17 @@ var Treadmill = function(speed_) {
 	this.initializeLayers = init;
 
 	this.setSaturation = function(saturationAmount){
-		desaturatedGrass = utils.desaturateImage(GRASS_IMAGE, saturationAmount);
+		var grass;
+
+		var dayNum = window.gamestate.dayNum();
+
+		if (dayNum == 4){
+			grass = DIRT_IMAGE;
+		} else {
+			grass = GRASS_IMAGE;
+		}
+
+		desaturatedGrass = utils.desaturateImage(grass, saturationAmount);
 		House.desaturate(saturationAmount);
 
 		for (var i = 0; i < grass.length; i++){
@@ -136,6 +151,7 @@ var Treadmill = function(speed_) {
 
 	this.update = function(elapsed_){
 		elapsed = elapsed_;
+		squiggle.update(elapsed_);
 	}
 
 	this.setSpeed = function(amt){
@@ -219,6 +235,8 @@ var Treadmill = function(speed_) {
 				window.gamestate.mainCharacter.draw();
 			}
 		}
+
+		squiggle.draw();
 	}
 
 	this.addCarBomb = function (func){

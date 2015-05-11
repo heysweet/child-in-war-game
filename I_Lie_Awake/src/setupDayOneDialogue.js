@@ -72,7 +72,7 @@ var choices6 = [
 ];
 
 choices6[1].onChoice = function (argument) {
-	achievement.achieve("Liar (You Didnt)");
+	achievement.achieve("Liar (You Didn't)");
 };
 
 var walkToSchool = [
@@ -102,10 +102,17 @@ var choices7 = [
 	new Choice("sorry but i got to buy eggs for mom today", null, "Parents")
 ];
 
-choices7[0].onChoice = function (argument) {
+var gamerChoice = choices7[0].onChoice;
+
+choices7[0].onChoice = function () {
+	gamerChoice();
 	achievement.achieve("Devout Gamer");
 };
-choices7[1].onChoice = function (argument) {
+
+var parentChoice = choices7[0].onChoice;
+
+choices7[1].onChoice = function () {
+	parentChoice();
 	achievement.achieve("Team Player");
 };
 
