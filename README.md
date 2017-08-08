@@ -1,3 +1,9 @@
+# I Lie Awake
+
+[Live Demo](http://sald-devs.github.io/sald/5DaysLeft.html)
+
+## Installation
+
 Make sure you have node installed.
 
 Fork the SALD repo using the instructions found here:
